@@ -253,6 +253,1089 @@ const plantillaFila = {
   },
 };
 
+export const plantillaCabeceras = [
+  { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" }, // <--- AGREGADO 'key'
+  { name: "Evento", colspan: 1, rowspan: 3, key: "evento" }, // <--- AGREGADO 'key'
+  { name: "Reloj", colspan: 1, rowspan: 3, key: "reloj" }, // <--- AGREGADO 'key'
+  {
+    name: "Envio de Paquetes",
+    colspan: 18,
+    rowspan: 1,
+    key: "envio_de_paquetes", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" }, // <--- AGREGADO 'key'
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          }, // <--- AGREGADO 'key'
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 4,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Esperas Mayores a 15m",
+            colspan: 1,
+            rowspan: 1,
+            key: "esperas_mayores_a_15m",
+          }, // <--- AGREGADO 'key'
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 4,
+        rowSpan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowSpan: 1, key: "servidor_1" }, // <--- AGREGADO 'key'
+          { name: "Servidor 2", colspan: 1, rowSpan: 1, key: "servidor_2" }, // <--- AGREGADO 'key'
+          { name: "Servidor 3", colspan: 1, rowSpan: 1, key: "servidor_3" }, // <--- AGREGADO 'key'
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowSpan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          }, // <--- AGREGADO 'key'
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" }, // <--- AGREGADO 'key'
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          }, // <--- AGREGADO 'key'
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 4,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          }, // <--- AGREGADO 'key'
+          {
+            name: "Probabilidad de Espera Mayor a 15m",
+            colspan: 1,
+            rowspan: 1,
+            key: "probabilidad_de_espera_mayor_a_15m", // <--- AGREGADO 'key'
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Reclamaciones y Devoluciones",
+    colspan: 15,
+    rowspan: 1,
+    key: "reclamaciones_y_devoluciones", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 3,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 3,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          },
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Venta de Sellos y Sobres",
+    colspan: 16,
+    rowspan: 1,
+    key: "venta_de_sellos_y_sobres", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 4,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          { name: "Servidor 3", colspan: 1, rowspan: 1, key: "servidor_3" },
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 3,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          },
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Atencion Empresarial",
+    colspan: 15,
+    rowspan: 1,
+    key: "atencion_empresarial", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 3,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 3,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          },
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Postales y Envios Especiales",
+    colspan: 14,
+    rowspan: 1,
+    key: "postales_y_envios_especiales", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 2,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 3,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          },
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Atencion Empresarial con Ausencia",
+    colspan: 13,
+    rowspan: 1,
+    key: "atencion_empresarial_con_ausencia", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 2,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Servidor Periodico",
+            colspan: 1,
+            rowspan: 1,
+            key: "servidor_periodico",
+          },
+          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 2,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Venta de Sellos y Sobres sin 1 Empleado",
+    colspan: 13,
+    rowspan: 1,
+    key: "venta_de_sellos_y_sobres_sin_1_empleado", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 2,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 3,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 2,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Atencion Empresarial con Prioridad",
+    colspan: 20,
+    rowspan: 1,
+    key: "atencion_empresarial_con_prioridad", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Llegada de Cliente",
+        colspan: 3,
+        rowspan: 1,
+        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo entre Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_entre_llegada",
+          },
+          {
+            name: "Hora de Llegada",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_llegada",
+          },
+        ],
+      },
+      {
+        name: "Prioridad",
+        colspan: 2,
+        rowspan: 1,
+        key: "prioridad", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tipo de Prioridad",
+            colspan: 1,
+            rowspan: 1,
+            key: "tipo_prioridad",
+          },
+        ],
+      },
+      {
+        name: "Cola sin Prioridad",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola_sin_prioridad", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Cola con Prioridad",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola_con_prioridad", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 2,
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+        ],
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 4,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos CP",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos_cp",
+          },
+          {
+            name: "Clientes Atendidos SP",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos_sp",
+          },
+          {
+            name: "Tiempo Promedio de Espera CSP",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera_csp",
+          },
+          {
+            name: "Tiempo Promedio de Espera CCP",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera_ccp",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Post Envio de Paquetes",
+    colspan: 13,
+    rowspan: 1,
+    key: "post_envio_de_paquetes", // <--- AGREGADO 'key'
+    subheaders: [
+      {
+        name: "Solicitud ",
+        colspan: 2,
+        rowspan: 1,
+        key: "solicitud_del_servicio", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: "Solicita", colspan: 1, rowspan: 1, key: "solicita" },
+        ],
+      },
+      {
+        name: "Cola",
+        colspan: 3,
+        rowspan: 1,
+        key: "cola", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes en Cola",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_en_cola",
+          },
+          {
+            name: "Longitud Maxima",
+            colspan: 1,
+            rowspan: 1,
+            key: "longitud_maxima",
+          },
+          {
+            name: "Tiempos de Espera Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_espera_acumulados",
+          },
+        ],
+      },
+      {
+        name: "Servidores",
+        colspan: 2, // This will be dynamically updated by ajustarServidores
+        rowspan: 1,
+        key: "servidores", // <--- AGREGADO 'key'
+        subheaders: [], // Subheaders will be dynamically added by ajustarServidores
+      },
+      {
+        name: "Fin de Atencion",
+        colspan: 3,
+        rowspan: 1,
+        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        subheaders: [
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          {
+            name: "Tiempo de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_de_atencion",
+          },
+          {
+            name: "Hora de Fin de Atencion",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion",
+          },
+        ],
+      },
+      {
+        name: "Estadisticos",
+        colspan: 3,
+        rowspan: 1,
+        key: "estadisticos", // <--- AGREGADO 'key'
+        subheaders: [
+          {
+            name: "Clientes Atendidos",
+            colspan: 1,
+            rowspan: 1,
+            key: "clientes_atendidos",
+          },
+          {
+            name: "Porcentaje de Ocupacion",
+            colspan: 1,
+            rowspan: 1,
+            key: "porcentaje_de_ocupacion",
+          },
+          {
+            name: "Tiempo Promedio de Espera",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempo_promedio_de_espera",
+          },
+        ],
+      },
+    ],
+  },
+];
+
 const abreviaciones = {
   envio_de_paquetes: "EP",
   reclamaciones_y_devoluciones: "RyD",
@@ -264,543 +1347,6 @@ const abreviaciones = {
   atencion_empresarial_con_prioridad: "AECP",
   post_envio_de_paquetes: "PEP",
 };
-
-export const plantillaCabeceras = [
-  { name: "Simulacion", colspan: 1, rowspan: 3 },
-  { name: "Evento", colspan: 1, rowspan: 3 },
-  { name: "Reloj", colspan: 1, rowspan: 3 },
-  {
-    name: "Envio de Paquetes",
-    colspan: 18, // 3 (llegada) + 4 (cola) + 4 (servidores) + 3 (fin atencion) + 4 (estadisticos) = 18
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 4,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Esperas Mayores a 15m", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 4,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-          { name: "Servidor 3", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 4,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-          {
-            name: "Probabilidad de Espera Mayor a 15m",
-            colspan: 1,
-            rowspan: 1,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Reclamaciones y Devoluciones",
-    colspan: 15, // Corrected from 14 to 15 (3+3+3+3+3)
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 3, // Corrected from 2 to 3
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Venta de Sellos y Sobres",
-    colspan: 16, // 3 (llegada) + 3 (cola) + 4 (servidores) + 3 (fin atencion) + 3 (estadisticos) = 16
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 4,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-          { name: "Servidor 3", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Atencion Empresarial",
-    colspan: 15, // 3 (llegada) + 3 (cola) + 3 (servidores) + 3 (fin atencion) + 3 (estadisticos) = 15
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Postales y Envios Especiales",
-    colspan: 14, // 3 (llegada) + 3 (cola) + 2 (servidores) + 3 (fin atencion) + 3 (estadisticos) = 14
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Atencion Empresarial con Ausencia",
-    colspan: 13, // 3 (llegada) + 3 (cola) + 2 (servidores) + 3 (fin atencion) + 2 (estadisticos) = 13
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor Periodico", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Venta de Sellos y Sobres sin 1 Empleado",
-    colspan: 13, // 3 (llegada) + 2 (cola) + 3 (servidores) + 3 (fin atencion) + 2 (estadisticos) = 13
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Atencion Empresarial con Prioridad",
-    colspan: 20, // 3 (llegada) + 2 (prioridad) + 3 (cola sin prioridad) + 3 (cola con prioridad) + 2 (servidores) + 3 (fin atencion) + 4 (estadisticos) = 20
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Llegada de Cliente",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo entre Llegada", colspan: 1, rowspan: 1 },
-          { name: "Hora de Llegada", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Prioridad",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tipo de Prioridad", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola sin Prioridad",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola con Prioridad",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Servidor 2", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 4,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos CP", colspan: 1, rowspan: 1 },
-          { name: "Clientes Atendidos SP", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera CSP", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera CCP", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Post Envio de Paquetes",
-    colspan: 13, // This will be dynamically updated by ajustarServidores
-    rowspan: 1,
-    subheaders: [
-      {
-        name: "Solicitud ",
-        colspan: 2,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Solicita", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Cola",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes en Cola", colspan: 1, rowspan: 1 },
-          { name: "Longitud Maxima", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Espera Acumulados", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Servidores",
-        colspan: 2, // This will be dynamically updated by ajustarServidores
-        rowspan: 1,
-        subheaders: [], // Subheaders will be dynamically added by ajustarServidores
-      },
-      {
-        name: "Fin de Atencion",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1 },
-          { name: "Tiempo de Atencion", colspan: 1, rowspan: 1 },
-          { name: "Hora de Fin de Atencion", colspan: 1, rowspan: 1 },
-        ],
-      },
-      {
-        name: "Estadisticos",
-        colspan: 3,
-        rowspan: 1,
-        subheaders: [
-          { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
-          { name: "Porcentaje de Ocupacion", colspan: 1, rowspan: 1 },
-          { name: "Tiempo Promedio de Espera", colspan: 1, rowspan: 1 },
-        ],
-      },
-    ],
-  },
-];
-
 // tasa = clientes/hora
 const tasasBase = {
   envio_de_paquetes: {
