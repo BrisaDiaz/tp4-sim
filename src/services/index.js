@@ -1593,19 +1593,19 @@ const procesarLlegadaConPrioridad = (
   config,
   colas
 ) => {
-  /// incremetrar los clientes registrados
   clientes_registrados[evento.servicio] += 1;
 
-  /// genero la prioridad del cliente
+  // Generar prioridad del cliente
   const rndPrioridad = Math.random();
   const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
-  const cola = rndPrioridad < 0.2 ? "cola_con_prioridad" : "cola_sin_prioridad";
+  const cola =
+    prioridad === "alta" ? "cola_con_prioridad" : "cola_sin_prioridad";
 
-  /// actualizo los valores de prioridad
+  // Actualizar valores de prioridad
   fila[evento.servicio].prioridad.rnd = rndPrioridad;
   fila[evento.servicio].prioridad.tipo_prioridad = prioridad;
 
-  /// generar la proxima llegada
+  // Generar próxima llegada
   const llegada = generadorExponencial(
     config.tasas[evento.servicio].tasa_de_llegada
   );
@@ -1614,7 +1614,7 @@ const procesarLlegadaConPrioridad = (
   fila[evento.servicio].llegada_de_cliente.hora_de_llegada =
     fila.reloj + llegada.value;
 
-  // registrar la llegada del proximo cliente
+  // Registrar próxima llegada
   eventos.push({
     nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
       clientes_registrados[evento.servicio]
@@ -1625,38 +1625,44 @@ const procesarLlegadaConPrioridad = (
     hora: fila.reloj + llegada.value,
   });
 
-  /// verificar si hay servidores libres
-  const serividoresLibres = encontrarServidoresLibres(evento.servicio, fila);
+  // Verificar servidores libres
+  const servidoresLibres = encontrarServidoresLibres(evento.servicio, fila);
 
-  /// agregar a la cola
-  if (serividoresLibres.length === 0) {
+  if (servidoresLibres.length === 0) {
+    // Agregar a la cola correspondiente
     colas[evento.servicio][cola].push({
       cliente_id: evento.cliente_id,
       hora_de_ingreso: fila.reloj,
     });
 
-    /// actualizamos la longitud de la cola
+    // Actualizar longitud de la cola
     fila[evento.servicio][cola].clientes_en_cola += 1;
-    const longituActual = fila[evento.servicio][cola].clientes_en_cola;
-    if (longituActual > fila[evento.servicio][cola].longitud_maxima) {
-      fila[evento.servicio][cola].longitud_maxima = longituActual;
+
+    // Actualizar longitud máxima
+    if (
+      fila[evento.servicio][cola].clientes_en_cola >
+      fila[evento.servicio][cola].longitud_maxima
+    ) {
+      fila[evento.servicio][cola].longitud_maxima =
+        fila[evento.servicio][cola].clientes_en_cola;
     }
   } else {
-    /// ocupar un servidor
-    const servidor = serividoresLibres[0];
+    // Ocupar servidor
+    const servidor = servidoresLibres[0];
     fila[evento.servicio].servidores[servidor] = "ocupado";
 
-    /// generar el fin de atencion
+    // Generar fin de atención
     const finAtencion = generadorExponencial(
       config.tasas[evento.servicio].tasa_de_atencion
     );
+
     fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
     fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
       finAtencion.value;
     fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
       fila.reloj + finAtencion.value;
 
-    /// registrar fin de atencion del cliente que llego actualmente
+    // Registrar fin de atención
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         evento.cliente_id
@@ -1666,7 +1672,7 @@ const procesarLlegadaConPrioridad = (
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
-      servidor, /// para saber que servidor se debe liberar
+      servidor,
     });
   }
 };
@@ -1727,13 +1733,17 @@ const procesarFinAtencionGenerica = (
         fila[evento.servicio].cola.esperas_mayores_a_15m += 1;
       }
 
-      const prob =
-        fila[evento.servicio].cola.esperas_mayores_a_15m /
-        fila[evento.servicio].estadisticos.clientes_atendidos;
-
-      /// actulizo la probabilidad de esperas mayores a 15 min
-      fila[evento.servicio].estadisticos.probabilidad_de_espera_mayor_a_15m =
-        prob;
+      if (fila[evento.servicio].estadisticos.clientes_atendidos > 0) {
+        const prob =
+          fila[evento.servicio].cola.esperas_mayores_a_15m /
+          fila[evento.servicio].estadisticos.clientes_atendidos;
+        fila[evento.servicio].estadisticos.probabilidad_de_espera_mayor_a_15m =
+          prob;
+      } else {
+        fila[
+          evento.servicio
+        ].estadisticos.probabilidad_de_espera_mayor_a_15m = 0;
+      }
     }
     const finAtencion = generadorExponencial(
       config.tasas[evento.servicio].tasa_de_atencion
@@ -1789,64 +1799,69 @@ const procesarFinAtencionConPrioridad = (
   eventos,
   tiempos_de_ocupacion_acumulados
 ) => {
-  /// comprovar si hay clientes en la cola
-  fila[evento.servicio].estadisticos.clientes_atendidos += 1;
+  // Incrementar tiempos de ocupación
   tiempos_de_ocupacion_acumulados[evento.servicio] += evento.tiempo_de_atencion;
 
-  const longitudCCP =
-    colas["atencion_empresarial_con_prioridad"].cola_con_prioridad.length;
-  const longitudCSP =
-    colas["atencion_empresarial_con_prioridad"].cola_sin_prioridad.length;
-
-  let cola = "cola_con_prioridad";
-
-  /// solo se atendera a los clientes de la cola sin pioridad si la cola con prioridad esta vacia
-  if (longitudCCP === 0) {
-    cola = "cola_sin_prioridad";
+  // Determinar qué cola tiene clientes (priorizando la cola con prioridad)
+  let colaActual = "cola_con_prioridad";
+  if (colas[evento.servicio][colaActual].length === 0) {
+    colaActual = "cola_sin_prioridad";
   }
+
   const clienteMasAntiguoEnCola =
-    longitudCCP !== 0 || longitudCSP !== 0
-      ? encontrarClienteMasAntiguo(colas[evento.servicio][cola], fila.reloj)
+    colas[evento.servicio][colaActual].length > 0
+      ? encontrarClienteMasAntiguo(
+          colas[evento.servicio][colaActual],
+          fila.reloj
+        )
       : null;
 
   if (clienteMasAntiguoEnCola) {
-    let cola = "cola_con_prioridad";
+    // Actualizar contadores según el tipo de cola
+    if (colaActual === "cola_con_prioridad") {
+      fila[evento.servicio].estadisticos.clientes_atendidos_cp += 1;
+    } else {
+      fila[evento.servicio].estadisticos.clientes_atendidos_sp += 1;
+    }
 
-    /// actualizo la logitud de la cola
-    fila[evento.servicio][cola].clientes_en_cola -= 1;
+    // Actualizar longitud de la cola (asegurándose de no ir a negativo)
+    fila[evento.servicio][colaActual].clientes_en_cola = Math.max(
+      0,
+      fila[evento.servicio][colaActual].clientes_en_cola - 1
+    );
 
-    /// calculo el tiempo de permanencia en cola
+    // Calcular tiempo de espera
     const tiempoEspera = evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
 
-    /// incrementar los clientes atendidos
-    fila[evento.servicio].estadisticos[
-      `clientes_atendidos_${cola === "cola_con_prioridad" ? "cp" : "sp"}`
-    ] += 1;
+    // Actualizar tiempos acumulados
+    fila[evento.servicio][colaActual].tiempos_de_espera_acumulados +=
+      tiempoEspera;
 
-    /// actualizo los tiempos acumulados en cola
-    fila[evento.servicio][cola].tiempos_de_espera_acumulados += tiempoEspera;
-
-    /// calculo los tiempos promedios de espera (se recalcula por que aumento la cantidad de clientes atendidos)
-    const tiempoEsperaAcum =
-      fila[evento.servicio][cola].tiempos_de_espera_acumulados;
+    // Calcular promedios
     const clientesAtendidos =
-      fila[evento.servicio].estadisticos[
-        `clientes_atendidos_${cola === "cola_con_prioridad" ? "cp" : "sp"}`
-      ];
+      colaActual === "cola_con_prioridad"
+        ? fila[evento.servicio].estadisticos.clientes_atendidos_cp
+        : fila[evento.servicio].estadisticos.clientes_atendidos_sp;
 
-    const promDeEspera = tiempoEsperaAcum / clientesAtendidos;
+    if (clientesAtendidos > 0) {
+      const tiempoEsperaAcum =
+        fila[evento.servicio][colaActual].tiempos_de_espera_acumulados;
+      const promDeEspera = tiempoEsperaAcum / clientesAtendidos;
 
-    /// actualizo el promedio de espera en cola
-    fila[evento.servicio].estadisticos[
-      `tiempo_promedio_de_espera_${
-        cola === "cola_con_prioridad" ? "ccp" : "csp"
-      }`
-    ] = promDeEspera;
+      if (colaActual === "cola_con_prioridad") {
+        fila[evento.servicio].estadisticos.tiempo_promedio_de_espera_ccp =
+          promDeEspera;
+      } else {
+        fila[evento.servicio].estadisticos.tiempo_promedio_de_espera_csp =
+          promDeEspera;
+      }
+    }
 
-    /// generar el fin de atencion
+    // Generar nuevo fin de atención
     const finAtencion = generadorExponencial(
       config.tasas[evento.servicio].tasa_de_atencion
     );
+
     fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
     fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
       finAtencion.value;
@@ -1856,16 +1871,16 @@ const procesarFinAtencionConPrioridad = (
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         clienteMasAntiguoEnCola.cliente_id
-      }_${cola === "cola_con_prioridad" ? "cp" : "sp"}`,
+      }_${colaActual === "cola_con_prioridad" ? "cp" : "sp"}`,
       cliente_id: clienteMasAntiguoEnCola.cliente_id,
       servicio: "atencion_empresarial_con_prioridad",
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
-      servidor: evento.servidor, /// para saber que servidor se debe liberar
+      servidor: evento.servidor,
     });
   } else {
-    /// liberar el servidor
+    // Liberar el servidor si no hay clientes en ninguna cola
     fila[evento.servicio].servidores[evento.servidor] = "libre";
   }
 };
@@ -2162,7 +2177,7 @@ export const gestorSimulacion = (config) => {
         // Verificar si el servidor está ocupado
         const estaOcupado =
           fila.atencion_empresarial_con_ausencia.servidores
-            .servidor_periodico === "ocupado";
+            .servidor_periodico === "ausente";
 
         if (estaOcupado) {
           // Buscar el próximo evento de fin de atención para este servidor
@@ -2200,6 +2215,9 @@ export const gestorSimulacion = (config) => {
           fila.atencion_empresarial_con_ausencia.cola.tiempos_de_espera_acumulados +=
             tiempoEspera;
           fila.atencion_empresarial_con_ausencia.cola.clientes_en_cola -= 1;
+
+          // Incrementar clientes atendidos
+          fila.atencion_empresarial_con_ausencia.estadisticos.clientes_atendidos += 1;
 
           // Generar fin de atención
           const finAtencion = generadorExponencial(
