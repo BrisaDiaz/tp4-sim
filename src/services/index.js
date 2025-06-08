@@ -254,21 +254,32 @@ const plantillaFila = {
 };
 const setNullsFila = (fila) => {
   servicios.forEach((servicio) => {
-    if ("llegada_de_cliente" in fila[servicio]) {
+    // Resetear llegada_de_cliente
+    if (fila[servicio]?.llegada_de_cliente) {
       fila[servicio].llegada_de_cliente.rnd = null;
       fila[servicio].llegada_de_cliente.tiempo_entre_llegada = null;
       fila[servicio].llegada_de_cliente.hora_de_llegada = null;
     }
-    fila[servicio].fin_de_atencion.rnd = null;
-    fila[servicio].fin_de_atencion.tiempo_entre_llegada = null;
-    fila[servicio].fin_de_atencion.hora_de_llegada = null;
+
+    // Resetear fin_de_atencion
+    if (fila[servicio]?.fin_de_atencion) {
+      fila[servicio].fin_de_atencion.rnd = null;
+      fila[servicio].fin_de_atencion.tiempo_de_atencion = null;
+      fila[servicio].fin_de_atencion.hora_de_fin_de_atencion = null;
+    }
   });
 
-  fila.atencion_empresarial_con_prioridad.prioridad.rnd = null;
-  fila.atencion_empresarial_con_prioridad.prioridad.tipo_prioridad = null;
+  // Resetear prioridad
+  if (fila.atencion_empresarial_con_prioridad?.prioridad) {
+    fila.atencion_empresarial_con_prioridad.prioridad.rnd = null;
+    fila.atencion_empresarial_con_prioridad.prioridad.tipo_prioridad = null;
+  }
 
-  fila.post_envio_de_paquetes.solicitud_del_servicio.rnd = null;
-  fila.post_envio_de_paquetes.solicitud_del_servicio.solicita = null;
+  // Resetear solicitud de servicio
+  if (fila.post_envio_de_paquetes?.solicitud_del_servicio) {
+    fila.post_envio_de_paquetes.solicitud_del_servicio.rnd = null;
+    fila.post_envio_de_paquetes.solicitud_del_servicio.solicita = null;
+  }
 
   return fila;
 };
@@ -1512,11 +1523,12 @@ const procesarLlegadaGenerica = (
     fila[evento.servicio].llegada_de_cliente.hora_de_llegada =
       fila.reloj + llegada.value;
 
+    /// registrar proxima llegada
     eventos.push({
       nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
-        clientes_registrados[evento.servicio] + 1
+        clientes_registrados[evento.servicio]
       }`,
-      cliente_id: clientes_registrados[evento.servicio] + 1,
+      cliente_id: clientes_registrados[evento.servicio],
       servicio: evento.servicio,
       tipo: "llegada_de_cliente",
       hora: fila.reloj + llegada.value,
@@ -1558,6 +1570,7 @@ const procesarLlegadaGenerica = (
     fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
       fila.reloj + finAtencion.value;
 
+    /// registrar fin de atención del cliente que llegó actualmente
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         evento.cliente_id
@@ -1634,11 +1647,12 @@ const procesarLlegadaConPrioridad = (
   fila[evento.servicio].llegada_de_cliente.hora_de_llegada =
     fila.reloj + llegada.value;
 
+  // registrar la llegada del proximo cliente
   eventos.push({
     nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
-      clientes_registrados[evento.servicio] + 1
+      clientes_registrados[evento.servicio]
     }`,
-    cliente_id: clientes_registrados[evento.servicio] + 1,
+    cliente_id: clientes_registrados[evento.servicio],
     servicio: evento.servicio,
     tipo: "llegada_de_cliente",
     hora: fila.reloj + llegada.value,
@@ -1675,6 +1689,7 @@ const procesarLlegadaConPrioridad = (
     fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
       fila.reloj + finAtencion.value;
 
+    /// registrar fin de atencion del cliente que llego actualmente
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         evento.cliente_id
@@ -1966,12 +1981,11 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
       }
 
       // Añadir el evento a la lista de eventos
+      clientes_registrados[servicio] += 1;
       const abreviacion = abreviaciones[servicio] || servicio; // Usa abreviación o el nombre completo si no existe
       eventos.push({
-        nombre: `llegada_cliente_${abreviacion}_${
-          clientes_registrados[servicio] + 1
-        }`,
-        cliente_id: clientes_registrados[servicio] + 1,
+        nombre: `llegada_cliente_${abreviacion}_${clientes_registrados[servicio]}`,
+        cliente_id: clientes_registrados[servicio],
         servicio: servicio,
         tipo: "llegada_de_cliente",
         hora: llegada.value,
@@ -2099,7 +2113,7 @@ export const gestorSimulacion = (config) => {
 
   for (let i = 0; i < config.simulacion.cantidad_de_filas; i++) {
     const esIncio = i === 0;
-    const esFIn = i === config.simulacion.cantidad_de_filas - 1;
+    const esFin = i === config.simulacion.cantidad_de_filas - 1;
 
     if (esIncio) {
       // Inicializar la simulación con el primer evento de llegada de cliente
@@ -2118,11 +2132,6 @@ export const gestorSimulacion = (config) => {
       fila.simulacion = i;
       fila.evento = evento.nombre;
       fila.reloj = evento.hora;
-
-      fila.atencion_empresarial_con_prioridad.prioridad =
-        plantillaFila.atencion_empresarial_con_prioridad.prioridad;
-      fila.post_envio_de_paquetes.solicitud_del_servicio =
-        plantillaFila.post_envio_de_paquetes.solicitud_del_servicio;
 
       if (evento.tipo === "llegada_de_cliente") {
         if (evento.servicio === "atencion_empresarial_con_prioridad") {
@@ -2240,7 +2249,7 @@ export const gestorSimulacion = (config) => {
         /// se va a verificar si hay clientes en la cola
       }
 
-      if (esFIn) {
+      if (esFin) {
         /// hacer un barrido final, iterar sobre los servidores de todos los servicio, si estan ocupados, setear su tiempo de ocupacion acumulado y calcular su porcentaje de ocupacion
         servicios.forEach((servicio) => {
           if ("tiempos_de_ocupacion_acumulados" in fila[servicio].servidores) {
