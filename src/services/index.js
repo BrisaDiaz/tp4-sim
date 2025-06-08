@@ -237,7 +237,7 @@ const plantillaFila = {
       tiempos_de_espera_acumulados: 0,
     },
     servidores: {
-      // Corrected initial value from "libre" to 0
+      servidor_1: "libre", // Servidor explícitamente inicializado
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -1280,10 +1280,10 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2, // This will be dynamically updated by ajustarServidores
+        colspan: 2,
         rowspan: 1,
         key: "servidores", // <--- AGREGADO 'key'
-        subheaders: [], // Subheaders will be dynamically added by ajustarServidores
+        subheaders: [],
       },
       {
         name: "Fin de Atencion",
@@ -1418,16 +1418,22 @@ const ajustarServidores = (config) => {
     tiempos_de_ocupacion_acumulados: 0,
   };
 
+  // Agregar servidores dinámicamente
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
     plantillaFila["post_envio_de_paquetes"].servidores[`servidor_${i}`] =
       "libre";
   }
 
-  // editar plantillaCabeceras para incluir la cantidad de servidores e incrementar el colspan
-  const postEnvioDePaquetesHeader = plantillaCabeceras[11];
-  const servidoresSubheader = postEnvioDePaquetesHeader.subheaders[2];
+  // Actualizar cabeceras
+  const postEnvioDePaquetesHeader = plantillaCabeceras.find(
+    (header) => header.key === "post_envio_de_paquetes"
+  );
 
-  // Clear existing server subheaders before adding new ones
+  const servidoresSubheader = postEnvioDePaquetesHeader.subheaders.find(
+    (sub) => sub.key === "servidores"
+  );
+
+  // Limpiar y reconstruir subheaders
   servidoresSubheader.subheaders = [];
 
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
@@ -1435,6 +1441,7 @@ const ajustarServidores = (config) => {
       name: `Servidor ${i}`,
       colspan: 1,
       rowspan: 1,
+      key: `servidor_${i}`,
     });
   }
 
@@ -1442,19 +1449,18 @@ const ajustarServidores = (config) => {
     name: "Tiempos de Ocupacion Acumulados",
     colspan: 1,
     rowspan: 1,
+    key: "tiempos_de_ocupacion_acumulados",
   });
 
-  // Correction for colspan calculation:
-  // Set the colspan for the "Servidores" subheader
+  // Actualizar colspan total
   servidoresSubheader.colspan = cant_servidores_envio_de_paquetes + 1;
 
-  // Recalculate the total colspan for "Post Envio de Paquetes"
+  // Recalcular colspan total para la sección
   postEnvioDePaquetesHeader.colspan =
-    postEnvioDePaquetesHeader.subheaders[0].colspan + // Solicitud
-    postEnvioDePaquetesHeader.subheaders[1].colspan + // Cola
-    servidoresSubheader.colspan + // Servidores (newly calculated)
-    postEnvioDePaquetesHeader.subheaders[3].colspan + // Fin de Atencion
-    postEnvioDePaquetesHeader.subheaders[4].colspan; // Estadisticos
+    postEnvioDePaquetesHeader.subheaders.reduce(
+      (total, sub) => total + sub.colspan,
+      0
+    );
 };
 
 const generadorExponencial = (lambda) => {
@@ -1877,9 +1883,9 @@ const procesarFinAtencionConPrioridad = (
 };
 const registrarEventoAusencia = (reloj, eventos) => {
   eventos.push({
-    nombre: `asuncia_servidor_${abreviaciones["atencion_empresarial_con_ausencia"]}`,
+    nombre: `ausencia_servidor_${abreviaciones["atencion_empresarial_con_ausencia"]}`,
     servicio: "atencion_empresarial_con_ausencia",
-    tipo: "asuncia_servidor",
+    tipo: "ausencia_servidor",
     servidor: "servidor_periodico",
     hora: reloj + 1, /// hora actual + 1 hora
   });
@@ -1895,9 +1901,15 @@ const registrarEventoRegreso = (reloj, eventos) => {
 };
 
 const mergeFilas = (fila, filaPrevia, evento) => {
-  fila[evento.servicio].servidores = filaPrevia[evento.servicio].servidores;
-  fila[evento.servicio].estadisticos = filaPrevia[evento.servicio].estadisticos;
+  // Copiar servidores y estadísticos
+  fila[evento.servicio].servidores = JSON.parse(
+    JSON.stringify(filaPrevia[evento.servicio].servidores)
+  );
+  fila[evento.servicio].estadisticos = JSON.parse(
+    JSON.stringify(filaPrevia[evento.servicio].estadisticos)
+  );
 
+  // Manejar casos especiales
   if (evento.servicio === "atencion_empresarial_con_prioridad") {
     fila[evento.servicio].prioridad = JSON.parse(
       JSON.stringify(filaPrevia[evento.servicio].prioridad)
@@ -1911,6 +1923,13 @@ const mergeFilas = (fila, filaPrevia, evento) => {
   } else {
     fila[evento.servicio].cola = JSON.parse(
       JSON.stringify(filaPrevia[evento.servicio].cola)
+    );
+  }
+
+  // Caso especial para Post Envío de Paquetes
+  if (evento.servicio === "post_envio_de_paquetes") {
+    fila[evento.servicio].servidores = JSON.parse(
+      JSON.stringify(filaPrevia[evento.servicio].servidores)
     );
   }
 };
@@ -2181,7 +2200,7 @@ export const gestorSimulacion = (config) => {
             );
           }
         }
-      } else if (evento.tipo === "asuncia_servidor") {
+      } else if (evento.tipo === "ausencia_servidor") {
         /// verificamos si el servidor esta ocupado
         const estaOcupado =
           fila["atencion_empresarial_con_prioridad"].servidores
@@ -2203,20 +2222,16 @@ export const gestorSimulacion = (config) => {
         } else {
           /// actualizo el estado del servidor
           fila[
-            "atencion_empresarial_con_prioridad"
+            "atencion_empresarial_con_ausencia"
           ].servidores.servidor_periodico = "ausente";
 
           /// registro el evento regreso de servidor
           registrarEventoRegreso(evento.hora, eventos);
         }
-
-        /// evitar generar fila (simplemente me cambia el estado del servidor)
-        i--;
-        continue;
       } else if (evento.tipo === "regreso_servidor") {
         /// actualizo el estado del servidor
         fila[
-          "atencion_empresarial_con_prioridad"
+          "atencion_empresarial_con_ausencia"
         ].servidores.servidor_periodico = "libre";
 
         procesarFinAtencionGenerica(fila, evento, colas, config, eventos); /// se va a verificar si hay clientes en la cola
