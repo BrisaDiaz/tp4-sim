@@ -5,25 +5,23 @@ export default function VectorEstado({ cabeceras, filas }) {
   // Colores visualmente estéticos para diferenciar los servicios de primer nivel
   const serviceColors = ["#f1fafa", "#dcf1f0"];
 
-  // Función auxiliar para renderizar las cabeceras
+  // Función auxiliar para renderizar las cabeceras (sin cambios, ya es dinámica)
   const renderHeaders = (
     headers,
     level = 0,
     serviceCounter = { value: -1 }
   ) => {
     return headers.map((header, index) => {
-      // Clases para el nivel de la cabecera y alineación
       let headerClasses = `header-level-${level} text-center align-middle`;
       let headerStyle = {};
 
-      // Asigna colores a las cabeceras de servicio de primer nivel
       if (
         level === 0 &&
         header.name !== "Simulacion" &&
         header.name !== "Evento" &&
         header.name !== "Reloj"
       ) {
-        serviceCounter.value++; // Incrementa el contador para el próximo servicio
+        serviceCounter.value++;
         headerStyle.backgroundColor =
           serviceColors[serviceCounter.value % serviceColors.length];
       }
@@ -38,8 +36,6 @@ export default function VectorEstado({ cabeceras, filas }) {
         >
           {header.name}
           {(header.subheaders || header.headers) && (
-            // Renderiza subcabeceras o cabeceras anidadas en una tabla anidada
-            // Pasa el serviceCounter.value a un objeto para que se mantenga la referencia
             <table className="nested-header-table">
               <thead>
                 <tr>
@@ -57,38 +53,60 @@ export default function VectorEstado({ cabeceras, filas }) {
     });
   };
 
-  // Función auxiliar para obtener todos los valores de una fila de forma plana
-  const getRowValues = (rowObject) => {
+  // Función auxiliar para obtener los valores de la fila de forma ordenada y plana
+  const getFlattenedRowValues = (rowData, headersDefinition) => {
     let values = [];
-    for (const key in rowObject) {
-      if (typeof rowObject[key] === "object" && rowObject[key] !== null) {
-        values = values.concat(getRowValues(rowObject[key]));
+    headersDefinition.forEach((header) => {
+      if (header.subheaders || header.headers) {
+        const nestedData = rowData[header.key] || {};
+        values = values.concat(
+          getFlattenedRowValues(nestedData, header.subheaders || header.headers)
+        );
       } else {
-        values.push(rowObject[key]);
+        // Asegúrate de que header.key exista antes de acceder a rowData[header.key]
+        values.push(rowData[header.key]);
       }
-    }
+    });
     return values;
+  };
+
+  // MODIFICACIÓN: Función para truncar a 4 decimales o mostrar "-" si es null/undefined
+  const formatValueForDisplay = (value) => {
+    // Si el valor es null o undefined, retorna un guion
+    if (value === null || value === undefined) {
+      return "-";
+    }
+
+    // Si es un número decimal, lo formatea a 4 decimales
+    if (typeof value === "number" && !Number.isInteger(value)) {
+      // parseFloat() para eliminar ceros finales si toFixed los agrega
+      // (ej. 1.2000 se convierte en 1.2)
+      return parseFloat(value.toFixed(4));
+    }
+
+    // Para cualquier otro tipo de valor (string, entero, etc.), lo retorna tal cual
+    return value;
   };
 
   return (
     <div className="container mt-4">
       <h4 className="mb-3">Vector de Estados</h4>
       <div className="table-responsive-wrapper">
-        {/* Contenedor para el scroll y la cabecera pegajosa */}
         <table className="table table-bordered table-striped compact-table">
           <thead className="sticky-header">
-            {/* Cabecera pegajosa */}
             <tr>{renderHeaders(cabeceras, 0, { value: -1 })}</tr>
-            {/* Pasa el serviceCounter inicializado como un objeto */}
           </thead>
           <tbody>
             {filas.map((fila, rowIndex) => (
               <tr key={rowIndex}>
-                {getRowValues(fila).map((value, colIndex) => (
-                  <td key={colIndex} className="text-center align-middle">
-                    {value}
-                  </td>
-                ))}
+                {/* Llama a formatValueForDisplay para cada valor */}
+                {getFlattenedRowValues(fila, cabeceras).map(
+                  (value, colIndex) => (
+                    <td key={colIndex} className="text-center align-middle">
+                      {formatValueForDisplay(value)}
+                    </td>
+                  )
+                )}
               </tr>
             ))}
           </tbody>

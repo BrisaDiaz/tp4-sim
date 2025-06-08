@@ -850,7 +850,7 @@ export const plantillaCofig = {
       tasa_de_atencion: tasasBase.venta_de_sellos_y_sobres.tasa_de_atencion,
       tasa_de_llegada: tasasBase.venta_de_sellos_y_sobres.tasa_de_llegada,
       cantidad_de_servidores:
-        tasasBase.venta_de_sellos_y_sobres.cantidad_de_servidores,
+        tasasBase.venta_de_sellos_y_sobres.cantidad_de_servidores - 1,
     },
     atencion_empresarial_con_prioridad: {
       tasa_de_atencion: tasasBase.atencion_empresarial.tasa_de_atencion,
@@ -964,7 +964,7 @@ export const gestorSimulacion = (config) => {
 
       const filaPrevia = filas[filas.length - 1];
 
-      const fila = { ...plantillaFila };
+      const fila = JSON.parse(JSON.stringify(plantillaFila));
       fila.simulacion = i;
       fila.evento = evento.nombre;
       fila.reloj = evento.hora;
@@ -1007,19 +1007,128 @@ export const gestorSimulacion = (config) => {
           );
         }
       } else if (evento.tipo === "asuncia_servidor") {
-        break;
+        ///
       } else if (evento.tipo === "regreso_servidor") {
-        break;
+        ////
       }
 
       /// agregar fila al vector de estados
       filas.push(fila);
     }
   }
-  console.log(filas);
+
+  const filasVisibles = filas.slice(
+    config.simulacion.fila_desde - 1,
+    config.simulacion.fila_desde - 1 + config.simulacion.filas_a_mostrar
+  );
+
+  const ultimaFila = filas[filas.length - 1];
+  filasVisibles.push(ultimaFila);
+
+  const rtas = {
+    punto_1: {
+      envio_de_paquetes: {
+        porcentaje_de_ocupacion:
+          ultimaFila.envio_de_paquetes.estadisticos.porcentaje_de_ocupacion,
+        tiempo_promedio_de_espera:
+          ultimaFila.envio_de_paquetes.estadisticos.tiempo_promedio_de_espera,
+      },
+      reclamaciones_y_devoluciones: {
+        porcentaje_de_ocupacion:
+          ultimaFila.reclamaciones_y_devoluciones.estadisticos
+            .porcentaje_de_ocupacion,
+        tiempo_promedio_de_espera:
+          ultimaFila.reclamaciones_y_devoluciones.estadisticos
+            .tiempo_promedio_de_espera,
+      },
+      venta_de_sellos_y_sobres: {
+        porcentaje_de_ocupacion:
+          ultimaFila.venta_de_sellos_y_sobres.estadisticos
+            .porcentaje_de_ocupacion,
+        tiempo_promedio_de_espera:
+          ultimaFila.venta_de_sellos_y_sobres.estadisticos
+            .tiempo_promedio_de_espera,
+      },
+      atencion_empresarial: {
+        porcentaje_de_ocupacion:
+          ultimaFila.atencion_empresarial.estadisticos.porcentaje_de_ocupacion,
+        tiempo_promedio_de_espera:
+          ultimaFila.atencion_empresarial.estadisticos
+            .tiempo_promedio_de_espera,
+      },
+      postales_y_envios_especiales: {
+        porcentaje_de_ocupacion:
+          ultimaFila.postales_y_envios_especiales.estadisticos
+            .porcentaje_de_ocupacion,
+        tiempo_promedio_de_espera:
+          ultimaFila.postales_y_envios_especiales.estadisticos
+            .tiempo_promedio_de_espera,
+      },
+    },
+    punto_2: {
+      tiempo_promedio_de_espera_con_sin_asusencia:
+        ultimaFila.atencion_empresarial.estadisticos.tiempo_promedio_de_espera,
+      tiempo_promedio_de_espera_con_con_asusencia:
+        ultimaFila.atencion_empresarial_con_ausencia.estadisticos
+          .tiempo_promedio_de_espera,
+      incremento:
+        (ultimaFila.atencion_empresarial_con_ausencia.estadisticos /
+          ultimaFila.atencion_empresarial.estadisticos
+            .tiempo_promedio_de_espera -
+          1) *
+        100,
+    },
+    punto_3:
+      ultimaFila.venta_de_sellos_y_sobres_sin_1_empleado.estadisticos
+        .porcentaje_de_ocupacion,
+    punto_4: {
+      envio_de_paquetes: ultimaFila.envio_de_paquetes.cola.longitud_maxima,
+      reclamaciones_y_devoluciones:
+        ultimaFila.reclamaciones_y_devoluciones.cola.longitud_maxima,
+      venta_de_sellos_y_sobres:
+        ultimaFila.venta_de_sellos_y_sobres.cola.longitud_maxima,
+      atencion_empresarial:
+        ultimaFila.atencion_empresarial.cola.longitud_maxima,
+      postales_y_envios_especiales:
+        ultimaFila.postales_y_envios_especiales.cola.longitud_maxima,
+      atencion_empresarial_con_ausencia:
+        ultimaFila.atencion_empresarial_con_ausencia.cola.longitud_maxima,
+      venta_de_sellos_y_sobres_sin_1_empleado:
+        ultimaFila.venta_de_sellos_y_sobres_sin_1_empleado.cola.longitud_maxima,
+      atencion_empresarial_con_prioridad: {
+        cola_con_prioridad:
+          ultimaFila.atencion_empresarial_con_prioridad.cola_con_prioridad
+            .longitud_maxima,
+        cola_sin_prioridad:
+          ultimaFila.atencion_empresarial_con_prioridad.cola_sin_prioridad
+            .longitud_maxima,
+      },
+      post_envio_de_paquetes:
+        ultimaFila.post_envio_de_paquetes.cola.longitud_maxima,
+    },
+    punto_5: {
+      tiempo_promedio_de_espera_ccp:
+        ultimaFila.atencion_empresarial_con_prioridad.estadisticos
+          .tiempo_promedio_de_espera_ccp,
+      tiempo_promedio_de_espera_csp:
+        ultimaFila.atencion_empresarial_con_prioridad.estadisticos
+          .tiempo_promedio_de_espera_csp,
+    },
+    punto_6:
+      ultimaFila.envio_de_paquetes.estadisticos
+        .probabilidad_de_espera_mayor_a_15m,
+    punto_7: {
+      porcentaje_de_ocupacion:
+        ultimaFila.post_envio_de_paquetes.estadisticos.porcentaje_de_ocupacion,
+      tiempo_promedio_de_espera:
+        ultimaFila.post_envio_de_paquetes.estadisticos
+          .tiempo_promedio_de_espera,
+    },
+  };
   return {
     cabeceras: plantillaCabeceras,
-    filas,
+    filas: filasVisibles,
+    rtas,
   };
 };
 
@@ -1048,7 +1157,7 @@ const procesarLlegadaGenerica = (
     nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
       clientes_registrados[evento.servicio] + 1
     }`,
-    id_cliente: clientes_registrados[evento.servicio] + 1,
+    cliente_id: clientes_registrados[evento.servicio] + 1,
     servicio: evento.servicio,
     tipo: "llegada_de_cliente",
     hora: fila.reloj + llegada.value,
@@ -1090,9 +1199,9 @@ const procesarLlegadaGenerica = (
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
-        evento.id_cliente
+        evento.cliente_id
       }`,
-      id_cliente: evento.id_cliente,
+      cliente_id: evento.cliente_id,
       servicio: evento.servicio,
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
@@ -1164,7 +1273,7 @@ const procesarLlegadaConPrioridad = (
     nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
       clientes_registrados[evento.servicio] + 1
     }`,
-    id_cliente: clientes_registrados[evento.servicio] + 1,
+    cliente_id: clientes_registrados[evento.servicio] + 1,
     servicio: evento.servicio,
     tipo: "llegada_de_cliente",
     hora: fila.reloj + llegada.value,
@@ -1206,9 +1315,9 @@ const procesarLlegadaConPrioridad = (
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
-        evento.id_cliente
+        evento.cliente_id
       }_${prioridad === "alta" ? "cp" : "sp"}`,
-      id_cliente: evento.id_cliente,
+      cliente_id: evento.cliente_id,
       servicio: "atencion_empresarial_con_prioridad",
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
@@ -1309,9 +1418,9 @@ const procesarFinAtencionGenerica = (
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
-        clienteMasAntiguoEnCola.id_cliente
+        clienteMasAntiguoEnCola.cliente_id
       }`,
-      id_cliente: evento.id_cliente,
+      cliente_id: clienteMasAntiguoEnCola.cliente_id,
       servicio: evento.servicio,
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
@@ -1325,9 +1434,11 @@ const procesarFinAtencionGenerica = (
     fila[evento.servicio].servidores[evento.servidor] = "libre";
 
     /// verificar si se debe calcular el porcentaje de ocupacion (se recalcula únicamente cuando el servidor se libera)
+
     if ("porcentaje_de_ocupacion" in fila[evento.servicio].estadisticos) {
       /// actualizar los tiempos de ocupación acumulados
       const tiempoAcum = tiempos_de_ocupacion_acumulados[evento.servicio];
+
       fila[evento.servicio].servidores.tiempos_de_ocupacion_acumulados =
         tiempoAcum;
 
@@ -1414,9 +1525,9 @@ const procesarFinAtencionConPrioridad = (
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
-        evento.id_cliente
+        evento.cliente_id
       }_${cola === "cola_con_prioridad" ? "cp" : "sp"}`,
-      id_cliente: evento.id_cliente,
+      cliente_id: evento.cliente_id,
       servicio: "atencion_empresarial_con_prioridad",
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
@@ -1472,7 +1583,7 @@ const servicios = [
 ];
 
 const inicializarSimulacion = (config, eventos, clientes_registrados) => {
-  const fila = { ...plantillaFila };
+  const fila = JSON.parse(JSON.stringify(plantillaFila));
   fila.simulacion = 0;
   fila.evento = "Inicio";
   fila.reloj = 0;
@@ -1506,7 +1617,7 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
         nombre: `llegada_cliente_${abreviacion}_${
           clientes_registrados[servicio] + 1
         }`,
-        id_cliente: clientes_registrados[servicio] + 1,
+        cliente_id: clientes_registrados[servicio] + 1,
         servicio: servicio,
         tipo: "llegada_de_cliente",
         hora: llegada.value,
@@ -1518,7 +1629,6 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
       );
     }
   }
-
   return fila;
 };
 

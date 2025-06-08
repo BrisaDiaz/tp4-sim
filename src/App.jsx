@@ -7,12 +7,13 @@ function App() {
   const [cabeceras, setCabeceras] = useState(null);
   const [filas, setFilas] = useState(null);
 
-  const handleConfigSubmit = (config) => {
-    console.log("Configuración enviada:", config);
-    const resultados = gestorSimulacion(config);
+  const handleConfigSubmit = (data) => {
+    const resultados = gestorSimulacion(data);
+    console.log(resultados.rtas);
     setCabeceras(resultados.cabeceras);
     setFilas(resultados.filas);
   };
+
   return (
     <>
       <div className="App mb-4">

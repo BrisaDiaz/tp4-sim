@@ -1,4 +1,4 @@
-/* Estilos para el componente VectorEstado */
+/* VectorEstado.css */
 
 /* Contenedor para el scroll y la cabecera pegajosa */
 .table-responsive-wrapper {
@@ -12,22 +12,30 @@
 /* Estilos generales de la tabla */
 .compact-table {
   width: 100%;
-  /* Eliminar table-layout: fixed para permitir ajuste de ancho por contenido */
+  table-layout: auto; /* IMPORTANTE: Asegura que el ancho de la columna se ajuste al contenido */
   border-collapse: collapse; /* Elimina el espacio entre celdas para un look más compacto */
 }
 
 /* Estilos para las celdas de cabecera y datos */
 .compact-table th,
 .compact-table td {
-  padding: 0; /* Relleno muy reducido para la máxima compacidad */
-  font-size: 0.75rem; /* Tamaño de fuente aún más pequeño */
+  padding: 0; /* Relleno ajustado para compacidad, pero con espacio */
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
   overflow: hidden; /* Oculta el contenido que excede el ancho */
   text-overflow: ellipsis; /* Muestra puntos suspensivos para el contenido oculto */
   border: 1px solid #dcdcdc; /* Bordes más finos y suaves para todas las celdas */
   box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
-  height: 20px; /* Altura fija para las celdas para uniformidad */
-  line-height: 2.5em;
+  height: 2.5em; /* Altura fija para las celdas para uniformidad */
+}
+
+.compact-table th {
+  /* Ancho mínimo para las cabeceras, permitiendo que crezcan si el contenido es mayor */
+  min-width: 130px; /* Un valor inicial razonable, ajusta según sea necesario */
+}
+
+.compact-table td {
+  /* Ancho mínimo para las celdas de datos, permitiendo que crezcan */
+  min-width: 130px; /* Un valor inicial razonable, ajusta según sea necesario */
 }
 
 /* Cabecera pegajosa */
@@ -40,39 +48,37 @@
 }
 
 /* Estilos para diferenciar los niveles de las cabeceras */
-/* Primer nivel de cabecera (Simulacion, Evento, Reloj, y los nombres de los servicios principales) */
 .header-level-0 {
-  background-color: #e0e0e0; /* Gris ligeramente más oscuro para el nivel 0 */
+  background-color: #e0e0e0;
   font-weight: bold;
-  /* min-width: max-content; no siempre funciona bien con anidamiento, se ajusta por contenido */
   text-align: center;
   vertical-align: middle;
-  padding: 0; /* Ajustar padding */
+  padding: 0;
 }
 
-/* Segundo nivel de cabecera (subsecciones dentro de cada servicio) */
 .header-level-1 {
-  background-color: #fff; /* Gris más claro para el nivel 1 */
+  background-color: #fff;
   font-weight: bold;
-  /* min-width: max-content; */
   text-align: center;
   vertical-align: middle;
-  padding: 0; /* Ajustar padding */
+  padding: 0;
   border-bottom: none !important;
 }
 
-/* Tercer nivel de cabecera (columnas individuales como Rnd, Tiempo, Hora) */
 .header-level-2 {
-  background-color: #fff; /* Blanco roto para el nivel 2 */
+  background-color: #fff;
   font-weight: normal;
-  min-width: max-content; /* Ancho mínimo para estas columnas pequeñas */
-  width: auto; /* Permite que el ancho se ajuste */
+  width: 130px; /* Establece el ancho exacto */
+  min-width: 130px; /* Asegura que no sea más pequeño */
+  max-width: 130px; /* Asegura que no sea más grande */
   text-align: center;
   vertical-align: middle;
-  padding: 0 1em !important; /* Ajustar padding */
+  padding: 0 !important; /* Ajustar padding */
   border-bottom: none !important;
+  min-height: 75px !important;
+  height: 75px !important;
+  max-height: 75px !important;
 }
-
 /* Alineación de celdas */
 .text-center {
   text-align: center;
@@ -84,38 +90,41 @@
 
 /* Ajustes para las tablas anidadas dentro de las cabeceras */
 .nested-header-table {
-  width: 100%; /* Asegura que la tabla anidada ocupe el ancho disponible */
-  border-collapse: collapse; /* Para que los bordes de las celdas anidadas se vean bien */
-  margin-top: 0.1rem; /* Pequeño margen superior para separar visualmente */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.1rem;
 }
 
 .nested-header-table th {
-  border: 1px solid #dcdcdc; /* Bordes para las celdas de las cabeceras anidadas */
-  padding: 0; /* Ajustar padding para las celdas anidadas */
-  vertical-align: top; /* Alinea las cabeceras anidadas en la parte superior */
-  min-width: min-content; /* Ancho mínimo para las celdas de cabecera internas */
+  border: 1px solid #dcdcdc;
+  padding: 0 0; /* Ajustar padding */
+  vertical-align: top;
+  min-width: 130px; /* Ancho mínimo para las celdas de cabecera internas */
   width: auto; /* Permitir ajuste automático */
-  white-space: nowrap; /* Evita que el texto se divida */
-  text-overflow: ellipsis; /* Puntos suspensivos si el texto es muy largo */
-  overflow: hidden; /* Oculta el contenido desbordado */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal; /* Permite que el texto se rompa en múltiples líneas */
+  word-break: break-word; /* Ayuda a romper palabras largas si no caben */
 }
+
 .nested-header-table th:first-child {
   border-left: none !important;
 }
+
 .nested-header-table th:last-child {
   border-right: none !important;
 }
 
 /* Ancho de columnas para las cabeceras principales (Simulacion, Evento, Reloj) */
 .compact-table th[colspan="1"][rowspan="3"] {
-  min-width: 80px; /* Ancho fijo para las primeras columnas, más compactas */
+  min-width: 130px; /* Un poco más de ancho para estas columnas clave */
 }
 
 /* Estilos para las filas de datos */
 .compact-table tbody tr:nth-child(even) {
-  background-color: #f8f8f8; /* Color de fondo para filas pares, más suave */
+  background-color: #f8f8f8;
 }
 
 .compact-table tbody tr:hover {
-  background-color: #e8e8e8; /* Resaltado al pasar el ratón, más suave */
+  background-color: #e8e8e8;
 }

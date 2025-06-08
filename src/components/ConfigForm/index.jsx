@@ -15,14 +15,7 @@ export default function ConfigForm({ onSubmit }) {
       simulacion: plantillaCofig.simulacion,
       // Inicializa solo las tasas que tendrán inputs directos
       tasas: {
-        envio_de_paquetes: plantillaCofig.tasas.envio_de_paquetes,
-        reclamaciones_y_devoluciones:
-          plantillaCofig.tasas.reclamaciones_y_devoluciones,
-        venta_de_sellos_y_sobres: plantillaCofig.tasas.venta_de_sellos_y_sobres,
-        atencion_empresarial: plantillaCofig.tasas.atencion_empresarial,
-        postales_y_envios_especiales:
-          plantillaCofig.tasas.postales_y_envios_especiales,
-        post_envio_de_paquetes: plantillaCofig.tasas.post_envio_de_paquetes,
+        ...plantillaCofig.tasas,
       },
     },
   });
@@ -84,8 +77,8 @@ export default function ConfigForm({ onSubmit }) {
   }, [ventaSellosSobresTasaAtencion, ventaSellosSobresTasaLlegada, setValue]);
 
   // Manejador del submit del formulario
-  const handleFormSubmit = (data) => {
-    onSubmit(data);
+  const handleFormSubmit = (config) => {
+    onSubmit(config);
   };
 
   return (
