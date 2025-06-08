@@ -30,10 +30,9 @@ function App() {
 
   return (
     <Container className="App mb-4">
-      {" "}
       {/* Usa Container de React-Bootstrap para un mejor layout */}
       <h1 className="text-center my-4">Oficina de Correos Mocasa</h1>
-      <ConfigForm onSubmit={handleConfigSubmit} isDisabled={isLoading} />{" "}
+      <ConfigForm onSubmit={handleConfigSubmit} isDisabled={isLoading} />
       {/* Deshabilita el formulario mientras carga */}
       {/* Indicador de carga */}
       {isLoading && (

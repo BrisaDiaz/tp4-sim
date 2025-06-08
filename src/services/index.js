@@ -1542,7 +1542,7 @@ const procesarLlegadaGenerica = (
   if (serividoresLibres.length === 0) {
     colas[evento.servicio].push({
       cliente_id: evento.cliente_id,
-      hora_de_ingreso: evento.hora,
+      hora_de_ingreso: fila.reloj,
     });
 
     /// actualizamos la longitud de la cola
@@ -1665,7 +1665,7 @@ const procesarLlegadaConPrioridad = (
   if (serividoresLibres.length === 0) {
     colas[evento.servicio][cola].push({
       cliente_id: evento.cliente_id,
-      hora_de_ingreso: evento.hora,
+      hora_de_ingreso: fila.reloj,
     });
 
     /// actualizamos la longitud de la cola
@@ -1731,17 +1731,18 @@ const procesarFinAtencionGenerica = (
   config,
   eventos
 ) => {
+  const clienteMasAntiguoEnCola =
+    colas[evento.servicio].length !== 0
+      ? encontrarClienteMasAntiguo(colas[evento.servicio], fila.reloj)
+      : null;
+
   /// comprovar si hay clientes en la cola
-  if (colas[evento.servicio].length !== 0) {
+  if (clienteMasAntiguoEnCola) {
     /// el servidor se matiene ocupado
     fila[evento.servicio].servidores[evento.servidor] = "ocupado";
 
     /// incrementar los clientes atendidos
     fila[evento.servicio].estadisticos.clientes_atendidos += 1;
-
-    const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
-      colas[evento.servicio]
-    );
 
     /// actualizo la logitud de la cola
     fila[evento.servicio].cola.clientes_en_cola -= 1;
@@ -1847,17 +1848,19 @@ const procesarFinAtencionConPrioridad = (
   const longitudCSP =
     colas["atencion_empresarial_con_prioridad"].cola_sin_prioridad.length;
 
-  if (longitudCCP !== 0 || longitudCSP !== 0) {
+  let cola = "cola_con_prioridad";
+
+  /// solo se atendera a los clientes de la cola sin pioridad si la cola con prioridad esta vacia
+  if (longitudCCP === 0) {
+    cola = "cola_sin_prioridad";
+  }
+  const clienteMasAntiguoEnCola =
+    longitudCCP !== 0 || longitudCSP !== 0
+      ? encontrarClienteMasAntiguo(colas[evento.servicio][cola], fila.reloj)
+      : null;
+
+  if (clienteMasAntiguoEnCola) {
     let cola = "cola_con_prioridad";
-
-    /// solo se atendera a los clientes de la cola sin pioridad si la cola con prioridad esta vacia
-    if (longitudCCP === 0) {
-      cola = "cola_sin_prioridad";
-    }
-
-    const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
-      colas[evento.servicio][cola]
-    );
 
     /// actualizo la logitud de la cola
     fila[evento.servicio][cola].clientes_en_cola -= 1;
@@ -2038,11 +2041,13 @@ const encontrarProxEvento = (
   return proximoEvento;
 };
 
-const encontrarClienteMasAntiguo = (cola) => {
+const encontrarClienteMasAntiguo = (cola, reloj) => {
   cola.sort((a, b) => a.hora_de_ingreso - b.hora_de_ingreso);
 
   if (cola.length > 0) {
-    const clienteMasAntiguo = cola[0];
+    const clienteMasAntiguo = cola.find(
+      (cliente) => cliente.hora_de_ingreso <= reloj
+    );
 
     cola.splice(0, 1);
 

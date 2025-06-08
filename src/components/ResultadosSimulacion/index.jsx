@@ -43,7 +43,7 @@ const ResultadosSimulacion = ({ resultados }) => {
             <thead className="table-dark">
               <tr>
                 <th>Servicio</th>
-                <th>Tiempo De Espera Promedio (hh:mm:ss)</th>{" "}
+                <th>Tiempo De Espera Promedio (hh:mm:ss)</th>
                 {/* Etiqueta de la columna actualizada */}
                 <th>Porcentaje De Ocupación (%)</th>
               </tr>
@@ -56,7 +56,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                       .replace(/_/g, " ")
                       .replace(/\b\w/g, (c) => c.toUpperCase())}
                   </td>
-                  <td>{formatHoursToHHMMSS(data.tiempo_promedio_de_espera)}</td>{" "}
+                  <td>{formatHoursToHHMMSS(data.tiempo_promedio_de_espera)}</td>
                   {/* Usa la función de formato */}
                   <td>{data.porcentaje_de_ocupacion.toFixed(2)}</td>
                 </tr>
@@ -92,7 +92,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                     resultados.punto_2
                       .tiempo_promedio_de_espera_con_sin_asusencia
                   )}
-                </td>{" "}
+                </td>
                 {/* Usa la función de formato */}
               </tr>
               <tr>
@@ -102,7 +102,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                     resultados.punto_2
                       .tiempo_promedio_de_espera_con_con_asusencia
                   )}
-                </td>{" "}
+                </td>
                 {/* Usa la función de formato */}
               </tr>
               <tr>
@@ -166,7 +166,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                   Object.entries(value).map(([subQueueName, subValue]) => (
                     <tr key={`${queueName}-${subQueueName}`}>
                       <td>
-                        {queueName.replace(/_/g, " ")} -{" "}
+                        {queueName.replace(/_/g, " ")} -
                         {subQueueName.replace(/_/g, " ")}
                       </td>
                       <td>{subValue}</td>
@@ -199,7 +199,7 @@ const ResultadosSimulacion = ({ resultados }) => {
             <thead className="table-dark">
               <tr>
                 <th>Tipo Cliente</th>
-                <th>Tiempo De Espera Promedio (hh:mm:ss)</th>{" "}
+                <th>Tiempo De Espera Promedio (hh:mm:ss)</th>
                 {/* Etiqueta de la columna actualizada */}
               </tr>
             </thead>
@@ -210,7 +210,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                   {formatHoursToHHMMSS(
                     resultados.punto_5.tiempo_promedio_de_espera_ccp
                   )}
-                </td>{" "}
+                </td>
                 {/* Usa la función de formato */}
               </tr>
               <tr>
@@ -219,7 +219,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                   {formatHoursToHHMMSS(
                     resultados.punto_5.tiempo_promedio_de_espera_csp
                   )}
-                </td>{" "}
+                </td>
                 {/* Usa la función de formato */}
               </tr>
             </tbody>
@@ -286,7 +286,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                   {formatHoursToHHMMSS(
                     resultados.punto_7.tiempo_promedio_de_espera
                   )}
-                </td>{" "}
+                </td>
                 {/* Usa la función de formato */}
               </tr>
             </tbody>
