@@ -252,7 +252,22 @@ const plantillaFila = {
     },
   },
 };
+const setNullsFila = (fila) => {
+  servicios.forEach((servicio) => {
+    if ("llegada_de_cliente" in fila[servicio]) {
+      fila[servicio].llegada_de_cliente =
+        plantillaFila.envio_de_paquetes.llegada_de_cliente;
+    }
+    fila[servicio].fin_de_atencion =
+      plantillaFila.envio_de_paquetes.fin_de_atencion;
+  });
+  fila.atencion_empresarial_con_prioridad.prioridad =
+    plantillaFila.atencion_empresarial_con_prioridad.prioridad;
+  fila.post_envio_de_paquetes.solicitud_del_servicio =
+    plantillaFila.post_envio_de_paquetes.solicitud_del_servicio;
 
+  return fila;
+};
 export const plantillaCabeceras = [
   { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" }, // <--- AGREGADO 'key'
   { name: "Evento", colspan: 1, rowspan: 3, key: "evento" }, // <--- AGREGADO 'key'
@@ -1699,6 +1714,9 @@ const procesarFinAtencionGenerica = (
 ) => {
   /// comprovar si hay clientes en la cola
   if (colas[evento.servicio].length !== 0) {
+    /// el servidor se matiene ocupado
+    fila[evento.servicio].servidores[evento.servidor] = "ocupado";
+
     /// incrementar los clientes atendidos
     fila[evento.servicio].estadisticos.clientes_atendidos += 1;
 
@@ -1791,6 +1809,7 @@ const procesarFinAtencionGenerica = (
 
       const porcDeOcupacion =
         (tiempoAcum / (cantServidores * tiempoTotal)) * 100;
+
       fila[evento.servicio].estadisticos.porcentaje_de_ocupacion =
         porcDeOcupacion;
     }
@@ -1900,46 +1919,15 @@ const registrarEventoRegreso = (reloj, eventos) => {
   });
 };
 
-const mergeFilas = (fila, filaPrevia, evento) => {
-  // Copiar servidores y estadísticos
-  fila[evento.servicio].servidores = JSON.parse(
-    JSON.stringify(filaPrevia[evento.servicio].servidores)
-  );
-  fila[evento.servicio].estadisticos = JSON.parse(
-    JSON.stringify(filaPrevia[evento.servicio].estadisticos)
-  );
-
-  // Manejar casos especiales
-  if (evento.servicio === "atencion_empresarial_con_prioridad") {
-    fila[evento.servicio].prioridad = JSON.parse(
-      JSON.stringify(filaPrevia[evento.servicio].prioridad)
-    );
-    fila[evento.servicio].cola_con_prioridad = JSON.parse(
-      JSON.stringify(filaPrevia[evento.servicio].cola_con_prioridad)
-    );
-    fila[evento.servicio].cola_sin_prioridad = JSON.parse(
-      JSON.stringify(filaPrevia[evento.servicio].cola_sin_prioridad)
-    );
-  } else {
-    fila[evento.servicio].cola = JSON.parse(
-      JSON.stringify(filaPrevia[evento.servicio].cola)
-    );
-  }
-
-  // Caso especial para Post Envío de Paquetes
-  if (evento.servicio === "post_envio_de_paquetes") {
-    fila[evento.servicio].servidores = JSON.parse(
-      JSON.stringify(filaPrevia[evento.servicio].servidores)
-    );
-  }
-};
-
-const servicios = [
+const serviciosBase = [
   "envio_de_paquetes",
   "reclamaciones_y_devoluciones",
   "venta_de_sellos_y_sobres",
   "atencion_empresarial",
   "postales_y_envios_especiales",
+];
+const servicios = [
+  ...serviciosBase,
   "atencion_empresarial_con_ausencia",
   "venta_de_sellos_y_sobres_sin_1_empleado",
   "atencion_empresarial_con_prioridad",
@@ -2105,8 +2093,11 @@ export const gestorSimulacion = (config) => {
     post_envio_de_paquetes: 0,
   };
 
+  let filaPrevia = null;
+
   for (let i = 0; i < config.simulacion.cantidad_de_filas; i++) {
     const esIncio = i === 0;
+    const esFIn = i === config.simulacion.cantidad_de_filas - 1;
 
     if (esIncio) {
       // Inicializar la simulación con el primer evento de llegada de cliente
@@ -2119,15 +2110,13 @@ export const gestorSimulacion = (config) => {
       const evento = encontrarProxEvento(eventos);
       if (!evento) throw new Error("No se han encontrado eventos");
 
-      const filaPrevia = filas[i - 1];
-
-      const fila = JSON.parse(JSON.stringify(plantillaFila));
+      let fila = JSON.parse(JSON.stringify(plantillaFila));
+      if (filaPrevia) {
+        fila = setNullsFila(filaPrevia);
+      }
       fila.simulacion = i;
       fila.evento = evento.nombre;
       fila.reloj = evento.hora;
-
-      /// hacer un merge con los valores de la fila previa
-      mergeFilas(fila, filaPrevia, evento);
 
       if (evento.tipo === "llegada_de_cliente") {
         if (evento.servicio === "atencion_empresarial_con_prioridad") {
@@ -2237,8 +2226,31 @@ export const gestorSimulacion = (config) => {
         procesarFinAtencionGenerica(fila, evento, colas, config, eventos); /// se va a verificar si hay clientes en la cola
       }
 
+      if (esFIn) {
+        /// hacer un barrido final, iterar sobre los servidores de todos los servicio, si estan ocupados, setear su tiempo de ocupacion acumulado y calcular su porcentaje de ocupacion
+        servicios.forEach((servicio) => {
+          if ("tiempos_de_ocupacion_acumulados" in fila[servicio].servidores) {
+            const tiempoAcum = tiempos_de_ocupacion_acumulados[servicio];
+            fila[servicio].servidores.tiempos_de_ocupacion_acumulados =
+              tiempoAcum;
+
+            // nos aseguramos de que el reloj no sea cero para evitar división por cero
+            const tiempoTotal = fila.reloj > 0 ? fila.reloj : 1;
+            const cantServidores =
+              config.tasas[servicio].cantidad_de_servidores;
+
+            const porcDeOcupacion =
+              (tiempoAcum / (cantServidores * tiempoTotal)) * 100;
+
+            fila[servicio].estadisticos.porcentaje_de_ocupacion =
+              porcDeOcupacion;
+          }
+        });
+      }
+
       /// agregar fila al vector de estados
-      filas.push(fila);
+      filas.push(JSON.parse(JSON.stringify(fila)));
+      filaPrevia = fila;
     }
   }
 
