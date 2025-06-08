@@ -1015,7 +1015,7 @@ export const gestorSimulacion = (config) => {
           /// liberar el servidor
           fila[evento.servicio].servidores[evento.servidor] = "libre";
 
-          /// verificar si se deben calcular los tiempos de ocupacion
+          /// verificar si se debe calcular el porcentaje de ocupacion
           if ("porcentaje_de_ocupacion" in fila[evento.servicio].estadisticos) {
             /// actualizar los tiempos de ocupación acumulados
             const tiempoAcum = tiempos_de_ocupacion_acumulados[evento.servicio];
@@ -1031,6 +1031,14 @@ export const gestorSimulacion = (config) => {
 
             fila[evento.servicio].estadisticos.porcentaje_de_ocupacion =
               porcDeOcupacion;
+          }
+
+          /// verificar si se debe calcular los tiempos promedios de atencion
+          if (
+            "tiempo_promedio_de_espera" in fila[evento.servicio].estadisticos
+          ) {
+            const tiempoEsperaAcum =
+              tiempos_de_espera_acumulados[evento.servicio];
           }
         }
       } else if (evento.tipo === "asuncia_servidor") {
@@ -1321,11 +1329,17 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
 };
 
 const encontrarProxEvento = (eventos) => {
-  // Ordenar los eventos por hora (menos a mayor)
-  const eventosOrdenarEventos = eventos.sort((a, b) => a.hora - b.hora);
-  return eventosOrdenarEventos.length > 0
-    ? eventosOrdenarEventos[0] // Retorna el primer evento (el de menor hora)
-    : null; // Si no hay eventos, retorna null
+  eventos.sort((a, b) => a.hora - b.hora);
+
+  if (eventos.length > 0) {
+    const proximoEvento = eventos[0];
+
+    eventos.splice(0, 1);
+
+    return proximoEvento;
+  } else {
+    return null;
+  }
 };
 
 const encontrarServidoresLibres = (nombreServicio, filaPrevia) => {
