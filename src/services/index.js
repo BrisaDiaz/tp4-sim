@@ -2238,6 +2238,10 @@ export const gestorSimulacion = (config) => {
           "atencion_empresarial_con_ausencia"
         ].servidores.servidor_periodico = "libre";
 
+        /// registro el proximo evento de ausencia
+        registrarEventoAusencia(evento.reloj, eventos);
+
+        /// se va a verificar si hay clientes en la cola para atender
         procesarFinAtencionGenerica(
           fila,
           evento,
@@ -2246,7 +2250,6 @@ export const gestorSimulacion = (config) => {
           config,
           eventos
         );
-        /// se va a verificar si hay clientes en la cola
       }
 
       if (esFin) {
