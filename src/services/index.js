@@ -269,6 +269,8 @@ const setNullsFila = (fila) => {
 
   fila.post_envio_de_paquetes.solicitud_del_servicio.rnd = null;
   fila.post_envio_de_paquetes.solicitud_del_servicio.solicita = null;
+
+  return fila;
 };
 export const plantillaCabeceras = [
   { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" }, // <--- AGREGADO 'key'
@@ -2111,7 +2113,7 @@ export const gestorSimulacion = (config) => {
       if (!evento) throw new Error("No se han encontrado eventos");
 
       let fila = JSON.parse(JSON.stringify(filaPrevia));
-      setNullsFila(fila);
+      fila = setNullsFila(fila);
 
       fila.simulacion = i;
       fila.evento = evento.nombre;
