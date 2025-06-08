@@ -255,18 +255,20 @@ const plantillaFila = {
 const setNullsFila = (fila) => {
   servicios.forEach((servicio) => {
     if ("llegada_de_cliente" in fila[servicio]) {
-      fila[servicio].llegada_de_cliente =
-        plantillaFila.envio_de_paquetes.llegada_de_cliente;
+      fila[servicio].llegada_de_cliente.rnd = null;
+      fila[servicio].llegada_de_cliente.tiempo_entre_llegada = null;
+      fila[servicio].llegada_de_cliente.hora_de_llegada = null;
     }
-    fila[servicio].fin_de_atencion =
-      plantillaFila.envio_de_paquetes.fin_de_atencion;
+    fila[servicio].fin_de_atencion.rnd = null;
+    fila[servicio].fin_de_atencion.tiempo_entre_llegada = null;
+    fila[servicio].fin_de_atencion.hora_de_llegada = null;
   });
-  fila.atencion_empresarial_con_prioridad.prioridad =
-    plantillaFila.atencion_empresarial_con_prioridad.prioridad;
-  fila.post_envio_de_paquetes.solicitud_del_servicio =
-    plantillaFila.post_envio_de_paquetes.solicitud_del_servicio;
 
-  return fila;
+  fila.atencion_empresarial_con_prioridad.prioridad.rnd = null;
+  fila.atencion_empresarial_con_prioridad.prioridad.tipo_prioridad = null;
+
+  fila.post_envio_de_paquetes.solicitud_del_servicio.rnd = null;
+  fila.post_envio_de_paquetes.solicitud_del_servicio.solicita = null;
 };
 export const plantillaCabeceras = [
   { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" }, // <--- AGREGADO 'key'
@@ -1766,8 +1768,6 @@ const procesarFinAtencionGenerica = (
       fila[evento.servicio].estadisticos.probabilidad_de_espera_mayor_a_15m =
         prob;
     }
-
-    /// generar el fin de atencion
     const finAtencion = generadorExponencial(
       config.tasas[evento.servicio].tasa_de_atencion
     );
@@ -2103,20 +2103,24 @@ export const gestorSimulacion = (config) => {
       // Inicializar la simulación con el primer evento de llegada de cliente
       const fila = inicializarSimulacion(config, eventos, clientes_registrados);
       filas.push(fila);
-
+      filaPrevia = fila;
       /// generar el evento de ausencia
       registrarEventoAusencia(0, eventos);
     } else {
       const evento = encontrarProxEvento(eventos);
       if (!evento) throw new Error("No se han encontrado eventos");
 
-      let fila = JSON.parse(JSON.stringify(plantillaFila));
-      if (filaPrevia) {
-        fila = setNullsFila(filaPrevia);
-      }
+      let fila = JSON.parse(JSON.stringify(filaPrevia));
+      setNullsFila(fila);
+
       fila.simulacion = i;
       fila.evento = evento.nombre;
       fila.reloj = evento.hora;
+
+      fila.atencion_empresarial_con_prioridad.prioridad =
+        plantillaFila.atencion_empresarial_con_prioridad.prioridad;
+      fila.post_envio_de_paquetes.solicitud_del_servicio =
+        plantillaFila.post_envio_de_paquetes.solicitud_del_servicio;
 
       if (evento.tipo === "llegada_de_cliente") {
         if (evento.servicio === "atencion_empresarial_con_prioridad") {
@@ -2223,7 +2227,15 @@ export const gestorSimulacion = (config) => {
           "atencion_empresarial_con_ausencia"
         ].servidores.servidor_periodico = "libre";
 
-        procesarFinAtencionGenerica(fila, evento, colas, config, eventos); /// se va a verificar si hay clientes en la cola
+        procesarFinAtencionGenerica(
+          fila,
+          evento,
+          colas,
+          tiempos_de_ocupacion_acumulados,
+          config,
+          eventos
+        );
+        /// se va a verificar si hay clientes en la cola
       }
 
       if (esFIn) {
