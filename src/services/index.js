@@ -237,8 +237,8 @@ const plantillaFila = {
       tiempos_de_espera_acumulados: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      tiempos_de_ocupacion_acumulados: "libre",
+      // Corrected initial value from "libre" to 0
+      tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
       rnd: null,
@@ -252,6 +252,7 @@ const plantillaFila = {
     },
   },
 };
+
 const abreviaciones = {
   envio_de_paquetes: "EP",
   reclamaciones_y_devoluciones: "RyD",
@@ -334,7 +335,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Reclamaciones y Devoluciones",
-    colspan: 14, // 3 (llegada) + 3 (cola) + 3 (servidores) + 3 (fin atencion) + 2 (estadisticos) = 14 (cambiado de 15, ya que estadisticos tiene 3 y no 2)
+    colspan: 15, // Corrected from 14 to 15 (3+3+3+3+3)
     rowspan: 1,
     subheaders: [
       {
@@ -379,7 +380,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Estadisticos",
-        colspan: 2,
+        colspan: 3, // Corrected from 2 to 3
         rowspan: 1,
         subheaders: [
           { name: "Clientes Atendidos", colspan: 1, rowspan: 1 },
@@ -748,7 +749,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Post Envio de Paquetes",
-    colspan: 13, // 2 (solicitud) + 3 (cola) + 2 (servidores) + 3 (fin atencion) + 3 (estadisticos) = 13
+    colspan: 13, // This will be dynamically updated by ajustarServidores
     rowspan: 1,
     subheaders: [
       {
@@ -772,12 +773,9 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2,
+        colspan: 2, // This will be dynamically updated by ajustarServidores
         rowspan: 1,
-        subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1 },
-          { name: "Tiempos de Ocupacion Acumulados", colspan: 1, rowspan: 1 },
-        ],
+        subheaders: [], // Subheaders will be dynamically added by ajustarServidores
       },
       {
         name: "Fin de Atencion",
@@ -878,23 +876,37 @@ const ajustarServidores = (config) => {
   }
 
   // editar plantillaCabeceras para incluir la cantidad de servidores e incrementar el colspan
-  plantillaCabeceras[11].subheaders[2].subheaders = [];
+  const postEnvioDePaquetesHeader = plantillaCabeceras[11];
+  const servidoresSubheader = postEnvioDePaquetesHeader.subheaders[2];
+
+  // Clear existing server subheaders before adding new ones
+  servidoresSubheader.subheaders = [];
+
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
-    plantillaCabeceras[11].subheaders[2].subheaders.push({
+    servidoresSubheader.subheaders.push({
       name: `Servidor ${i}`,
       colspan: 1,
       rowspan: 1,
     });
-
-    // incrementar el colspan
-    plantillaCabeceras[11].colspan += 1;
-    plantillaCabeceras[11].subheaders[2].colspan += 1;
   }
-  plantillaCabeceras[11].subheaders[2].subheaders.push({
+
+  servidoresSubheader.subheaders.push({
     name: "Tiempos de Ocupacion Acumulados",
     colspan: 1,
     rowspan: 1,
   });
+
+  // Correction for colspan calculation:
+  // Set the colspan for the "Servidores" subheader
+  servidoresSubheader.colspan = cant_servidores_envio_de_paquetes + 1;
+
+  // Recalculate the total colspan for "Post Envio de Paquetes"
+  postEnvioDePaquetesHeader.colspan =
+    postEnvioDePaquetesHeader.subheaders[0].colspan + // Solicitud
+    postEnvioDePaquetesHeader.subheaders[1].colspan + // Cola
+    servidoresSubheader.colspan + // Servidores (newly calculated)
+    postEnvioDePaquetesHeader.subheaders[3].colspan + // Fin de Atencion
+    postEnvioDePaquetesHeader.subheaders[4].colspan; // Estadisticos
 };
 
 const generadorExponencial = (lambda) => {
@@ -955,7 +967,7 @@ const procesarLlegadaGenerica = (
 
     /// actualiza la longitud máxima registrada
     if (longituActual > longitudMax) {
-      fila[evento.servicio].cola.longitudMax = longituActual;
+      fila[evento.servicio].cola.longitud_maxima = longituActual;
     }
   } else {
     /// ocupar un servidor
@@ -1066,13 +1078,10 @@ const procesarLlegadaConPrioridad = (
     });
 
     /// actualizamos la longitud de la cola
-    const longitudMax = fila[evento.servicio][cola].longitud_maxima;
     fila[evento.servicio][cola].clientes_en_cola += 1;
     const longituActual = fila[evento.servicio][cola].clientes_en_cola;
-
-    /// actualiza la longitud máxima registrada
-    if (longituActual > longitudMax) {
-      fila[evento.servicio][cola].longitudMax = longituActual;
+    if (longituActual > fila[evento.servicio][cola].longitud_maxima) {
+      fila[evento.servicio][cola].longitud_maxima = longituActual;
     }
   } else {
     /// ocupar un servidor
@@ -1135,7 +1144,7 @@ const procesarFinAtencionGenerica = (
     /// incrementar los clientes atendidos
     fila[evento.servicio].estadisticos.clientes_atendidos += 1;
 
-    const clienteMasAntiguoEnCola = encontararClienteMasAntiguo(
+    const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
       colas[evento.servicio]
     );
 
@@ -1236,7 +1245,8 @@ const procesarFinAtencionConPrioridad = (
   evento,
   colas,
   config,
-  eventos
+  eventos,
+  tiempos_de_ocupacion_acumulados
 ) => {
   /// comprovar si hay clientes en la colaSW
   const longitudCCP =
@@ -1252,10 +1262,7 @@ const procesarFinAtencionConPrioridad = (
       cola = "cola_sin_prioridad";
     }
 
-    /// incrementar los clientes atendidos
-    fila[evento.servicio].estadisticos.clientes_atendidos += 1;
-
-    const clienteMasAntiguoEnCola = encontararClienteMasAntiguo(
+    const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
       colas[evento.servicio][cola]
     );
 
@@ -1302,14 +1309,16 @@ const procesarFinAtencionConPrioridad = (
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
-        evento.cliente_id
+        clienteMasAntiguoEnCola.cliente_id
       }_${cola === "cola_con_prioridad" ? "cp" : "sp"}`,
-      cliente_id: evento.cliente_id,
+      cliente_id: clienteMasAntiguoEnCola.cliente_id,
       servicio: "atencion_empresarial_con_prioridad",
       tipo: "fin_de_atencion",
       hora: fila.reloj + finAtencion.value,
       servidor: evento.servidor, /// para saber que servidor se debe liberar
     });
+
+    tiempos_de_ocupacion_acumulados[evento.servicio] += finAtencion.value;
   } else {
     /// liberar el servidor
     fila[evento.servicio].servidores[evento.servidor] = "libre";
@@ -1338,14 +1347,18 @@ const mergeFilas = (fila, filaPrevia, evento) => {
   fila[evento.servicio].servidores = filaPrevia[evento.servicio].servidores;
   fila[evento.servicio].estadisticos = filaPrevia[evento.servicio].estadisticos;
 
-  if (evento.servicio === "") {
-    /// matener los valores de tiempo de tiempos de espera acumulado
-    ["cola_con_prioridad", "cola_sin_prioridad"].forEach(
-      (cola) =>
-        (fila[evento.servicio][cola] = filaPrevia[evento.servicio][cola])
+  if (evento.servicio === "atencion_empresarial_con_prioridad") {
+    // Mantener los valores de la cola de la fila previa
+    fila[evento.servicio].cola_con_prioridad = JSON.parse(
+      JSON.stringify(filaPrevia[evento.servicio].cola_con_prioridad)
+    );
+    fila[evento.servicio].cola_sin_prioridad = JSON.parse(
+      JSON.stringify(filaPrevia[evento.servicio].cola_sin_prioridad)
     );
   } else {
-    fila[evento.servicio].cola = filaPrevia[evento.servicio].cola;
+    fila[evento.servicio].cola = JSON.parse(
+      JSON.stringify(filaPrevia[evento.servicio].cola)
+    );
   }
 };
 
@@ -1449,7 +1462,7 @@ const encontrarProxEvento = (
   return proximoEvento;
 };
 
-const encontararClienteMasAntiguo = (cola) => {
+const encontrarClienteMasAntiguo = (cola) => {
   cola.sort((a, b) => a.hora_de_ingreso - b.hora_de_ingreso);
 
   if (cola.length > 0) {
@@ -1567,7 +1580,14 @@ export const gestorSimulacion = (config) => {
         }
       } else if (evento?.tipo === "fin_de_atencion") {
         if (evento.servicio === "atencion_empresarial_con_prioridad") {
-          procesarFinAtencionConPrioridad(fila, evento, colas, config, eventos);
+          procesarFinAtencionConPrioridad(
+            fila,
+            evento,
+            colas,
+            config,
+            eventos,
+            tiempos_de_ocupacion_acumulados
+          );
         } else {
           procesarFinAtencionGenerica(
             fila,
@@ -1709,7 +1729,8 @@ export const gestorSimulacion = (config) => {
         ultimaFila.atencion_empresarial_con_ausencia.estadisticos
           .tiempo_promedio_de_espera,
       incremento:
-        (ultimaFila.atencion_empresarial_con_ausencia.estadisticos /
+        (ultimaFila.atencion_empresarial_con_ausencia.estadisticos
+          .tiempo_promedio_de_espera /
           ultimaFila.atencion_empresarial.estadisticos
             .tiempo_promedio_de_espera -
           1) *
