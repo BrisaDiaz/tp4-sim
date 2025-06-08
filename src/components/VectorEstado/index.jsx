@@ -3,7 +3,7 @@ import "./VectorEstado.css"; // Importa el archivo CSS para los estilos personal
 
 export default function VectorEstado({ cabeceras, filas }) {
   // Colores visualmente estéticos para diferenciar los servicios de primer nivel
-  const serviceColors = ["#f1fafa", "#dcf1f0"];
+  const serviceColors = ["#f2f2f2", "#ffff"];
 
   // Función auxiliar para renderizar las cabeceras (sin cambios, ya es dinámica)
   const renderHeaders = (
@@ -90,7 +90,8 @@ export default function VectorEstado({ cabeceras, filas }) {
 
   return (
     <div className="container mt-4">
-      <h4 className="mb-3">Vector de Estados</h4>
+      <h2 className="mb-4 text-center">Vector de Estados</h2>
+
       <div className="table-responsive-wrapper">
         <table className="table table-bordered table-striped compact-table">
           <thead className="sticky-header">

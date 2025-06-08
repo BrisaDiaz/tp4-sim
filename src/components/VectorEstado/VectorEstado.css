@@ -97,7 +97,7 @@
 
 .nested-header-table th {
   border: 1px solid #dcdcdc;
-  padding: 0 0; /* Ajustar padding */
+  padding: 0.5em 0; /* Ajustar padding */
   vertical-align: top;
   min-width: 130px; /* Ancho mínimo para las celdas de cabecera internas */
   width: auto; /* Permitir ajuste automático */

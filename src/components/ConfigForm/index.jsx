@@ -211,7 +211,7 @@ export default function ConfigForm({ onSubmit }) {
 
         {/* Servicio: Reclamaciones y Devoluciones */}
         <div className="card mb-3">
-          <div className="card-header bg-secondary text-white">
+          <div className="card-header bg-primary text-white">
             Reclamaciones y Devoluciones
           </div>
           <div className="card-body row g-3">
@@ -266,7 +266,7 @@ export default function ConfigForm({ onSubmit }) {
 
         {/* Servicio: Venta de Sellos y Sobres */}
         <div className="card mb-3">
-          <div className="card-header bg-success text-white">
+          <div className="card-header bg-primary text-white">
             Venta de Sellos y Sobres
           </div>
           <div className="card-body row g-3">
@@ -321,7 +321,7 @@ export default function ConfigForm({ onSubmit }) {
 
         {/* Servicio: Atencion Empresarial */}
         <div className="card mb-3">
-          <div className="card-header bg-warning text-dark">
+          <div className="card-header bg-primary text-white">
             Atencion Empresarial
           </div>
           <div className="card-body row g-3">
@@ -376,7 +376,7 @@ export default function ConfigForm({ onSubmit }) {
 
         {/* Servicio: Postales y Envios Especiales */}
         <div className="card mb-3">
-          <div className="card-header bg-info text-white">
+          <div className="card-header bg-primary text-white">
             Postales y Envios Especiales
           </div>
           <div className="card-body row g-3">
@@ -431,7 +431,7 @@ export default function ConfigForm({ onSubmit }) {
 
         {/* Servicio: Post Envio de Paquetes (Este tiene su propia configuración de servidores) */}
         <div className="card mb-3">
-          <div className="card-header bg-dark text-white">
+          <div className="card-header bg-primary text-white">
             Post Envio de Paquetes
           </div>
           <div className="card-body row g-3">
