@@ -10,6 +10,7 @@ function App() {
   const handleConfigSubmit = (data) => {
     const resultados = gestorSimulacion(data);
     console.log(resultados.rtas);
+    console.log(resultados.filas);
     setCabeceras(resultados.cabeceras);
     setFilas(resultados.filas);
   };

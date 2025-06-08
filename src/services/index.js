@@ -866,10 +866,12 @@ export const plantillaCofig = {
 const ajustarServidores = (config) => {
   const cant_servidores_envio_de_paquetes =
     config.tasas["post_envio_de_paquetes"].cantidad_de_servidores || 1;
-  // editar plantillaFila para incluir la cantidad de servidores
+
+  // Inicializar correctamente el objeto servidores
   plantillaFila["post_envio_de_paquetes"].servidores = {
     tiempos_de_ocupacion_acumulados: 0,
   };
+
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
     plantillaFila["post_envio_de_paquetes"].servidores[`servidor_${i}`] =
       "libre";
@@ -1048,6 +1050,10 @@ const procesarLlegadaConPrioridad = (
   const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
   const cola = rndPrioridad < 0.2 ? "cola_con_prioridad" : "cola_sin_prioridad";
 
+  /// actualizo los valores de prioridad
+  fila[evento.servicio].prioridad.rnd = rndPrioridad;
+  fila[evento.servicio].prioridad.tipo_prioridad = prioridad;
+
   /// generar la proxima llegada
   const llegada = generadorExponencial(
     config.tasas[evento.servicio].tasa_de_llegada
@@ -1223,17 +1229,16 @@ const procesarFinAtencionGenerica = (
     if ("porcentaje_de_ocupacion" in fila[evento.servicio].estadisticos) {
       /// actualizar los tiempos de ocupación acumulados
       const tiempoAcum = tiempos_de_ocupacion_acumulados[evento.servicio];
-
       fila[evento.servicio].servidores.tiempos_de_ocupacion_acumulados =
         tiempoAcum;
 
-      /// actualizar el tiempo de ocupación promedio
+      // nos aseguramos de que el reloj no sea cero para evitar división por cero
+      const tiempoTotal = fila.reloj > 0 ? fila.reloj : 1;
       const cantServidores =
         config.tasas[evento.servicio].cantidad_de_servidores;
 
       const porcDeOcupacion =
-        (tiempoAcum / (cantServidores * fila.reloj)) * 100;
-
+        (tiempoAcum / (cantServidores * tiempoTotal)) * 100;
       fila[evento.servicio].estadisticos.porcentaje_de_ocupacion =
         porcDeOcupacion;
     }
@@ -1348,7 +1353,9 @@ const mergeFilas = (fila, filaPrevia, evento) => {
   fila[evento.servicio].estadisticos = filaPrevia[evento.servicio].estadisticos;
 
   if (evento.servicio === "atencion_empresarial_con_prioridad") {
-    // Mantener los valores de la cola de la fila previa
+    fila[evento.servicio].prioridad = JSON.parse(
+      JSON.stringify(filaPrevia[evento.servicio].prioridad)
+    );
     fila[evento.servicio].cola_con_prioridad = JSON.parse(
       JSON.stringify(filaPrevia[evento.servicio].cola_con_prioridad)
     );
@@ -1637,7 +1644,7 @@ export const gestorSimulacion = (config) => {
         if (estaOcupado) {
           const eventoFinAtencion = encontrarProxEvento(
             eventos,
-            "atencion_empresarial_con_prioridad",
+            "atencion_empresarial_con_ausencia",
             "servidor_periodico",
             false
           );
