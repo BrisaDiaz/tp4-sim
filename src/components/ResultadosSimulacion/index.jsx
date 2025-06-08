@@ -1,6 +1,24 @@
 import React from "react";
 import { Container, Card, Table } from "react-bootstrap";
 
+// Función de utilidad para formatear horas a hh:mm:ss
+const formatHoursToHHMMSS = (hours) => {
+  if (typeof hours !== "number" || isNaN(hours) || hours < 0) {
+    return "-"; // Retorna "-" para valores no numéricos, NaN o negativos
+  }
+
+  // Redondear al segundo más cercano antes de la conversión
+  const totalSeconds = Math.round(hours * 3600);
+
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+
+  const pad = (num) => num.toString().padStart(2, "0");
+
+  return `${pad(h)}:${pad(m)}:${pad(s)}`;
+};
+
 const ResultadosSimulacion = ({ resultados }) => {
   if (!resultados) {
     return <Container>No hay resultados de simulación para mostrar.</Container>;
@@ -13,7 +31,7 @@ const ResultadosSimulacion = ({ resultados }) => {
       {/* Punto 1 */}
       <Card className="mb-4 shadow-sm">
         <Card.Header as="h3" className="bg-primary text-white">
-          1. Tiempo de Espera Promedio y Porcentaje de Ocupación
+          1. Tiempo de Espera Promedio y Porcentaje de Porcentaje De Ocupación
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
@@ -25,8 +43,9 @@ const ResultadosSimulacion = ({ resultados }) => {
             <thead className="table-dark">
               <tr>
                 <th>Servicio</th>
-                <th>Tiempo Espera (min)</th>
-                <th>Ocupación (%)</th>
+                <th>Tiempo De Espera Promedio (hh:mm:ss)</th>{" "}
+                {/* Etiqueta de la columna actualizada */}
+                <th>Porcentaje De Ocupación (%)</th>
               </tr>
             </thead>
             <tbody>
@@ -37,7 +56,8 @@ const ResultadosSimulacion = ({ resultados }) => {
                       .replace(/_/g, " ")
                       .replace(/\b\w/g, (c) => c.toUpperCase())}
                   </td>
-                  <td>{data.tiempo_promedio_de_espera.toFixed(2)}</td>
+                  <td>{formatHoursToHHMMSS(data.tiempo_promedio_de_espera)}</td>{" "}
+                  {/* Usa la función de formato */}
                   <td>{data.porcentaje_de_ocupacion.toFixed(2)}</td>
                 </tr>
               ))}
@@ -68,20 +88,22 @@ const ResultadosSimulacion = ({ resultados }) => {
               <tr>
                 <td>Tiempo Promedio (Sin Ausencia)</td>
                 <td>
-                  {resultados.punto_2.tiempo_promedio_de_espera_con_sin_asusencia.toFixed(
-                    2
-                  )}{" "}
-                  min
-                </td>
+                  {formatHoursToHHMMSS(
+                    resultados.punto_2
+                      .tiempo_promedio_de_espera_con_sin_asusencia
+                  )}
+                </td>{" "}
+                {/* Usa la función de formato */}
               </tr>
               <tr>
                 <td>Tiempo Promedio (Con Ausencia)</td>
                 <td>
-                  {resultados.punto_2.tiempo_promedio_de_espera_con_con_asusencia.toFixed(
-                    2
-                  )}{" "}
-                  min
-                </td>
+                  {formatHoursToHHMMSS(
+                    resultados.punto_2
+                      .tiempo_promedio_de_espera_con_con_asusencia
+                  )}
+                </td>{" "}
+                {/* Usa la función de formato */}
               </tr>
               <tr>
                 <td>Incremento</td>
@@ -92,22 +114,22 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Body>
       </Card>
 
-      {/* Punto 3 */}
+      {/* Punto 3 (Sin cambios, ya que no son tiempos) */}
       <Card className="mb-4 shadow-sm">
         <Card.Header as="h3" className="bg-primary text-white">
-          3. Ocupación con un Empleado Menos
+          3. Porcentaje De Ocupación con un Empleado Menos
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se analiza cómo varía la ocupación
-            de los empleados si se reduce el personal en el servicio de venta de
-            sellos y sobres.
+            <strong>Justificación:</strong> Se analiza cómo varía la Porcentaje
+            De Ocupación de los empleados si se reduce el personal en el
+            servicio de venta de sellos y sobres.
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
               <tr>
                 <th>Servicio</th>
-                <th>Ocupación (%)</th>
+                <th>Porcentaje De Ocupación (%)</th>
               </tr>
             </thead>
             <tbody>
@@ -120,7 +142,7 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Body>
       </Card>
 
-      {/* Punto 4 */}
+      {/* Punto 4 (Sin cambios, ya que no son tiempos) */}
       <Card className="mb-4 shadow-sm">
         <Card.Header as="h3" className="bg-primary text-white">
           4. Máximo Clientes en Cola
@@ -177,28 +199,35 @@ const ResultadosSimulacion = ({ resultados }) => {
             <thead className="table-dark">
               <tr>
                 <th>Tipo Cliente</th>
-                <th>Tiempo Espera (min)</th>
+                <th>Tiempo De Espera Promedio (hh:mm:ss)</th>{" "}
+                {/* Etiqueta de la columna actualizada */}
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Con Prioridad</td>
                 <td>
-                  {resultados.punto_5.tiempo_promedio_de_espera_ccp.toFixed(2)}
-                </td>
+                  {formatHoursToHHMMSS(
+                    resultados.punto_5.tiempo_promedio_de_espera_ccp
+                  )}
+                </td>{" "}
+                {/* Usa la función de formato */}
               </tr>
               <tr>
                 <td>Sin Prioridad</td>
                 <td>
-                  {resultados.punto_5.tiempo_promedio_de_espera_csp.toFixed(2)}
-                </td>
+                  {formatHoursToHHMMSS(
+                    resultados.punto_5.tiempo_promedio_de_espera_csp
+                  )}
+                </td>{" "}
+                {/* Usa la función de formato */}
               </tr>
             </tbody>
           </Table>
         </Card.Body>
       </Card>
 
-      {/* Punto 6 */}
+      {/* Punto 6 (Sin cambios en el valor, es una probabilidad) */}
       <Card className="mb-4 shadow-sm">
         <Card.Header as="h3" className="bg-primary text-white">
           6. Probabilidad Espera {">"} 15 min
@@ -235,7 +264,7 @@ const ResultadosSimulacion = ({ resultados }) => {
           <p className="mb-3">
             <strong>Justificación:</strong> Se evalúa la viabilidad de
             implementar un nuevo servicio derivado de envíos de paquetes,
-            analizando su ocupación y tiempos de espera.
+            analizando su Porcentaje De Ocupación y tiempos de espera.
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -246,16 +275,19 @@ const ResultadosSimulacion = ({ resultados }) => {
             </thead>
             <tbody>
               <tr>
-                <td>Ocupación</td>
+                <td>Porcentaje De Ocupación</td>
                 <td>
                   {resultados.punto_7.porcentaje_de_ocupacion.toFixed(2)}%
                 </td>
               </tr>
               <tr>
-                <td>Tiempo Espera</td>
+                <td>Tiempo De Espera Promedio</td>
                 <td>
-                  {resultados.punto_7.tiempo_promedio_de_espera.toFixed(2)} min
-                </td>
+                  {formatHoursToHHMMSS(
+                    resultados.punto_7.tiempo_promedio_de_espera
+                  )}
+                </td>{" "}
+                {/* Usa la función de formato */}
               </tr>
             </tbody>
           </Table>
