@@ -2171,24 +2171,26 @@ export const gestorSimulacion = (config) => {
             fila.post_envio_de_paquetes.solicitud_del_servicio.solicita =
               solicita;
 
-            /// creamos un evento falso para reutilzar la lógica del método procesarLlegadaGenerica
-            const falsoEvento = {
-              nombre: "falso",
-              cliente_id: evento.cliente_id, /// se trata del mismo cliente que sale del servicio de envio de paquetes
-              servicio: "post_envio_de_paquetes",
-              tipo: "llegada_de_cliente",
-              hora: evento.hora,
-            };
+            if (solicita === "SI") {
+              /// creamos un evento falso para reutilzar la lógica del método procesarLlegadaGenerica
+              const falsoEvento = {
+                nombre: "falso",
+                cliente_id: evento.cliente_id, /// se trata del mismo cliente que sale del servicio de envio de paquetes
+                servicio: "post_envio_de_paquetes",
+                tipo: "llegada_de_cliente",
+                hora: evento.hora,
+              };
 
-            procesarLlegadaGenerica(
-              clientes_registrados,
-              falsoEvento,
-              eventos,
-              fila,
-              config,
-              colas,
-              tiempos_de_ocupacion_acumulados
-            );
+              procesarLlegadaGenerica(
+                clientes_registrados,
+                falsoEvento,
+                eventos,
+                fila,
+                config,
+                colas,
+                tiempos_de_ocupacion_acumulados
+              );
+            }
           }
         }
       } else if (evento.tipo === "ausencia_servidor") {
