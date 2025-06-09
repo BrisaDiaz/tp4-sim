@@ -1688,12 +1688,24 @@ const procesarFinAtencionGenerica = (
   fila[evento.servicio].estadisticos.clientes_atendidos += 1;
   tiempos_de_ocupacion_acumulados[evento.servicio] += evento.tiempo_de_atencion;
 
-  const clienteMasAntiguoEnCola =
-    colas[evento.servicio].length !== 0
-      ? encontrarClienteMasAntiguo(colas[evento.servicio], fila.reloj)
-      : null;
+  /// verificar si se debe ausentar el servidor
+  const debeAusentarseServidor = evento?.con_ausencia === true;
 
-  /// comprovar si hay clientes en la cola
+  if (debeAusentarseServidor) {
+    // Programar regreso después de 20 minutos
+    registrarEventoRegreso(evento.hora, eventos);
+  }
+
+  let clienteMasAntiguoEnCola = null;
+
+  if (!debeAusentarseServidor) {
+    clienteMasAntiguoEnCola =
+      colas[evento.servicio].length !== 0
+        ? encontrarClienteMasAntiguo(colas[evento.servicio], fila.reloj)
+        : null;
+  }
+
+  /// comprovar si hay clientes en la cola (si debe ausentarse el servidor se omite)
   if (clienteMasAntiguoEnCola) {
     /// el servidor se matiene ocupado
     fila[evento.servicio].servidores[evento.servidor] = "ocupado";
@@ -1766,8 +1778,14 @@ const procesarFinAtencionGenerica = (
       servidor: evento.servidor, /// para saber que servidor se debe liberar (es el mismo servidor del evento fin de atención, permanece ocupado)
     });
   } else {
-    /// liberar el servidor
-    fila[evento.servicio].servidores[evento.servidor] = "libre";
+    if (debeAusentarseServidor) {
+      //  marcarlo como ausente inmediatamente
+      fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
+        "ausente";
+    } else {
+      /// liberar el servidor
+      fila[evento.servicio].servidores[evento.servidor] = "libre";
+    }
 
     /// verificar si se debe calcular el porcentaje de ocupacion (se recalcula únicamente cuando el servidor se libera)
 
@@ -2174,33 +2192,40 @@ export const gestorSimulacion = (config) => {
           }
         }
       } else if (evento.tipo === "ausencia_servidor") {
-        // Verificar si el servidor está ocupado
-        const estaOcupado =
-          fila.atencion_empresarial_con_ausencia.servidores
-            .servidor_periodico === "ausente";
+        // Verificar estado actual del servidor
+        const estadoServidor =
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico;
 
-        if (estaOcupado) {
-          // Buscar el próximo evento de fin de atención para este servidor
+        if (estadoServidor === "ocupado") {
+          // Si está ocupado, programar ausencia cuando termine la atención actual
           const eventoFinAtencion = encontrarProxEvento(
             eventos,
             "atencion_empresarial_con_ausencia",
-            "servidor_periodico",
-            false
-          );
+            "servidor_periodico"
+          ); /// retorna y remueve el evento
 
+          /// modifico el evento para detectar la ausencia programada
           if (eventoFinAtencion) {
-            // Programar nueva ausencia después de que termine la atención actual
-            registrarEventoAusencia(eventoFinAtencion.hora, eventos);
+            const eventoModificado = {
+              ...eventoFinAtencion,
+              nombre: `${eventoFinAtencion.nombre} (ausencia)`,
+              con_ausencia: true,
+            };
+            eventos.push(eventoModificado);
           }
-        } else {
-          // Marcar servidor como ausente inmediatamente
+          /// no se cuenta el evento fallido (se omite la fila en el vector)
+          i--;
+          continue;
+        } else if (estadoServidor === "libre") {
+          // Si está libre, marcarlo como ausente inmediatamente
           fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
             "ausente";
-          // Programar regreso después de 20 minutos (1/3 de hora)
+          // Programar regreso después de 20 minutos
           registrarEventoRegreso(evento.hora, eventos);
         }
+        // Si ya está ausente, no hacer nada (ya hay un evento de regreso programado)
       } else if (evento.tipo === "regreso_servidor") {
-        // Restaurar servidor
+        // Restaurar servidor a estado libre
         fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
           "libre";
 
@@ -2216,10 +2241,8 @@ export const gestorSimulacion = (config) => {
             tiempoEspera;
           fila.atencion_empresarial_con_ausencia.cola.clientes_en_cola -= 1;
 
-          // Incrementar clientes atendidos
           fila.atencion_empresarial_con_ausencia.estadisticos.clientes_atendidos += 1;
 
-          // Generar fin de atención
           const finAtencion = generadorExponencial(
             config.tasas.atencion_empresarial_con_ausencia.tasa_de_atencion
           );
