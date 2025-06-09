@@ -2225,7 +2225,7 @@ export const gestorSimulacion = (config) => {
         }
         // Si ya está ausente, no hacer nada (ya hay un evento de regreso programado)
       } else if (evento.tipo === "regreso_servidor") {
-        // Restaurar servidor a estado libre
+        // Restaurar servidor a estado libre por defecto
         fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
           "libre";
 
@@ -2234,22 +2234,39 @@ export const gestorSimulacion = (config) => {
 
         // Atender siguiente cliente si hay en cola
         if (colas.atencion_empresarial_con_ausencia.length > 0) {
-          const cliente = colas.atencion_empresarial_con_ausencia.shift();
-          const tiempoEspera = evento.hora - cliente.hora_de_ingreso;
+          const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
+            colas[evento.servicio],
+            fila.reloj
+          );
+          /// pasa al etado ocupado en el cado de haber clientes en la cola
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
+            "ocupado";
+          const tiempoEspera =
+            evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
 
+          /// acutalizo los valores de la cola en la fila
           fila.atencion_empresarial_con_ausencia.cola.tiempos_de_espera_acumulados +=
             tiempoEspera;
           fila.atencion_empresarial_con_ausencia.cola.clientes_en_cola -= 1;
 
           fila.atencion_empresarial_con_ausencia.estadisticos.clientes_atendidos += 1;
 
+          /// genero el fin de atencion
           const finAtencion = generadorExponencial(
             config.tasas.atencion_empresarial_con_ausencia.tasa_de_atencion
           );
 
+          /// actualizo los valores de fin de atención en la fila
+          fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
+          fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
+            finAtencion.value;
+          fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
+            fila.reloj + finAtencion.value;
+
+          /// registro el evento fin de atención
           eventos.push({
-            nombre: `fin_atencion_${abreviaciones.atencion_empresarial_con_ausencia}_${cliente.cliente_id}`,
-            cliente_id: cliente.cliente_id,
+            nombre: `fin_atencion_${abreviaciones.atencion_empresarial_con_ausencia}_${clienteMasAntiguoEnCola.cliente_id}`,
+            cliente_id: clienteMasAntiguoEnCola.cliente_id,
             servicio: "atencion_empresarial_con_ausencia",
             tipo: "fin_de_atencion",
             hora: evento.hora + finAtencion.value,
