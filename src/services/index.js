@@ -1595,16 +1595,6 @@ const procesarLlegadaConPrioridad = (
 ) => {
   clientes_registrados[evento.servicio] += 1;
 
-  // Generar prioridad del cliente
-  const rndPrioridad = Math.random();
-  const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
-  const cola =
-    prioridad === "alta" ? "cola_con_prioridad" : "cola_sin_prioridad";
-
-  // Actualizar valores de prioridad
-  fila[evento.servicio].prioridad.rnd = rndPrioridad;
-  fila[evento.servicio].prioridad.tipo_prioridad = prioridad;
-
   // Generar próxima llegada
   const llegada = generadorExponencial(
     config.tasas[evento.servicio].tasa_de_llegada
@@ -1614,16 +1604,28 @@ const procesarLlegadaConPrioridad = (
   fila[evento.servicio].llegada_de_cliente.hora_de_llegada =
     fila.reloj + llegada.value;
 
+  // Generar prioridad del cliente
+  const rndPrioridad = Math.random();
+  const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
+
+  // Actualizar valores de prioridad
+  fila[evento.servicio].prioridad.rnd = rndPrioridad;
+  fila[evento.servicio].prioridad.tipo_prioridad = prioridad;
+
   // Registrar próxima llegada
   eventos.push({
     nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
       clientes_registrados[evento.servicio]
-    }`,
+    }_${prioridad === "alta" ? "cp" : "sp"}`,
     cliente_id: clientes_registrados[evento.servicio],
     servicio: evento.servicio,
     tipo: "llegada_de_cliente",
     hora: fila.reloj + llegada.value,
+    prioridad,
   });
+
+  const cola =
+    evento.prioridad === "alta" ? "cola_con_prioridad" : "cola_sin_prioridad";
 
   // Verificar servidores libres
   const servidoresLibres = encontrarServidoresLibres(evento.servicio, fila);
@@ -1666,7 +1668,7 @@ const procesarLlegadaConPrioridad = (
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         evento.cliente_id
-      }_${prioridad === "alta" ? "cp" : "sp"}`,
+      }_${evento.prioridad === "alta" ? "cp" : "sp"}`,
       cliente_id: evento.cliente_id,
       servicio: "atencion_empresarial_con_prioridad",
       tipo: "fin_de_atencion",
@@ -1969,13 +1971,37 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
       // Añadir el evento a la lista de eventos
       clientes_registrados[servicio] += 1;
       const abreviacion = abreviaciones[servicio] || servicio; // Usa abreviación o el nombre completo si no existe
-      eventos.push({
-        nombre: `llegada_cliente_${abreviacion}_${clientes_registrados[servicio]}`,
-        cliente_id: clientes_registrados[servicio],
-        servicio: servicio,
-        tipo: "llegada_de_cliente",
-        hora: llegada.value,
-      });
+
+      /// se determina su prioridad al generar la llegada
+      if (servicio === "atencion_empresarial_con_prioridad") {
+        // Generar prioridad del cliente
+        const rndPrioridad = Math.random();
+        const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
+
+        // Actualizar valores de prioridad
+        fila[servicio].prioridad.rnd = rndPrioridad;
+        fila[servicio].prioridad.tipo_prioridad = prioridad;
+
+        // Registrar próxima llegada
+        eventos.push({
+          nombre: `llegada_cliente_${abreviacion}_${
+            clientes_registrados[servicio]
+          }_${prioridad === "alta" ? "cp" : "sp"}`,
+          cliente_id: clientes_registrados[servicio],
+          servicio,
+          tipo: "llegada_de_cliente",
+          hora: fila.reloj + llegada.value,
+          prioridad,
+        });
+      } else {
+        eventos.push({
+          nombre: `llegada_cliente_${abreviacion}_${clientes_registrados[servicio]}`,
+          cliente_id: clientes_registrados[servicio],
+          servicio: servicio,
+          tipo: "llegada_de_cliente",
+          hora: llegada.value,
+        });
+      }
     } else {
       // Opcional: Manejar servicios que no tienen tasa de llegada si es necesario
       console.warn(
