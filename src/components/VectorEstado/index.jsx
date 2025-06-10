@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./VectorEstado.css";
 
 export default function VectorEstado({ cabeceras, filas }) {
-  const serviceColors = ["#f2f2f2", "#ffff"];
   const [visibleServices, setVisibleServices] = useState({});
 
   useEffect(() => {
@@ -65,19 +64,29 @@ export default function VectorEstado({ cabeceras, filas }) {
     const processHeaders = (
       headers,
       level = 0,
-      serviceCounter = { value: -1 }
+      serviceCounter = { value: -1 },
+      parentCounters = Array(maxDepth + 1).fill(-1)
     ) => {
       headers.forEach((header) => {
         let headerStyle = {};
+        const currentLevelCounter = ++parentCounters[level];
 
-        if (
-          level === 0 &&
-          header.key &&
-          !["simulacion", "evento", "reloj"].includes(header.key)
-        ) {
-          serviceCounter.value++;
-          headerStyle.backgroundColor =
-            serviceColors[serviceCounter.value % serviceColors.length];
+        // Alternar colores basado en el nivel y contador
+        const isEven = currentLevelCounter % 2 === 0;
+
+        // Asignar colores basados en el nivel
+        switch (level) {
+          case 0:
+            headerStyle.backgroundColor = isEven ? "#e0e0e0" : "#d0d0d0";
+            break;
+          case 1:
+            headerStyle.backgroundColor = isEven ? "#f0f0f0" : "#e8e8e8";
+            break;
+          case 2:
+            headerStyle.backgroundColor = isEven ? "#f8f8f8" : "#f0f0f0";
+            break;
+          default:
+            headerStyle.backgroundColor = isEven ? "#ffffff" : "#f8f8f8";
         }
 
         const nestedHeaders = header.subheaders || header.headers;
@@ -98,7 +107,9 @@ export default function VectorEstado({ cabeceras, filas }) {
           });
 
           // Procesar subcabeceras
-          processHeaders(nestedHeaders, level + 1, serviceCounter);
+          processHeaders(nestedHeaders, level + 1, serviceCounter, [
+            ...parentCounters,
+          ]);
         } else {
           // Cabecera final (sin subcabeceras)
           const colspan = 1;
@@ -133,7 +144,6 @@ export default function VectorEstado({ cabeceras, filas }) {
       </tr>
     ));
   };
-
   const getFlattenedRowValues = (rowData, headersDefinition) => {
     let values = [];
     headersDefinition.forEach((header) => {

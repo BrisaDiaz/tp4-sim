@@ -1,8 +1,9 @@
 /* VectorEstado.css */
 
+/* Contenedor para el scroll y la cabecera pegajosa */
 .table-responsive-wrapper {
   max-height: 80vh;
-  overflow: auto;
+  overflow: auto; /* Habilita el scroll horizontal y vertical */
   border: none;
   border-top: 1px solid #dcdcdc;
   border-radius: 0.1rem;
@@ -11,24 +12,25 @@
 /* Estructura principal de la tabla */
 .compact-table {
   width: 100%;
-  table-layout: auto;
+  table-layout: auto; /* IMPORTANTE: Mantiene el ajuste automático del contenido */
   border-collapse: collapse;
 }
 
-/* Estilos base para todas las celdas */
+/* Estilos base para todas las celdas (th y td) */
+/* Por defecto, todas las columnas finales (cabeceras y datos) son 130px */
 .compact-table th,
 .compact-table td {
   padding: 0.3rem;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #a0a0a0;
   box-sizing: border-box;
-  width: 130px;
-  min-width: 130px;
-  max-width: 130px;
+  width: 130px; /* Ancho deseado para la mayoría de las columnas finales */
+  min-width: 130px; /* Asegura que no se encojan */
+  max-width: 130px; /* Asegura que no se expandan */
   vertical-align: middle;
   text-align: center;
 }
 
-/* Celdas del cuerpo mantienen nowrap */
+/* Las celdas de datos mantienen el nowrap para ellipsis */
 .compact-table td {
   white-space: nowrap;
   overflow: hidden;
@@ -36,38 +38,113 @@
   height: 2.5em;
 }
 
-/* Cabeceras permiten salto de línea */
+/* Las cabeceras permiten salto de línea para mejor visualización de textos largos */
 .compact-table th {
   white-space: normal;
   word-wrap: break-word;
   word-break: break-word;
   hyphens: auto;
-  min-height: 2.5em;
+  min-height: 2.5em; /* Altura mínima para asegurar espacio */
   line-height: 1.2;
+  border-bottom: 1px solid #a0a0a0 !important;
 }
 
-/* Excepción para columnas especiales (Simulación, Evento, Reloj) */
-.compact-table th:nth-child(1),
-.compact-table th:nth-child(2),
-.compact-table th:nth-child(3),
+/* COLUMNAS ESPECIALES (Simulación, Evento, Reloj) */
+/* Deben tener un max-width mayor y ser sticky en ambas direcciones */
+.compact-table th:nth-child(1), /* Simulacion */
 .compact-table td:nth-child(1),
+.compact-table th:nth-child(2), /* Evento */
 .compact-table td:nth-child(2),
+.compact-table th:nth-child(3), /* Reloj */
 .compact-table td:nth-child(3) {
-  width: auto;
-  min-width: 100px;
-  max-width: 450px;
+  width: 130px; /* Mantener un ancho inicial, pero permitir mayor expansión */
+  min-width: 130px;
+  max-width: 400px; /* Permitir hasta 400px */
+  /* No cambiar el white-space from th/td defaults here, it's handled globally */
 }
 
-/* Cabecera pegajosa */
+/* Configuración de STICKY para las columnas especiales */
+/* Estas columnas son sticky tanto horizontal como verticalmente.
+   Su z-index será más alto para que queden por encima de otras celdas al hacer scroll. */
+
+/* Primera columna (Simulacion) */
+.compact-table th:nth-child(1).header-level-0,
+.compact-table td:nth-child(1) {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0; /* Pegada al borde izquierdo */
+  /* Borde visual */
+}
+
+/* Segunda columna (Evento) */
+.compact-table th:nth-child(2).header-level-0,
+.compact-table td:nth-child(2) {
+  position: -webkit-sticky;
+  position: sticky;
+  /* El valor de 'left' debe ser la suma de los anchos de las columnas precedentes */
+  /* Si la primera columna también puede crecer hasta 400px, left: 400px; */
+  /* Sin embargo, si quieres que la tabla se mantenga compacta, los 130px anteriores son más consistentes. */
+  /* Vamos a usar el ancho *establecido* de 130px para las posiciones sticky para que no se muevan erraticamente */
+  left: 129px; /* Ancho de la primera columna */
+}
+
+/* Tercera columna (Reloj) */
+.compact-table th:nth-child(3).header-level-0,
+.compact-table td:nth-child(3) {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 334px; /* 130px (ancho de la primera) + 130px (ancho de la segunda) */
+}
+
+.compact-table td:nth-child(1)::after,
+.compact-table td:nth-child(2)::after,
+.compact-table td:nth-child(3)::after,
+.compact-table th:nth-child(1).header-level-0::after,
+.compact-table th:nth-child(2).header-level-0::after,
+.compact-table th:nth-child(3).header-level-0::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0px; /* Posiciona el borde correctamente */
+  bottom: 0;
+  width: 1px;
+  background-color: #a0a0a0;
+  z-index: 1;
+}
+
+/* Cabecera pegajosa (sticky vertical para TODAS las cabeceras) */
+/* Esta regla hace que todas las cabeceras (<th>) sean sticky verticalmente (top: 0) */
+/* Aplicar sticky al thead asegura que TODAS las cabeceras se peguen verticalmente. */
 .sticky-header {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 10;
-  background-color: #f8f9fa;
+  z-index: 10; /* Z-index para la cabecera general */
+  background-color: #f8f9fa; /* Color de fondo base para todas las cabeceras */
+  /* Important: The z-index here must be lower than the individual sticky columns. */
+  /* The individual th rules for :nth-child(1,2,3) will override specific z-index for them. */
+}
+
+/* Modifica estas reglas */
+.compact-table th:nth-child(1).header-level-0,
+.compact-table th:nth-child(2).header-level-0,
+.compact-table th:nth-child(3).header-level-0 {
+  position: sticky;
+  z-index: 50 !important; /* Valor muy alto */
+  /* Mantén los otros estilos */
+  border-right: 1px solid #a0a0a0 !important;
+}
+
+.compact-table td:nth-child(1),
+.compact-table td:nth-child(2),
+.compact-table td:nth-child(3) {
+  position: sticky;
+  z-index: 5; /* Menor que los headers */
+  border-right: 1px solid #a0a0a0 !important;
 }
 
 /* Estilos para niveles de cabecera */
+/* Estos estilos son para la apariencia, no afectan directamente el sticky */
 .header-level-0 {
   background-color: #e0e0e0;
   font-weight: bold;
@@ -93,6 +170,7 @@
   vertical-align: middle;
   min-height: 40px;
   height: auto;
+  top: 20px;
 }
 
 .header-level-3 {
@@ -106,11 +184,31 @@
 
 /* Estilos para filas del cuerpo */
 .compact-table tbody tr:nth-child(even) {
-  background-color: #f8f8f8;
+  background-color: #eaeaea;
+}
+
+/* Fondo sólido para columnas sticky en filas pares */
+.compact-table tbody tr:nth-child(even) td:nth-child(1)::before,
+.compact-table tbody tr:nth-child(even) td:nth-child(2)::before,
+.compact-table tbody tr:nth-child(even) td:nth-child(3)::before {
+  background-color: #eaeaea; /* Color de fondo de filas pares */
 }
 
 .compact-table tbody tr:hover {
-  background-color: #e8e8e8;
+  background-color: #eaeaea;
+}
+
+/* Fondo sólido para columnas sticky en hover */
+.compact-table tbody tr:hover td:nth-child(1)::before,
+.compact-table tbody tr:hover td:nth-child(2)::before,
+.compact-table tbody tr:hover td:nth-child(3)::before {
+  background-color: #e8e8e8; /* Color de fondo en hover */
+}
+
+/* Fondos sólidos para diferentes niveles de cabecera */
+/* Se utiliza inherit para tomar el color de fondo de la celda directamente */
+.header-level-0::before {
+  background-color: inherit;
 }
 
 /* Alineación general */
@@ -126,14 +224,35 @@
 @media (max-width: 768px) {
   .compact-table th,
   .compact-table td {
-    width: 100px;
+    width: 100px; /* Ajustar ancho para pantallas pequeñas */
     min-width: 100px;
     max-width: 100px;
     font-size: 0.85rem;
     padding: 0.2rem;
   }
 
+  /* Las columnas especiales también deben ajustarse a 100px en móvil */
+  .compact-table th:nth-child(1),
+  .compact-table td:nth-child(1),
+  .compact-table th:nth-child(2),
+  .compact-table td:nth-child(2),
+  .compact-table th:nth-child(3),
+  .compact-table td:nth-child(3) {
+    max-width: 400px; /* Mantener un max-width coherente, pero el ancho base es 100px */
+  }
+
   .compact-table td {
     height: 2.5em;
+  }
+
+  /* Ajustar posiciones sticky para móvil */
+  .compact-table th:nth-child(2),
+  .compact-table td:nth-child(2) {
+    left: 100px; /* 100px (ancho de la primera columna en móvil) */
+  }
+
+  .compact-table th:nth-child(3),
+  .compact-table td:nth-child(3) {
+    left: 200px; /* 100px + 100px */
   }
 }
