@@ -15,9 +15,9 @@ const plantillaFila = {
       esperas_mayores_a_15m: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      servidor_2: "libre",
-      servidor_3: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_3: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -44,8 +44,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      servidor_2: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -71,9 +71,9 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      servidor_2: "libre",
-      servidor_3: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_3: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -99,8 +99,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      servidor_2: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -126,7 +126,7 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -152,8 +152,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_periodico: "libre",
-      servidor_2: "libre",
+      servidor_periodico: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
     },
     fin_de_atencion: {
       rnd: null,
@@ -176,8 +176,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      servidor_2: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -211,8 +211,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: "libre",
-      servidor_2: "libre",
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: "libre", inicio_ocupacion: null },
     },
     fin_de_atencion: {
       rnd: null,
@@ -237,7 +237,7 @@ const plantillaFila = {
       tiempos_de_espera_acumulados: 0,
     },
     servidores: {
-      servidor_1: "libre", // Servidor explícitamente inicializado
+      servidor_1: { estado: "libre", inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -252,167 +252,194 @@ const plantillaFila = {
     },
   },
 };
-const setNullsFila = (fila) => {
-  servicios.forEach((servicio) => {
-    // Resetear llegada_de_cliente
-    if (fila[servicio]?.llegada_de_cliente) {
-      fila[servicio].llegada_de_cliente.rnd = null;
-      fila[servicio].llegada_de_cliente.tiempo_entre_llegada = null;
-      fila[servicio].llegada_de_cliente.hora_de_llegada = null;
-    }
 
-    // Resetear fin_de_atencion
-    if (fila[servicio]?.fin_de_atencion) {
-      fila[servicio].fin_de_atencion.rnd = null;
-      fila[servicio].fin_de_atencion.tiempo_de_atencion = null;
-      fila[servicio].fin_de_atencion.hora_de_fin_de_atencion = null;
-    }
-  });
-
-  // Resetear prioridad
-  if (fila.atencion_empresarial_con_prioridad?.prioridad) {
-    fila.atencion_empresarial_con_prioridad.prioridad.rnd = null;
-    fila.atencion_empresarial_con_prioridad.prioridad.tipo_prioridad = null;
-  }
-
-  // Resetear solicitud de servicio
-  if (fila.post_envio_de_paquetes?.solicitud_del_servicio) {
-    fila.post_envio_de_paquetes.solicitud_del_servicio.rnd = null;
-    fila.post_envio_de_paquetes.solicitud_del_servicio.solicita = null;
-  }
-
-  return fila;
-};
 export const plantillaCabeceras = [
-  { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" }, // <--- AGREGADO 'key'
-  { name: "Evento", colspan: 1, rowspan: 3, key: "evento" }, // <--- AGREGADO 'key'
-  { name: "Reloj", colspan: 1, rowspan: 3, key: "reloj" }, // <--- AGREGADO 'key'
+  { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" },
+  { name: "Evento", colspan: 1, rowspan: 4, key: "evento" },
+  { name: "Reloj", colspan: 1, rowspan: 3, key: "reloj" },
   {
     name: "Envio de Paquetes",
-    colspan: 18,
+    colspan: 24, // 3 (Llegada) + 4 (Cola) + 7 (Servidores) + 3 (Fin de Atencion) + 4 (Estadisticos) = 21.
     rowspan: 1,
-    key: "envio_de_paquetes", // <--- AGREGADO 'key'
+    key: "envio_de_paquetes",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" }, // <--- AGREGADO 'key'
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
             name: "Tiempo entre Llegada",
             colspan: 1,
             rowspan: 1,
             key: "tiempo_entre_llegada",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Hora de Llegada",
             colspan: 1,
             rowspan: 1,
             key: "hora_de_llegada",
-          }, // <--- AGREGADO 'key'
+          },
         ],
       },
       {
         name: "Cola",
         colspan: 4,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
             colspan: 1,
             rowspan: 1,
             key: "clientes_en_cola",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Longitud Maxima",
             colspan: 1,
             rowspan: 1,
             key: "longitud_maxima",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Tiempos de Espera Acumulados",
             colspan: 1,
             rowspan: 1,
             key: "tiempos_de_espera_acumulados",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Esperas Mayores a 15m",
             colspan: 1,
             rowspan: 1,
             key: "esperas_mayores_a_15m",
-          }, // <--- AGREGADO 'key'
+          },
         ],
       },
       {
         name: "Servidores",
-        colspan: 4,
-        rowSpan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        colspan: 7, // 2 (Servidor 1) + 2 (Servidor 2) + 2 (Servidor 3) + 1 (Tiempos de Ocupacion Acumulados) = 7
+        rowspan: 1,
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowSpan: 1, key: "servidor_1" }, // <--- AGREGADO 'key'
-          { name: "Servidor 2", colspan: 1, rowSpan: 1, key: "servidor_2" }, // <--- AGREGADO 'key'
-          { name: "Servidor 3", colspan: 1, rowSpan: 1, key: "servidor_3" }, // <--- AGREGADO 'key'
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              {
+                name: "Estado",
+                colspan: 1,
+                rowspan: 1,
+                key: "estado",
+              },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 2",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              {
+                name: "Estado",
+                colspan: 1,
+                rowspan: 1,
+                key: "estado",
+              },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 3",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_3",
+            subheaders: [
+              {
+                name: "Estado",
+                colspan: 1,
+                rowspan: 1,
+                key: "estado",
+              },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
           {
             name: "Tiempos de Ocupacion Acumulados",
             colspan: 1,
-            rowSpan: 1,
+            rowspan: 1,
             key: "tiempos_de_ocupacion_acumulados",
-          }, // <--- AGREGADO 'key'
+          },
         ],
       },
       {
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" }, // <--- AGREGADO 'key'
+          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
             name: "Tiempo de Atencion",
             colspan: 1,
             rowspan: 1,
             key: "tiempo_de_atencion",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Hora de Fin de Atencion",
             colspan: 1,
             rowspan: 1,
             key: "hora_de_fin_de_atencion",
-          }, // <--- AGREGADO 'key'
+          },
         ],
       },
       {
         name: "Estadisticos",
         colspan: 4,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
             colspan: 1,
             rowspan: 1,
             key: "clientes_atendidos",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Porcentaje de Ocupacion",
             colspan: 1,
             rowspan: 1,
             key: "porcentaje_de_ocupacion",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Tiempo Promedio de Espera",
             colspan: 1,
             rowspan: 1,
             key: "tiempo_promedio_de_espera",
-          }, // <--- AGREGADO 'key'
+          },
           {
             name: "Probabilidad de Espera Mayor a 15m",
             colspan: 1,
             rowspan: 1,
-            key: "probabilidad_de_espera_mayor_a_15m", // <--- AGREGADO 'key'
+            key: "probabilidad_de_espera_mayor_a_15m",
           },
         ],
       },
@@ -420,15 +447,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Reclamaciones y Devoluciones",
-    colspan: 15,
+    colspan: 13, // 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 17. Original was 13, adjusted to 17
     rowspan: 1,
-    key: "reclamaciones_y_devoluciones", // <--- AGREGADO 'key'
+    key: "reclamaciones_y_devoluciones",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -449,7 +476,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 3,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -473,12 +500,40 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 3,
+        colspan: 5, // 2 (Servidor 1) + 2 (Servidor 2) + 1 (Tiempos de Ocupacion Acumulados) = 5
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
-          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 2",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
           {
             name: "Tiempos de Ocupacion Acumulados",
             colspan: 1,
@@ -491,7 +546,7 @@ export const plantillaCabeceras = [
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -512,7 +567,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -538,15 +593,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Venta de Sellos y Sobres",
-    colspan: 16,
+    colspan: 16, // 3 (Llegada) + 3 (Cola) + 7 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 19. Original was 16, adjusted to 19
     rowspan: 1,
-    key: "venta_de_sellos_y_sobres", // <--- AGREGADO 'key'
+    key: "venta_de_sellos_y_sobres",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -567,7 +622,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 3,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -591,13 +646,55 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 4,
+        colspan: 7, // 2 (Servidor 1) + 2 (Servidor 2) + 2 (Servidor 3) + 1 (Tiempos de Ocupacion Acumulados) = 7
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
-          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
-          { name: "Servidor 3", colspan: 1, rowspan: 1, key: "servidor_3" },
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 2",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 3",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_3",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
           {
             name: "Tiempos de Ocupacion Acumulados",
             colspan: 1,
@@ -610,7 +707,7 @@ export const plantillaCabeceras = [
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -631,7 +728,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -657,15 +754,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Atencion Empresarial",
-    colspan: 15,
+    colspan: 15, // 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 17.
     rowspan: 1,
-    key: "atencion_empresarial", // <--- AGREGADO 'key'
+    key: "atencion_empresarial",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -686,7 +783,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 3,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -710,12 +807,40 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 3,
+        colspan: 5, // 2 (Servidor 1) + 2 (Servidor 2) + 1 (Tiempos de Ocupacion Acumulados) = 5
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
-          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 2",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
           {
             name: "Tiempos de Ocupacion Acumulados",
             colspan: 1,
@@ -728,7 +853,7 @@ export const plantillaCabeceras = [
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -749,7 +874,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -775,15 +900,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Postales y Envios Especiales",
-    colspan: 14,
+    colspan: 11, // 3 (Llegada) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 15.
     rowspan: 1,
-    key: "postales_y_envios_especiales", // <--- AGREGADO 'key'
+    key: "postales_y_envios_especiales",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -804,7 +929,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 3,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -828,11 +953,25 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2,
+        colspan: 3, // 2 (Servidor 1) + 1 (Tiempos de Ocupacion Acumulados) = 3
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
           {
             name: "Tiempos de Ocupacion Acumulados",
             colspan: 1,
@@ -845,7 +984,7 @@ export const plantillaCabeceras = [
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -866,7 +1005,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -892,15 +1031,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Atencion Empresarial con Ausencia",
-    colspan: 13,
+    colspan: 10, // The comment is correct: 3 (llegada) + 3 (cola) + 2 (servidores: 2 * 1 estado) + 3 (Fin de Atencion) + 2 (Estadisticos) = 13.
     rowspan: 1,
-    key: "atencion_empresarial_con_ausencia", // <--- AGREGADO 'key'
+    key: "atencion_empresarial_con_ausencia",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -921,7 +1060,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 3,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -945,24 +1084,35 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2,
+        colspan: 2, // 1 (Servidor Periodico: Estado) + 1 (Servidor 2: Estado) = 2.
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
           {
             name: "Servidor Periodico",
             colspan: 1,
             rowspan: 1,
             key: "servidor_periodico",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+            ],
           },
-          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+            ],
+          },
         ],
       },
       {
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -983,7 +1133,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 2,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -1003,15 +1153,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Venta de Sellos y Sobres sin 1 Empleado",
-    colspan: 13,
+    colspan: 13, // 3 (Llegada) + 2 (Cola) + 5 (Servidores) + 3 (Fin de Atencion) + 2 (Estadisticos) = 15.
     rowspan: 1,
-    key: "venta_de_sellos_y_sobres_sin_1_empleado", // <--- AGREGADO 'key'
+    key: "venta_de_sellos_y_sobres_sin_1_empleado",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -1032,7 +1182,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 2,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -1050,12 +1200,40 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 3,
+        colspan: 5, // 2 (Servidor 1) + 2 (Servidor 2) + 1 (Tiempos de Ocupacion Acumulados) = 5
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
-          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Servidor 2",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
           {
             name: "Tiempos de Ocupacion Acumulados",
             colspan: 1,
@@ -1068,7 +1246,7 @@ export const plantillaCabeceras = [
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -1089,7 +1267,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 2,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -1109,15 +1287,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Atencion Empresarial con Prioridad",
-    colspan: 20,
+    colspan: 23, // 3 (Llegada) + 2 (Prioridad) + 3 (Cola sin Prioridad) + 3 (Cola con Prioridad) + 2 (Servidores) + 3 (Fin de Atencion) + 4 (Estadisticos) = 20. Original was 11, adjusted to 20
     rowspan: 1,
-    key: "atencion_empresarial_con_prioridad", // <--- AGREGADO 'key'
+    key: "atencion_empresarial_con_prioridad",
     subheaders: [
       {
         name: "Llegada de Cliente",
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente", // <--- AGREGADO 'key'
+        key: "llegada_de_cliente",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -1138,7 +1316,7 @@ export const plantillaCabeceras = [
         name: "Prioridad",
         colspan: 2,
         rowspan: 1,
-        key: "prioridad", // <--- AGREGADO 'key'
+        key: "prioridad",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -1153,7 +1331,7 @@ export const plantillaCabeceras = [
         name: "Cola sin Prioridad",
         colspan: 3,
         rowspan: 1,
-        key: "cola_sin_prioridad", // <--- AGREGADO 'key'
+        key: "cola_sin_prioridad",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -1179,7 +1357,7 @@ export const plantillaCabeceras = [
         name: "Cola con Prioridad",
         colspan: 3,
         rowspan: 1,
-        key: "cola_con_prioridad", // <--- AGREGADO 'key'
+        key: "cola_con_prioridad",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -1203,19 +1381,35 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2,
+        colspan: 2, // 1 (Servidor 1: Estado) + 1 (Servidor 2: Estado) = 2.
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
+        key: "servidores",
         subheaders: [
-          { name: "Servidor 1", colspan: 1, rowspan: 1, key: "servidor_1" },
-          { name: "Servidor 2", colspan: 1, rowspan: 1, key: "servidor_2" },
+          {
+            name: "Servidor 1",
+            colspan: 1,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+            ],
+          },
+          {
+            name: "Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "servidor_2",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+            ],
+          },
         ],
       },
       {
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -1236,7 +1430,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 4,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos CP",
@@ -1268,15 +1462,15 @@ export const plantillaCabeceras = [
   },
   {
     name: "Post Envio de Paquetes",
-    colspan: 13,
+    colspan: 11, //  2 (Solicitud) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 14. Original was 11, adjusted to 14
     rowspan: 1,
-    key: "post_envio_de_paquetes", // <--- AGREGADO 'key'
+    key: "post_envio_de_paquetes",
     subheaders: [
       {
-        name: "Solicitud ",
+        name: "Solicitud del Servicio",
         colspan: 2,
         rowspan: 1,
-        key: "solicitud_del_servicio", // <--- AGREGADO 'key'
+        key: "solicitud_del_servicio",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           { name: "Solicita", colspan: 1, rowspan: 1, key: "solicita" },
@@ -1286,7 +1480,7 @@ export const plantillaCabeceras = [
         name: "Cola",
         colspan: 3,
         rowspan: 1,
-        key: "cola", // <--- AGREGADO 'key'
+        key: "cola",
         subheaders: [
           {
             name: "Clientes en Cola",
@@ -1310,16 +1504,38 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2,
+        colspan: 3, // 2 (Servidor 1) + 1 (Tiempos de Ocupacion Acumulados) = 3
         rowspan: 1,
-        key: "servidores", // <--- AGREGADO 'key'
-        subheaders: [],
+        key: "servidores",
+        subheaders: [
+          {
+            name: "Servidor 1",
+            colspan: 2,
+            rowspan: 1,
+            key: "servidor_1",
+            subheaders: [
+              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
+            ],
+          },
+          {
+            name: "Tiempos de Ocupacion Acumulados",
+            colspan: 1,
+            rowspan: 1,
+            key: "tiempos_de_ocupacion_acumulados",
+          },
+        ],
       },
       {
         name: "Fin de Atencion",
         colspan: 3,
         rowspan: 1,
-        key: "fin_de_atencion", // <--- AGREGADO 'key'
+        key: "fin_de_atencion",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
           {
@@ -1340,7 +1556,7 @@ export const plantillaCabeceras = [
         name: "Estadisticos",
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos", // <--- AGREGADO 'key'
+        key: "estadisticos",
         subheaders: [
           {
             name: "Clientes Atendidos",
@@ -1365,7 +1581,6 @@ export const plantillaCabeceras = [
     ],
   },
 ];
-
 const abreviaciones = {
   envio_de_paquetes: "EP",
   reclamaciones_y_devoluciones: "RyD",
@@ -1438,6 +1653,52 @@ export const plantillaCofig = {
     },
   },
 };
+const serviciosBase = [
+  "envio_de_paquetes",
+  "reclamaciones_y_devoluciones",
+  "venta_de_sellos_y_sobres",
+  "atencion_empresarial",
+  "postales_y_envios_especiales",
+];
+const servicios = [
+  ...serviciosBase,
+  "atencion_empresarial_con_ausencia",
+  "venta_de_sellos_y_sobres_sin_1_empleado",
+  "atencion_empresarial_con_prioridad",
+  "post_envio_de_paquetes",
+];
+
+const setNullsFila = (fila) => {
+  servicios.forEach((servicio) => {
+    // Resetear llegada_de_cliente
+    if (fila[servicio]?.llegada_de_cliente) {
+      fila[servicio].llegada_de_cliente.rnd = null;
+      fila[servicio].llegada_de_cliente.tiempo_entre_llegada = null;
+      fila[servicio].llegada_de_cliente.hora_de_llegada = null;
+    }
+
+    // Resetear fin_de_atencion
+    if (fila[servicio]?.fin_de_atencion) {
+      fila[servicio].fin_de_atencion.rnd = null;
+      fila[servicio].fin_de_atencion.tiempo_de_atencion = null;
+      fila[servicio].fin_de_atencion.hora_de_fin_de_atencion = null;
+    }
+  });
+
+  // Resetear prioridad
+  if (fila.atencion_empresarial_con_prioridad?.prioridad) {
+    fila.atencion_empresarial_con_prioridad.prioridad.rnd = null;
+    fila.atencion_empresarial_con_prioridad.prioridad.tipo_prioridad = null;
+  }
+
+  // Resetear solicitud de servicio
+  if (fila.post_envio_de_paquetes?.solicitud_del_servicio) {
+    fila.post_envio_de_paquetes.solicitud_del_servicio.rnd = null;
+    fila.post_envio_de_paquetes.solicitud_del_servicio.solicita = null;
+  }
+
+  return fila;
+};
 
 const ajustarServidores = (config) => {
   const cant_servidores_envio_de_paquetes =
@@ -1450,8 +1711,10 @@ const ajustarServidores = (config) => {
 
   // Agregar servidores dinámicamente
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
-    plantillaFila["post_envio_de_paquetes"].servidores[`servidor_${i}`] =
-      "libre";
+    plantillaFila["post_envio_de_paquetes"].servidores[`servidor_${i}`] = {
+      estado: "libre",
+      inicio_ocupacion: null,
+    };
   }
 
   // Actualizar cabeceras
@@ -1469,9 +1732,23 @@ const ajustarServidores = (config) => {
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
     servidoresSubheader.subheaders.push({
       name: `Servidor ${i}`,
-      colspan: 1,
+      colspan: 2,
       rowspan: 1,
       key: `servidor_${i}`,
+      subheaders: [
+        {
+          name: "Estado",
+          colspan: 1,
+          rowspan: 1,
+          key: "estado",
+        },
+        {
+          name: "Inicio de Ocupación",
+          colspan: 1,
+          rowspan: 1,
+          key: "inicio_ocupacion",
+        },
+      ],
     });
   }
 
@@ -1483,9 +1760,9 @@ const ajustarServidores = (config) => {
   });
 
   // Actualizar colspan total
-  servidoresSubheader.colspan = cant_servidores_envio_de_paquetes + 1;
+  servidoresSubheader.colspan = cant_servidores_envio_de_paquetes * 2 + 1;
 
-  // Recalcular colspan total para la sección
+  // Recalcular colspan total para la sección "Post Envio de Paquetes"
   postEnvioDePaquetesHeader.colspan =
     postEnvioDePaquetesHeader.subheaders.reduce(
       (total, sub) => total + sub.colspan,
@@ -1506,7 +1783,8 @@ const procesarLlegadaGenerica = (
   eventos,
   fila,
   config,
-  colas
+  colas,
+  filaPrevia
 ) => {
   /// incremetrar los clientes registrados
   clientes_registrados[evento.servicio] += 1;
@@ -1556,7 +1834,8 @@ const procesarLlegadaGenerica = (
   } else {
     /// ocupar un servidor
     const servidor = serividoresLibres[0];
-    fila[evento.servicio].servidores[servidor] = "ocupado";
+    fila[evento.servicio].servidores[servidor].estado = "ocupado";
+    fila[evento.servicio].servidores[servidor].inicio_ocupacion = fila.reloj;
 
     /// generar el fin de atencion
     const finAtencion = generadorExponencial(
@@ -1581,6 +1860,15 @@ const procesarLlegadaGenerica = (
       tiempo_de_atencion: finAtencion.value,
       servidor, /// para saber que servidor se debe liberar
     });
+
+    /// determinar si el servidor venía de estar libre
+    const estabaLibre =
+      filaPrevia[evento.servicio].servidores[servidor].estado === "libre";
+
+    /// actualizo el inicio de ocupación con la hora en que se ocupa nuevamente
+    if (estabaLibre) {
+      fila[evento.servicio].servidores[servidor].inicio_ocupacion = fila.reloj;
+    }
   }
 };
 
@@ -1651,7 +1939,7 @@ const procesarLlegadaConPrioridad = (
   } else {
     // Ocupar servidor
     const servidor = servidoresLibres[0];
-    fila[evento.servicio].servidores[servidor] = "ocupado";
+    fila[evento.servicio].servidores[servidor].estado = "ocupado";
 
     // Generar fin de atención
     const finAtencion = generadorExponencial(
@@ -1683,12 +1971,11 @@ const procesarFinAtencionGenerica = (
   fila,
   evento,
   colas,
-  tiempos_de_ocupacion_acumulados,
   config,
-  eventos
+  eventos,
+  filaPrevia
 ) => {
   fila[evento.servicio].estadisticos.clientes_atendidos += 1;
-  tiempos_de_ocupacion_acumulados[evento.servicio] += evento.tiempo_de_atencion;
 
   /// verificar si se debe ausentar el servidor
   const debeAusentarseServidor = evento?.con_ausencia === true;
@@ -1709,8 +1996,8 @@ const procesarFinAtencionGenerica = (
 
   /// comprovar si hay clientes en la cola (si debe ausentarse el servidor se omite)
   if (clienteMasAntiguoEnCola) {
-    /// el servidor se matiene ocupado
-    fila[evento.servicio].servidores[evento.servidor] = "ocupado";
+    /// el servidor se mantiene ocupado
+    fila[evento.servicio].servidores[evento.servidor].estado = "ocupado";
 
     /// actualizo la logitud de la cola
     fila[evento.servicio].cola.clientes_en_cola -= 1;
@@ -1782,31 +2069,41 @@ const procesarFinAtencionGenerica = (
   } else {
     if (debeAusentarseServidor) {
       //  marcarlo como ausente inmediatamente
-      fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
+      fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
         "ausente";
     } else {
       /// liberar el servidor
-      fila[evento.servicio].servidores[evento.servidor] = "libre";
-    }
+      fila[evento.servicio].servidores[evento.servidor].estado = "libre";
+      fila[evento.servicio].servidores[evento.servidor].inicio_ocupacion = null;
 
-    /// verificar si se debe calcular el porcentaje de ocupacion (se recalcula únicamente cuando el servidor se libera)
+      /// verificar si se debe calcular el porcentaje de ocupacion (se recalcula únicamente cuando el servidor se libera)
+      if ("porcentaje_de_ocupacion" in fila[evento.servicio].estadisticos) {
+        /// actualizar los tiempos de ocupación acumulados
+        let tiempoAcum =
+          filaPrevia[evento.servicio].servidores
+            .tiempos_de_ocupacion_acumulados;
 
-    if ("porcentaje_de_ocupacion" in fila[evento.servicio].estadisticos) {
-      /// actualizar los tiempos de ocupación acumulados
-      const tiempoAcum = tiempos_de_ocupacion_acumulados[evento.servicio];
-      fila[evento.servicio].servidores.tiempos_de_ocupacion_acumulados =
-        tiempoAcum;
+        let tiempoServidor =
+          fila.reloj -
+          filaPrevia[evento.servicio].servidores[evento.servidor]
+            .inicio_ocupacion;
 
-      // nos aseguramos de que el reloj no sea cero para evitar división por cero
-      const tiempoTotal = fila.reloj > 0 ? fila.reloj : 1;
-      const cantServidores =
-        config.tasas[evento.servicio].cantidad_de_servidores;
+        tiempoAcum += tiempoServidor;
 
-      const porcDeOcupacion =
-        (tiempoAcum / (cantServidores * tiempoTotal)) * 100;
+        fila[evento.servicio].servidores.tiempos_de_ocupacion_acumulados =
+          tiempoAcum;
 
-      fila[evento.servicio].estadisticos.porcentaje_de_ocupacion =
-        porcDeOcupacion;
+        // Calcular porcentaje de ocupación
+        const tiempoTotal = fila.reloj > 0 ? fila.reloj : 1;
+        const cantServidores =
+          config.tasas[evento.servicio].cantidad_de_servidores;
+        const porcDeOcupacion =
+          (fila[evento.servicio].servidores.tiempos_de_ocupacion_acumulados /
+            (cantServidores * tiempoTotal)) *
+          100;
+        fila[evento.servicio].estadisticos.porcentaje_de_ocupacion =
+          porcDeOcupacion;
+      }
     }
   }
 };
@@ -1816,12 +2113,8 @@ const procesarFinAtencionConPrioridad = (
   evento,
   colas,
   config,
-  eventos,
-  tiempos_de_ocupacion_acumulados
+  eventos
 ) => {
-  // Incrementar tiempos de ocupación
-  tiempos_de_ocupacion_acumulados[evento.servicio] += evento.tiempo_de_atencion;
-
   // Determinar qué cola tiene clientes (priorizando la cola con prioridad)
   let colaActual = "cola_con_prioridad";
   if (colas[evento.servicio][colaActual].length === 0) {
@@ -1901,7 +2194,7 @@ const procesarFinAtencionConPrioridad = (
     });
   } else {
     // Liberar el servidor si no hay clientes en ninguna cola
-    fila[evento.servicio].servidores[evento.servidor] = "libre";
+    fila[evento.servicio].servidores[evento.servidor].estado = "libre";
   }
 };
 
@@ -1923,21 +2216,6 @@ const registrarEventoRegreso = (reloj, eventos) => {
     hora: reloj + 20 / 60, /// hora actual + 20 min
   });
 };
-
-const serviciosBase = [
-  "envio_de_paquetes",
-  "reclamaciones_y_devoluciones",
-  "venta_de_sellos_y_sobres",
-  "atencion_empresarial",
-  "postales_y_envios_especiales",
-];
-const servicios = [
-  ...serviciosBase,
-  "atencion_empresarial_con_ausencia",
-  "venta_de_sellos_y_sobres_sin_1_empleado",
-  "atencion_empresarial_con_prioridad",
-  "post_envio_de_paquetes",
-];
 
 const inicializarSimulacion = (config, eventos, clientes_registrados) => {
   const fila = JSON.parse(JSON.stringify(plantillaFila));
@@ -2066,18 +2344,6 @@ const encontrarClienteMasAntiguo = (cola, reloj) => {
   }
 };
 
-const encontrarServidoresLibres = (nombreServicio, fila) => {
-  const servidoresLibres = [];
-
-  Object.entries(fila[nombreServicio].servidores).forEach(([clave, valor]) => {
-    /// valida que sea la columna servidor_n y no el acumulador de los tiempos de ocupación
-    if (clave.includes("servidor") && valor === "libre")
-      servidoresLibres.push(clave);
-  });
-
-  return servidoresLibres;
-};
-
 export const gestorSimulacion = (config) => {
   // Ajustar la plantilla de servidores según la configuración
   ajustarServidores(config);
@@ -2109,18 +2375,6 @@ export const gestorSimulacion = (config) => {
       cola_sin_prioridad: [],
     },
     post_envio_de_paquetes: [],
-  };
-
-  const tiempos_de_ocupacion_acumulados = {
-    envio_de_paquetes: 0,
-    reclamaciones_y_devoluciones: 0,
-    venta_de_sellos_y_sobres: 0,
-    atencion_empresarial: 0,
-    postales_y_envios_especiales: 0,
-    atencion_empresarial_con_ausencia: 0,
-    venta_de_sellos_y_sobres_sin_1_empleado: 0,
-    atencion_empresarial_con_prioridad: 0,
-    post_envio_de_paquetes: 0,
   };
 
   let filaPrevia = null;
@@ -2164,27 +2418,21 @@ export const gestorSimulacion = (config) => {
             eventos,
             fila,
             config,
-            colas
+            colas,
+            filaPrevia
           );
         }
       } else if (evento?.tipo === "fin_de_atencion") {
         if (evento.servicio === "atencion_empresarial_con_prioridad") {
-          procesarFinAtencionConPrioridad(
-            fila,
-            evento,
-            colas,
-            config,
-            eventos,
-            tiempos_de_ocupacion_acumulados
-          );
+          procesarFinAtencionConPrioridad(fila, evento, colas, config, eventos);
         } else {
           procesarFinAtencionGenerica(
             fila,
             evento,
             colas,
-            tiempos_de_ocupacion_acumulados,
             config,
-            eventos
+            eventos,
+            filaPrevia
           );
 
           if (evento.servicio === "envio_de_paquetes") {
@@ -2214,7 +2462,7 @@ export const gestorSimulacion = (config) => {
                 fila,
                 config,
                 colas,
-                tiempos_de_ocupacion_acumulados
+                filaPrevia
               );
             }
           }
@@ -2222,7 +2470,8 @@ export const gestorSimulacion = (config) => {
       } else if (evento.tipo === "ausencia_servidor") {
         // Verificar estado actual del servidor
         const estadoServidor =
-          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico;
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico
+            .estado;
 
         if (estadoServidor === "ocupado") {
           // Si está ocupado, programar ausencia cuando termine la atención actual
@@ -2246,7 +2495,7 @@ export const gestorSimulacion = (config) => {
           continue;
         } else if (estadoServidor === "libre") {
           // Si está libre, marcarlo como ausente inmediatamente
-          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
             "ausente";
           // Programar regreso después de 20 minutos
           registrarEventoRegreso(evento.hora, eventos);
@@ -2254,7 +2503,7 @@ export const gestorSimulacion = (config) => {
         // Si ya está ausente, no hacer nada (ya hay un evento de regreso programado)
       } else if (evento.tipo === "regreso_servidor") {
         // Restaurar servidor a estado libre por defecto
-        fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
+        fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
           "libre";
 
         // Programar próxima ausencia en 1 hora
@@ -2267,7 +2516,7 @@ export const gestorSimulacion = (config) => {
             fila.reloj
           );
           /// pasa al etado ocupado en el cado de haber clientes en la cola
-          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico =
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
             "ocupado";
           const tiempoEspera =
             evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
@@ -2309,31 +2558,28 @@ export const gestorSimulacion = (config) => {
         // En el bloque esFin
         servicios.forEach((servicio) => {
           if ("tiempos_de_ocupacion_acumulados" in fila[servicio].servidores) {
-            const tiempoAcum = tiempos_de_ocupacion_acumulados[servicio];
+            let tiempoAcum =
+              filaPrevia[servicio].servidores.tiempos_de_ocupacion_acumulados;
+
+            // Sumar tiempo de servidores que aún están ocupados
+            Object.entries(filaPrevia[servicio].servidores).forEach(
+              ([clave, valor]) => {
+                if (clave.includes("servidor") && valor.estado === "ocupado") {
+                  tiempoAcum += fila.reloj - valor.inicio_ocupacion;
+                }
+              }
+            );
+
             fila[servicio].servidores.tiempos_de_ocupacion_acumulados =
               tiempoAcum;
 
             const tiempoTotal = fila.reloj > 0 ? fila.reloj : 1;
             const cantServidores =
               config.tasas[servicio].cantidad_de_servidores;
-
-            // Calcular tiempo promedio por servidor
-            const tiempoProm = tiempoAcum / cantServidores;
-            const porcDeOcupacion = (tiempoProm / tiempoTotal) * 100;
-
+            const porcDeOcupacion =
+              (tiempoAcum / (cantServidores * tiempoTotal)) * 100;
             fila[servicio].estadisticos.porcentaje_de_ocupacion =
               porcDeOcupacion;
-          }
-
-          // Recalcular tiempos promedio de espera
-          if ("tiempo_promedio_de_espera" in fila[servicio].estadisticos) {
-            const clientesAtendidos =
-              fila[servicio].estadisticos.clientes_atendidos;
-            const tiempoEsperaAcum =
-              fila[servicio].cola.tiempos_de_espera_acumulados;
-
-            fila[servicio].estadisticos.tiempo_promedio_de_espera =
-              clientesAtendidos > 0 ? tiempoEsperaAcum / clientesAtendidos : 0;
           }
         });
       }
@@ -2459,4 +2705,16 @@ export const gestorSimulacion = (config) => {
     filas: filasVisibles,
     rtas,
   };
+};
+
+const encontrarServidoresLibres = (nombreServicio, fila) => {
+  const servidoresLibres = [];
+
+  Object.entries(fila[nombreServicio].servidores).forEach(([clave, valor]) => {
+    /// valida que sea la columna servidor_n y no el acumulador de los tiempos de ocupación
+    if (clave.includes("servidor") && valor.estado === "libre")
+      servidoresLibres.push(clave);
+  });
+
+  return servidoresLibres;
 };

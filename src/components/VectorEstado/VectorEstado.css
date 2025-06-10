@@ -1,85 +1,119 @@
 /* VectorEstado.css */
 
-/* Contenedor para el scroll y la cabecera pegajosa */
 .table-responsive-wrapper {
-  max-height: 80vh; /* Altura máxima para el scroll */
-  overflow: auto; /* Habilita el scroll */
-  border: none; /* Borde más suave */
-  border-top: 1px solid #dcdcdc; /* Borde superior para el contenedor */
-  border-radius: 0.1rem; /* Bordes ligeramente redondeados */
+  max-height: 80vh;
+  overflow: auto;
+  border: none;
+  border-top: 1px solid #dcdcdc;
+  border-radius: 0.1rem;
 }
 
-/* Estilos generales de la tabla */
+/* Estructura principal de la tabla */
 .compact-table {
   width: 100%;
-  table-layout: auto; /* IMPORTANTE: Asegura que el ancho de la columna se ajuste al contenido */
-  border-collapse: collapse; /* Elimina el espacio entre celdas para un look más compacto */
+  table-layout: auto;
+  border-collapse: collapse;
 }
 
-/* Estilos para las celdas de cabecera y datos */
+/* Estilos base para todas las celdas */
 .compact-table th,
 .compact-table td {
-  padding: 0; /* Relleno ajustado para compacidad, pero con espacio */
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-  overflow: hidden; /* Oculta el contenido que excede el ancho */
-  text-overflow: ellipsis; /* Muestra puntos suspensivos para el contenido oculto */
-  border: 1px solid #dcdcdc; /* Bordes más finos y suaves para todas las celdas */
-  box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
-  height: 2.5em; /* Altura fija para las celdas para uniformidad */
+  padding: 0.3rem;
+  border: 1px solid #dcdcdc;
+  box-sizing: border-box;
+  width: 130px;
+  min-width: 130px;
+  max-width: 130px;
+  vertical-align: middle;
+  text-align: center;
 }
 
-.compact-table th {
-  /* Ancho mínimo para las cabeceras, permitiendo que crezcan si el contenido es mayor */
-  min-width: 130px; /* Un valor inicial razonable, ajusta según sea necesario */
-}
-
+/* Celdas del cuerpo mantienen nowrap */
 .compact-table td {
-  /* Ancho mínimo para las celdas de datos, permitiendo que crezcan */
-  min-width: 130px; /* Un valor inicial razonable, ajusta según sea necesario */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 2.5em;
+}
+
+/* Cabeceras permiten salto de línea */
+.compact-table th {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  min-height: 2.5em;
+  line-height: 1.2;
+}
+
+/* Excepción para columnas especiales (Simulación, Evento, Reloj) */
+.compact-table th:nth-child(1),
+.compact-table th:nth-child(2),
+.compact-table th:nth-child(3),
+.compact-table td:nth-child(1),
+.compact-table td:nth-child(2),
+.compact-table td:nth-child(3) {
+  width: auto;
+  min-width: 100px;
+  max-width: 200px;
 }
 
 /* Cabecera pegajosa */
 .sticky-header {
-  position: -webkit-sticky; /* Para compatibilidad con Safari */
+  position: -webkit-sticky;
   position: sticky;
-  top: 0; /* Pega la cabecera en la parte superior del contenedor de scroll */
-  z-index: 10; /* Asegura que la cabecera esté por encima del contenido al hacer scroll */
-  background-color: #f8f9fa; /* Color de fondo para la cabecera pegajosa */
+  top: 0;
+  z-index: 10;
+  background-color: #f8f9fa;
 }
 
-/* Estilos para diferenciar los niveles de las cabeceras */
+/* Estilos para niveles de cabecera */
 .header-level-0 {
   background-color: #e0e0e0;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
-  padding: 0;
+  min-height: 50px;
+  height: auto;
 }
 
 .header-level-1 {
-  background-color: #fff;
+  background-color: #f0f0f0;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
-  padding: 0;
-  border-bottom: none !important;
+  min-height: 45px;
+  height: auto;
 }
 
 .header-level-2 {
-  background-color: #fff;
-  font-weight: normal;
-  width: 130px; /* Establece el ancho exacto */
-  min-width: 130px; /* Asegura que no sea más pequeño */
-  max-width: 130px; /* Asegura que no sea más grande */
+  background-color: #f8f8f8;
+  font-weight: 600;
   text-align: center;
   vertical-align: middle;
-  padding: 0 !important; /* Ajustar padding */
-  border-bottom: none !important;
-  min-height: 75px !important;
-  height: 75px !important;
-  max-height: 75px !important;
+  min-height: 40px;
+  height: auto;
 }
-/* Alineación de celdas */
+
+.header-level-3 {
+  background-color: #fff;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  min-height: 35px;
+  height: auto;
+}
+
+/* Estilos para filas del cuerpo */
+.compact-table tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.compact-table tbody tr:hover {
+  background-color: #e8e8e8;
+}
+
+/* Alineación general */
 .text-center {
   text-align: center;
 }
@@ -88,43 +122,18 @@
   vertical-align: middle;
 }
 
-/* Ajustes para las tablas anidadas dentro de las cabeceras */
-.nested-header-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0.1rem;
-}
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .compact-table th,
+  .compact-table td {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    font-size: 0.85rem;
+    padding: 0.2rem;
+  }
 
-.nested-header-table th {
-  border: 1px solid #dcdcdc;
-  padding: 0.5em 0; /* Ajustar padding */
-  vertical-align: top;
-  min-width: 130px; /* Ancho mínimo para las celdas de cabecera internas */
-  width: auto; /* Permitir ajuste automático */
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: normal; /* Permite que el texto se rompa en múltiples líneas */
-  word-break: break-word; /* Ayuda a romper palabras largas si no caben */
-}
-
-.nested-header-table th:first-child {
-  border-left: none !important;
-}
-
-.nested-header-table th:last-child {
-  border-right: none !important;
-}
-
-/* Ancho de columnas para las cabeceras principales (Simulacion, Evento, Reloj) */
-.compact-table th[colspan="1"][rowspan="3"] {
-  min-width: 130px; /* Un poco más de ancho para estas columnas clave */
-}
-
-/* Estilos para las filas de datos */
-.compact-table tbody tr:nth-child(even) {
-  background-color: #f8f8f8;
-}
-
-.compact-table tbody tr:hover {
-  background-color: #e8e8e8;
+  .compact-table td {
+    height: 2.5em;
+  }
 }
