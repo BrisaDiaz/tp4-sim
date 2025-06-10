@@ -55,7 +55,7 @@
 .compact-table td:nth-child(3) {
   width: auto;
   min-width: 100px;
-  max-width: 200px;
+  max-width: 450px;
 }
 
 /* Cabecera pegajosa */
