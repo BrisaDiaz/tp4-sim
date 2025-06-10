@@ -1963,7 +1963,36 @@ const procesarLlegadaConPrioridad = (
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
       servidor,
+      cola,
+      espera_en_cola: 0,
     });
+
+    // Actualizar contadores según el tipo de cola
+    if (cola === "cola_con_prioridad") {
+      fila[evento.servicio].estadisticos.clientes_atendidos_cp += 1;
+    } else {
+      fila[evento.servicio].estadisticos.clientes_atendidos_sp += 1;
+    }
+
+    // Calcular promedios
+    const clientesAtendidos =
+      cola === "cola_con_prioridad"
+        ? fila[evento.servicio].estadisticos.clientes_atendidos_cp
+        : fila[evento.servicio].estadisticos.clientes_atendidos_sp;
+
+    if (clientesAtendidos > 0) {
+      const tiempoEsperaAcum =
+        fila[evento.servicio][cola].tiempos_de_espera_acumulados;
+      const promDeEspera = tiempoEsperaAcum / clientesAtendidos;
+
+      if (cola === "cola_con_prioridad") {
+        fila[evento.servicio].estadisticos.tiempo_promedio_de_espera_ccp =
+          promDeEspera;
+      } else {
+        fila[evento.servicio].estadisticos.tiempo_promedio_de_espera_csp =
+          promDeEspera;
+      }
+    }
   }
 };
 
@@ -1994,6 +2023,9 @@ const procesarFinAtencionGenerica = (
         : null;
   }
 
+  /// el tiempo que estubo en cola el proximo cliente a atender
+  let tiempoEspera = 0;
+
   /// comprovar si hay clientes en la cola (si debe ausentarse el servidor se omite)
   if (clienteMasAntiguoEnCola) {
     /// el servidor se mantiene ocupado
@@ -2003,49 +2035,8 @@ const procesarFinAtencionGenerica = (
     fila[evento.servicio].cola.clientes_en_cola -= 1;
 
     /// calculo el tiempo de permanencia en cola
-    const tiempoEspera = evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
+    tiempoEspera = evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
 
-    /// verificar si se debe calcular los tiempos promedios de espera
-    if ("tiempo_promedio_de_espera" in fila[evento.servicio].estadisticos) {
-      /// actualizo los tiempos acumulados en cola
-      fila[evento.servicio].cola.tiempos_de_espera_acumulados += tiempoEspera;
-
-      const tiempoEsperaAcum =
-        fila[evento.servicio].cola.tiempos_de_espera_acumulados;
-      const clientesAtendidos =
-        fila[evento.servicio].estadisticos.clientes_atendidos;
-
-      // Evitar división por cero
-      const promDeEspera =
-        clientesAtendidos > 0 ? tiempoEsperaAcum / clientesAtendidos : 0;
-
-      fila[evento.servicio].estadisticos.tiempo_promedio_de_espera =
-        promDeEspera;
-    }
-
-    /// verificar si se debe calcular la probabilidad de espera >15min
-    if (
-      "probabilidad_de_espera_mayor_a_15m" in fila[evento.servicio].estadisticos
-    ) {
-      /// actualizar la cantidad de esperas > 15 min
-      const esperaSup15m = tiempoEspera > 15 / 60 ? true : false;
-
-      if (esperaSup15m) {
-        fila[evento.servicio].cola.esperas_mayores_a_15m += 1;
-      }
-
-      if (fila[evento.servicio].estadisticos.clientes_atendidos > 0) {
-        const prob =
-          fila[evento.servicio].cola.esperas_mayores_a_15m /
-          fila[evento.servicio].estadisticos.clientes_atendidos;
-        fila[evento.servicio].estadisticos.probabilidad_de_espera_mayor_a_15m =
-          prob;
-      } else {
-        fila[
-          evento.servicio
-        ].estadisticos.probabilidad_de_espera_mayor_a_15m = 0;
-      }
-    }
     const finAtencion = generadorExponencial(
       config.tasas[evento.servicio].tasa_de_atencion
     );
@@ -2106,6 +2097,44 @@ const procesarFinAtencionGenerica = (
       }
     }
   }
+  /// verificar si se debe calcular los tiempos promedios de espera
+  if ("tiempo_promedio_de_espera" in fila[evento.servicio].estadisticos) {
+    /// actualizo los tiempos acumulados en cola
+    fila[evento.servicio].cola.tiempos_de_espera_acumulados += tiempoEspera;
+
+    const tiempoEsperaAcum =
+      fila[evento.servicio].cola.tiempos_de_espera_acumulados;
+    const clientesAtendidos =
+      fila[evento.servicio].estadisticos.clientes_atendidos;
+
+    // Evitar división por cero
+    const promDeEspera =
+      clientesAtendidos > 0 ? tiempoEsperaAcum / clientesAtendidos : 0;
+
+    fila[evento.servicio].estadisticos.tiempo_promedio_de_espera = promDeEspera;
+  }
+
+  /// verificar si se debe calcular la probabilidad de espera >15min
+  if (
+    "probabilidad_de_espera_mayor_a_15m" in fila[evento.servicio].estadisticos
+  ) {
+    /// actualizar la cantidad de esperas > 15 min
+    const esperaSup15m = tiempoEspera > 15 / 60 ? true : false;
+
+    if (esperaSup15m) {
+      fila[evento.servicio].cola.esperas_mayores_a_15m += 1;
+    }
+
+    if (fila[evento.servicio].estadisticos.clientes_atendidos > 0) {
+      const prob =
+        fila[evento.servicio].cola.esperas_mayores_a_15m /
+        fila[evento.servicio].estadisticos.clientes_atendidos;
+      fila[evento.servicio].estadisticos.probabilidad_de_espera_mayor_a_15m =
+        prob;
+    } else {
+      fila[evento.servicio].estadisticos.probabilidad_de_espera_mayor_a_15m = 0;
+    }
+  }
 };
 
 const procesarFinAtencionConPrioridad = (
@@ -2130,18 +2159,18 @@ const procesarFinAtencionConPrioridad = (
       : null;
 
   if (clienteMasAntiguoEnCola) {
+    // Actualizar longitud de la cola (asegurándose de no ir a negativo)
+    fila[evento.servicio][colaActual].clientes_en_cola = Math.max(
+      0,
+      fila[evento.servicio][colaActual].clientes_en_cola - 1
+    );
+
     // Actualizar contadores según el tipo de cola
     if (colaActual === "cola_con_prioridad") {
       fila[evento.servicio].estadisticos.clientes_atendidos_cp += 1;
     } else {
       fila[evento.servicio].estadisticos.clientes_atendidos_sp += 1;
     }
-
-    // Actualizar longitud de la cola (asegurándose de no ir a negativo)
-    fila[evento.servicio][colaActual].clientes_en_cola = Math.max(
-      0,
-      fila[evento.servicio][colaActual].clientes_en_cola - 1
-    );
 
     // Calcular tiempo de espera
     const tiempoEspera = evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
@@ -2191,6 +2220,8 @@ const procesarFinAtencionConPrioridad = (
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
       servidor: evento.servidor,
+      cola: colaActual,
+      espera_en_cola: tiempoEspera,
     });
   } else {
     // Liberar el servidor si no hay clientes en ninguna cola
