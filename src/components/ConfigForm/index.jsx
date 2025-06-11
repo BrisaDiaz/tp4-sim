@@ -97,7 +97,7 @@ export default function ConfigForm({ onSubmit }) {
                 errors.simulacion?.cantidad_de_filas ? "is-invalid" : ""
               }`}
               id="cantidadRondas"
-              {...register("simulacion.filas_a_mostrar", {
+              {...register("simulacion.cantidad_de_filas", {
                 required: true,
                 min: 1,
               })}
