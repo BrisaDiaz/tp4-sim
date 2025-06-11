@@ -35,9 +35,8 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se calcula el tiempo promedio que
-            los clientes esperan en cada cola y el porcentaje de tiempo que los
-            empleados están ocupados, para evaluar la eficiencia del servicio.
+            <strong>Consigna:</strong> ¿Cuál es el tiempo de espera promedio y
+            porcentaje de ocupación para cada tipo de servicio?
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -73,9 +72,9 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se evalúa cómo afecta al servicio la
-            ausencia periódica de un empleado, comparando los tiempos de espera
-            con y sin ausencias.
+            <strong>Consigna:</strong>Si uno de los empleados de Atención
+            Empresarial cada hora debe ausentarse 12 minutos, ¿cómo cambiarían
+            los tiempos de espera?
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -121,9 +120,9 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se analiza cómo varía la Porcentaje
-            De Ocupación de los empleados si se reduce el personal en el
-            servicio de venta de sellos y sobres.
+            <strong>Consigna:</strong> 3. ¿Cuál sería el porcentaje de ocupación
+            en la venta de sellos y sobres si uno de los empleados se dedica
+            temporalmente a reclamaciones y devoluciones?
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -149,9 +148,15 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se registra la máxima cantidad de
-            clientes simultáneos en cada cola para dimensionar el espacio físico
-            necesario.
+            <strong>Consigna:</strong>Determinar el máximo número de clientes
+            que hubo simultáneamente en cada cola durante la simulación. Se
+            registra la máxima cantidad de clientes simultáneos en cada cola
+            para dimensionar el espacio físico necesario.
+          </p>
+          <p className="mb-3">
+            <strong>Justificación:</strong> Conocer el tamaño máximo de las
+            colas es crucial para dimensionar el espacio físico, planificar la
+            capacidad del sistema y aplicar estrategias para picos de demanda.
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -191,9 +196,18 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se implementa una cola prioritaria
-            para evaluar cómo afecta a los tiempos de espera de clientes
-            prioritarios vs. regulares.
+            <strong>Consigna:</strong>Proponer e implementar una cola de
+            prioridad en el área de 'Atención Empresarial', asumiendo que el 20%
+            de los clientes son clasificados con alta prioridad al llegar al
+            sistema, y determinar el impacto de esta priorización en el tiempo
+            de espera promedio de los clientes de alta prioridad y el tiempo de
+            espera promedio de los clientes de baja prioridad.
+          </p>
+          <p className="mb-3">
+            <strong>Justificación:</strong>Simular este escenario permite
+            cuantificar el efecto de la priorización en los tiempos de espera y
+            predecir si la mejora en el servicio para clientes de alta prioridad
+            afecta negativamente a los de baja prioridad.
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -234,9 +248,15 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se calcula la probabilidad de que
-            los clientes de envíos esperen más de 15 minutos, identificando
-            posibles cuellos de botella.
+            <strong>Consigna:</strong>Calcular la probabilidad de que un cliente
+            espere más de 15 minutos en el servicio 'Envíos de Paquetes'.
+          </p>
+          <p className="mb-3">
+            <strong>Justificación:</strong> El servicio de 'Envíos de Paquetes'
+            concentra el mayor flujo de clientes y es crítico para la operativa
+            diaria; determinar la probabilidad de espera superior a 15 minutos
+            permite enfocar la optimización de recursos y mejorar la experiencia
+            del usuario donde el impacto es mayor.
           </p>
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
@@ -262,10 +282,13 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Justificación:</strong> Se evalúa la viabilidad de
-            implementar un nuevo servicio derivado de envíos de paquetes,
-            analizando su Porcentaje De Ocupación y tiempos de espera.
+            <strong>Consigna:</strong>7. Se debe agregar un servicio más a la
+            oficina de correos, donde el 50% de los clientes que llegan a
+            despachar Paquetes o Postales, deben pasar sí o sí por ese nuevo
+            servicio. Calcular estadísticas sobre la cola y el porcentaje de
+            ocupación del nuevo servicio.
           </p>
+
           <Table striped bordered hover size="sm">
             <thead className="table-dark">
               <tr>
