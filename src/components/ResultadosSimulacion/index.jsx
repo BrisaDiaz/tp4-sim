@@ -105,7 +105,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                 {/* Usa la función de formato */}
               </tr>
               <tr>
-                <td>Incremento</td>
+                <td>Incremento en los tiempos de espera</td>
                 <td>{resultados.punto_2.incremento.toFixed(2)}%</td>
               </tr>
             </tbody>
@@ -120,8 +120,8 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Consigna:</strong> 3. ¿Cuál sería el porcentaje de ocupación
-            en la venta de sellos y sobres si uno de los empleados se dedica
+            <strong>Consigna:</strong> ¿Cuál sería el porcentaje de ocupación en
+            la venta de sellos y sobres si uno de los empleados se dedica
             temporalmente a reclamaciones y devoluciones?
           </p>
           <Table striped bordered hover size="sm">
@@ -133,8 +133,18 @@ const ResultadosSimulacion = ({ resultados }) => {
             </thead>
             <tbody>
               <tr>
+                <td>Venta de Sellos y Sobres Sin 1 Empleado</td>
+                <td>
+                  {resultados.punto_3.venta_de_sellos_y_sobres_sin_1_empleado.toFixed(
+                    2
+                  )}
+                </td>
+              </tr>
+              <tr>
                 <td>Venta de Sellos y Sobres</td>
-                <td>{resultados.punto_3.toFixed(2)}</td>
+                <td>
+                  {resultados.punto_3.venta_de_sellos_y_sobres.toFixed(2)}
+                </td>
               </tr>
             </tbody>
           </Table>
@@ -149,9 +159,7 @@ const ResultadosSimulacion = ({ resultados }) => {
         <Card.Body>
           <p className="mb-3">
             <strong>Consigna:</strong>Determinar el máximo número de clientes
-            que hubo simultáneamente en cada cola durante la simulación. Se
-            registra la máxima cantidad de clientes simultáneos en cada cola
-            para dimensionar el espacio físico necesario.
+            que hubo en cada cola durante la simulación.
           </p>
           <p className="mb-3">
             <strong>Justificación:</strong> Conocer el tamaño máximo de las
@@ -169,16 +177,19 @@ const ResultadosSimulacion = ({ resultados }) => {
               {Object.entries(resultados.punto_4).map(([queueName, value]) =>
                 typeof value === "object" ? (
                   Object.entries(value).map(([subQueueName, subValue]) => (
-                    <tr key={`${queueName}-${subQueueName}`}>
+                    <tr
+                      key={`${queueName} - ${subQueueName}`}
+                      className="text-capitalize"
+                    >
                       <td>
-                        {queueName.replace(/_/g, " ")} -
+                        {queueName.replace(/_/g, " ")} {" - "}
                         {subQueueName.replace(/_/g, " ")}
                       </td>
                       <td>{subValue}</td>
                     </tr>
                   ))
                 ) : (
-                  <tr key={queueName}>
+                  <tr key={queueName} className="text-capitalize">
                     <td>{queueName.replace(/_/g, " ")}</td>
                     <td>{value}</td>
                   </tr>
@@ -282,7 +293,7 @@ const ResultadosSimulacion = ({ resultados }) => {
         </Card.Header>
         <Card.Body>
           <p className="mb-3">
-            <strong>Consigna:</strong>7. Se debe agregar un servicio más a la
+            <strong>Consigna:</strong>Se debe agregar un servicio más a la
             oficina de correos, donde el 50% de los clientes que llegan a
             despachar Paquetes o Postales, deben pasar sí o sí por ese nuevo
             servicio. Calcular estadísticas sobre la cola y el porcentaje de

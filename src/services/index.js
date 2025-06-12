@@ -2528,7 +2528,7 @@ export const gestorSimulacion = (config) => {
           // Si está libre, marcarlo como ausente inmediatamente
           fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
             "ausente";
-          // Programar regreso después de 20 minutos
+          // Programar regreso después de 12 minutos
           registrarEventoRegreso(evento.hora, eventos);
         }
         // Si ya está ausente, no hacer nada (ya hay un evento de regreso programado)
@@ -2684,9 +2684,14 @@ export const gestorSimulacion = (config) => {
             .tiempo_promedio_de_espera) *
         100,
     },
-    punto_3:
-      ultimaFila.venta_de_sellos_y_sobres_sin_1_empleado.estadisticos
-        .porcentaje_de_ocupacion,
+    punto_3: {
+      venta_de_sellos_y_sobres_sin_1_empleado:
+        ultimaFila.venta_de_sellos_y_sobres_sin_1_empleado.estadisticos
+          .porcentaje_de_ocupacion,
+      venta_de_sellos_y_sobres:
+        ultimaFila.venta_de_sellos_y_sobres.estadisticos
+          .porcentaje_de_ocupacion,
+    },
     punto_4: {
       envio_de_paquetes: ultimaFila.envio_de_paquetes.cola.longitud_maxima,
       reclamaciones_y_devoluciones:
