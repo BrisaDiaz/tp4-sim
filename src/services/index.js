@@ -2691,6 +2691,14 @@ export const gestorSimulacion = (config) => {
       venta_de_sellos_y_sobres:
         ultimaFila.venta_de_sellos_y_sobres.estadisticos
           .porcentaje_de_ocupacion,
+      incremento:
+        ((ultimaFila.venta_de_sellos_y_sobres_sin_1_empleado.estadisticos
+          .porcentaje_de_ocupacion -
+          ultimaFila.venta_de_sellos_y_sobres.estadisticos
+            .porcentaje_de_ocupacion) /
+          ultimaFila.venta_de_sellos_y_sobres.estadisticos
+            .porcentaje_de_ocupacion) *
+        100,
     },
     punto_4: {
       envio_de_paquetes: ultimaFila.envio_de_paquetes.cola.longitud_maxima,

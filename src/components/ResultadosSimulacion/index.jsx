@@ -57,7 +57,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                   </td>
                   <td>{formatHoursToHHMMSS(data.tiempo_promedio_de_espera)}</td>
                   {/* Usa la función de formato */}
-                  <td>{data.porcentaje_de_ocupacion.toFixed(2)}</td>
+                  <td>{data.porcentaje_de_ocupacion.toFixed(2)}%</td>
                 </tr>
               ))}
             </tbody>
@@ -138,13 +138,18 @@ const ResultadosSimulacion = ({ resultados }) => {
                   {resultados.punto_3.venta_de_sellos_y_sobres_sin_1_empleado.toFixed(
                     2
                   )}
+                  %
                 </td>
               </tr>
               <tr>
                 <td>Venta de Sellos y Sobres</td>
                 <td>
-                  {resultados.punto_3.venta_de_sellos_y_sobres.toFixed(2)}
+                  {resultados.punto_3.venta_de_sellos_y_sobres.toFixed(2)}%
                 </td>
+              </tr>
+              <tr>
+                <td>Incremento en el porcentaje de ocupación</td>
+                <td>{resultados.punto_3.incremento.toFixed(2)}%</td>
               </tr>
             </tbody>
           </Table>
