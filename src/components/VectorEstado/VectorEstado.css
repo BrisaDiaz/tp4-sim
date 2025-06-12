@@ -81,6 +81,7 @@
 .compact-table td:nth-child(2) {
   position: -webkit-sticky;
   position: sticky;
+  min-width: 250px;
   /* El valor de 'left' debe ser la suma de los anchos de las columnas precedentes */
   /* Si la primera columna también puede crecer hasta 400px, left: 400px; */
   /* Sin embargo, si quieres que la tabla se mantenga compacta, los 130px anteriores son más consistentes. */
@@ -93,7 +94,7 @@
 .compact-table td:nth-child(3) {
   position: -webkit-sticky;
   position: sticky;
-  left: 334px; /* 130px (ancho de la primera) + 130px (ancho de la segunda) */
+  left: 379px; /* 130px (ancho de la primera) + 130px (ancho de la segunda) */
 }
 
 .compact-table td:nth-child(1)::after,
