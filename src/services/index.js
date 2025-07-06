@@ -23,7 +23,9 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
+      hora_de_fin_de_atencion_servidor_2: null,
+      hora_de_fin_de_atencion_servidor_3: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -51,7 +53,8 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
+      hora_de_fin_de_atencion_servidor_2: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -79,7 +82,8 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
+      hora_de_fin_de_atencion_servidor_2: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -106,7 +110,8 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
+      hora_de_fin_de_atencion_servidor_2: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -132,7 +137,7 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -162,7 +167,8 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_periodico: null,
+      hora_de_fin_de_atencion_servidor_2: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -187,7 +193,8 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
+      hora_de_fin_de_atencion_servidor_2: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -221,7 +228,8 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
+      hora_de_fin_de_atencion_servidor_2: null,
     },
     estadisticos: {
       clientes_atendidos_cp: 0,
@@ -247,7 +255,7 @@ const plantillaFila = {
     fin_de_atencion: {
       rnd: null,
       tiempo_de_atencion: null,
-      hora_de_fin_de_atencion: null,
+      hora_de_fin_de_atencion_servidor_1: null,
     },
     estadisticos: {
       clientes_atendidos: 0,
@@ -263,7 +271,7 @@ export const plantillaCabeceras = [
   { name: "Reloj", colspan: 1, rowspan: 3, key: "reloj" },
   {
     name: "Envio de Paquetes",
-    colspan: 24, // 3 (Llegada) + 4 (Cola) + 7 (Servidores) + 3 (Fin de Atencion) + 4 (Estadisticos) = 21.
+    colspan: 23, // Corrected: 3 (Llegada) + 4 (Cola) + 7 (Servidores) + 5 (Fin de Atencion) + 4 (Estadisticos) = 23
     rowspan: 1,
     key: "envio_de_paquetes",
     subheaders: [
@@ -396,7 +404,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 5, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 3 (Servidores) = 5
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -408,10 +416,22 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
+          },
+          {
+            name: "Fin de Atencion Servidor 3",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_3",
           },
         ],
       },
@@ -451,7 +471,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Reclamaciones y Devoluciones",
-    colspan: 13, // 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 17. Original was 13, adjusted to 17
+    colspan: 18, // Corrected: 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 4 (Fin de Atencion) + 3 (Estadisticos) = 18
     rowspan: 1,
     key: "reclamaciones_y_devoluciones",
     subheaders: [
@@ -548,7 +568,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -560,10 +580,16 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
           },
         ],
       },
@@ -597,7 +623,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Venta de Sellos y Sobres",
-    colspan: 16, // 3 (Llegada) + 3 (Cola) + 7 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 19. Original was 16, adjusted to 19
+    colspan: 21, // Corrected: 3 (Llegada) + 3 (Cola) + 7 (Servidores) + 5 (Fin de Atencion) + 3 (Estadisticos) = 21
     rowspan: 1,
     key: "venta_de_sellos_y_sobres",
     subheaders: [
@@ -709,7 +735,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 5, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 3 (Servidores) = 5
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -721,10 +747,22 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
+          },
+          {
+            name: "Fin de Atencion Servidor 3",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_3",
           },
         ],
       },
@@ -758,7 +796,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Atencion Empresarial",
-    colspan: 15, // 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 17.
+    colspan: 18, // Corrected: 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 4 (Fin de Atencion) + 3 (Estadisticos) = 18
     rowspan: 1,
     key: "atencion_empresarial",
     subheaders: [
@@ -855,7 +893,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -867,10 +905,16 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
           },
         ],
       },
@@ -904,7 +948,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Postales y Envios Especiales",
-    colspan: 11, // 3 (Llegada) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 15.
+    colspan: 15, // Corrected: 3 (Llegada) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 15
     rowspan: 1,
     key: "postales_y_envios_especiales",
     subheaders: [
@@ -986,7 +1030,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 3, // 1 (RND) + 1 (Tiempo de Atencion) + 1 (Servidor) = 3
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -998,10 +1042,10 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
           },
         ],
       },
@@ -1035,7 +1079,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Atencion Empresarial con Ausencia",
-    colspan: 10, // The comment is correct: 3 (llegada) + 3 (cola) + 2 (servidores: 2 * 1 estado) + 3 (Fin de Atencion) + 2 (Estadisticos) = 13.
+    colspan: 15, // Corrected: 3 (Llegada) + 3 (Cola) + 3 (Servidores) + 4 (Fin de Atencion) + 2 (Estadisticos) = 15
     rowspan: 1,
     key: "atencion_empresarial_con_ausencia",
     subheaders: [
@@ -1088,7 +1132,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 3, // 2 (Servidor Periodico: Estado) + 1 (Servidor 2: Estado) = 3.
+        colspan: 3, // 2 (Servidor Periodico: Estado, Tiempo Remanente) + 1 (Servidor 2: Estado) = 3
         rowspan: 1,
         key: "servidores",
         subheaders: [
@@ -1120,7 +1164,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -1132,10 +1176,16 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor Periodico",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_periodico",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
           },
         ],
       },
@@ -1163,7 +1213,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Venta de Sellos y Sobres sin 1 Empleado",
-    colspan: 13, // 3 (Llegada) + 2 (Cola) + 5 (Servidores) + 3 (Fin de Atencion) + 2 (Estadisticos) = 15.
+    colspan: 16, // Corrected: 3 (Llegada) + 2 (Cola) + 5 (Servidores) + 4 (Fin de Atencion) + 2 (Estadisticos) = 16
     rowspan: 1,
     key: "venta_de_sellos_y_sobres_sin_1_empleado",
     subheaders: [
@@ -1254,7 +1304,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -1266,10 +1316,16 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
           },
         ],
       },
@@ -1297,7 +1353,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Atencion Empresarial con Prioridad",
-    colspan: 23, // 3 (Llegada) + 2 (Prioridad) + 3 (Cola sin Prioridad) + 3 (Cola con Prioridad) + 2 (Servidores) + 3 (Fin de Atencion) + 4 (Estadisticos) = 20. Original was 11, adjusted to 20
+    colspan: 23, // Corrected: 3 (Llegada) + 2 (Prioridad) + 3 (Cola Sin Prioridad) + 3 (Cola Con Prioridad) + 4 (Servidores) + 4 (Fin de Atencion) + 4 (Estadisticos) = 23
     rowspan: 1,
     key: "atencion_empresarial_con_prioridad",
     subheaders: [
@@ -1338,7 +1394,7 @@ export const plantillaCabeceras = [
         ],
       },
       {
-        name: "Cola sin Prioridad",
+        name: "Cola Sin Prioridad",
         colspan: 3,
         rowspan: 1,
         key: "cola_sin_prioridad",
@@ -1364,7 +1420,7 @@ export const plantillaCabeceras = [
         ],
       },
       {
-        name: "Cola con Prioridad",
+        name: "Cola Con Prioridad",
         colspan: 3,
         rowspan: 1,
         key: "cola_con_prioridad",
@@ -1391,33 +1447,45 @@ export const plantillaCabeceras = [
       },
       {
         name: "Servidores",
-        colspan: 2, // 1 (Servidor 1: Estado) + 1 (Servidor 2: Estado) = 2.
+        colspan: 4, // 2 (Servidor 1) + 2 (Servidor 2) = 4
         rowspan: 1,
         key: "servidores",
         subheaders: [
           {
             name: "Servidor 1",
-            colspan: 1,
+            colspan: 2,
             rowspan: 1,
             key: "servidor_1",
             subheaders: [
               { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
             ],
           },
           {
             name: "Servidor 2",
-            colspan: 1,
+            colspan: 2,
             rowspan: 1,
             key: "servidor_2",
             subheaders: [
               { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              {
+                name: "Inicio de Ocupación",
+                colspan: 1,
+                rowspan: 1,
+                key: "inicio_ocupacion",
+              },
             ],
           },
         ],
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 4, // 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -1429,10 +1497,16 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
+          },
+          {
+            name: "Fin de Atencion Servidor 2",
+            colspan: 1,
+            rowspan: 1,
+            key: "hora_de_fin_de_atencion_servidor_2",
           },
         ],
       },
@@ -1472,7 +1546,7 @@ export const plantillaCabeceras = [
   },
   {
     name: "Post Envio de Paquetes",
-    colspan: 11, //  2 (Solicitud) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 14. Original was 11, adjusted to 14
+    colspan: 15, // Corrected: 2 (Solicitud del Servicio) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 14
     rowspan: 1,
     key: "post_envio_de_paquetes",
     subheaders: [
@@ -1483,7 +1557,12 @@ export const plantillaCabeceras = [
         key: "solicitud_del_servicio",
         subheaders: [
           { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
-          { name: "Solicita", colspan: 1, rowspan: 1, key: "solicita" },
+          {
+            name: "Solicita",
+            colspan: 1,
+            rowspan: 1,
+            key: "solicita",
+          },
         ],
       },
       {
@@ -1543,7 +1622,7 @@ export const plantillaCabeceras = [
       },
       {
         name: "Fin de Atencion",
-        colspan: 3,
+        colspan: 3, // 1 (RND) + 1 (Tiempo de Atencion) + 1 (Servidor) = 3
         rowspan: 1,
         key: "fin_de_atencion",
         subheaders: [
@@ -1555,10 +1634,10 @@ export const plantillaCabeceras = [
             key: "tiempo_de_atencion",
           },
           {
-            name: "Hora de Fin de Atencion",
+            name: "Fin de Atencion Servidor 1",
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion",
+            key: "hora_de_fin_de_atencion_servidor_1",
           },
         ],
       },
@@ -1678,20 +1757,30 @@ const servicios = [
   "post_envio_de_paquetes",
 ];
 
-const setNullsFila = (fila) => {
+const setNullsFila = (fila, horaActual) => {
   servicios.forEach((servicio) => {
     // Resetear llegada_de_cliente
     if (fila[servicio]?.llegada_de_cliente) {
       fila[servicio].llegada_de_cliente.rnd = null;
       fila[servicio].llegada_de_cliente.tiempo_entre_llegada = null;
-      fila[servicio].llegada_de_cliente.hora_de_llegada = null;
+      // Mantiene la hora de la proxima llegada si aún no ha ocurrido
+      if (fila[servicio].llegada_de_cliente.hora_de_llegada <= horaActual) {
+        fila[servicio].llegada_de_cliente.hora_de_llegada = null;
+      }
     }
 
     // Resetear fin_de_atencion
     if (fila[servicio]?.fin_de_atencion) {
       fila[servicio].fin_de_atencion.rnd = null;
       fila[servicio].fin_de_atencion.tiempo_de_atencion = null;
-      fila[servicio].fin_de_atencion.hora_de_fin_de_atencion = null;
+      // Mantiene la hora del proximo fin de atención si aún no ha ocurrido
+      for (const key in fila[servicio].fin_de_atencion) {
+        if (key.startsWith("hora_de_fin_de_atencion_servidor_")) {
+          if (fila[servicio].fin_de_atencion[key] <= horaActual) {
+            fila[servicio].fin_de_atencion[key] = null;
+          }
+        }
+      }
     }
   });
 
@@ -1719,12 +1808,21 @@ const ajustarServidores = (config) => {
     tiempos_de_ocupacion_acumulados: 0,
   };
 
-  // Agregar servidores dinámicamente
+  // Inicializar correctamente el objeto fin_de_atencion
+  plantillaFila["post_envio_de_paquetes"].fin_de_atencion = {
+    rnd: null,
+    tiempo_de_atencion: null,
+  };
+
+  // Agregar servidores dinámicamente y sus respectivos fines de atención
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
     plantillaFila["post_envio_de_paquetes"].servidores[`servidor_${i}`] = {
       estado: "libre",
       inicio_ocupacion: null,
     };
+    plantillaFila["post_envio_de_paquetes"].fin_de_atencion[
+      `hora_de_fin_de_atencion_servidor_${i}`
+    ] = null;
   }
 
   // Actualizar cabeceras
@@ -1736,8 +1834,13 @@ const ajustarServidores = (config) => {
     (sub) => sub.key === "servidores"
   );
 
-  // Limpiar y reconstruir subheaders
+  const finDeAtencionSubheader = postEnvioDePaquetesHeader.subheaders.find(
+    (sub) => sub.key === "fin_de_atencion"
+  );
+
+  // Limpiar y reconstruir subheaders para servidores
   servidoresSubheader.subheaders = [];
+  let servidoresColspan = 0;
 
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
     servidoresSubheader.subheaders.push({
@@ -1760,24 +1863,51 @@ const ajustarServidores = (config) => {
         },
       ],
     });
+    servidoresColspan += 2;
   }
-
   servidoresSubheader.subheaders.push({
     name: "Tiempos de Ocupacion Acumulados",
     colspan: 1,
     rowspan: 1,
     key: "tiempos_de_ocupacion_acumulados",
   });
+  servidoresColspan += 1;
+  servidoresSubheader.colspan = servidoresColspan;
 
-  // Actualizar colspan total
-  servidoresSubheader.colspan = cant_servidores_envio_de_paquetes * 2 + 1;
+  // Limpiar y reconstruir subheaders para fin_de_atencion
+  finDeAtencionSubheader.subheaders = [
+    { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+    {
+      name: "Tiempo de Atencion",
+      colspan: 1,
+      rowspan: 1,
+      key: "tiempo_de_atencion",
+    },
+  ];
+  let finDeAtencionColspan = 2; // for RND and Tiempo de Atencion
 
-  // Recalcular colspan total para la sección "Post Envio de Paquetes"
+  for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
+    finDeAtencionSubheader.subheaders.push({
+      name: `Hora de Fin de Atencion Servidor ${i}`,
+      colspan: 1,
+      rowspan: 1,
+      key: `hora_de_fin_de_atencion_servidor_${i}`,
+    });
+    finDeAtencionColspan += 1;
+  }
+  finDeAtencionSubheader.colspan = finDeAtencionColspan;
+
+  // Actualizar el colspan del encabezado principal de "post_envio_de_paquetes"
+  const llegadaDeClienteColspan = 3;
+  const colaColspan = 4;
+  const estadisticosColspan = 4;
+
   postEnvioDePaquetesHeader.colspan =
-    postEnvioDePaquetesHeader.subheaders.reduce(
-      (total, sub) => total + sub.colspan,
-      0
-    );
+    llegadaDeClienteColspan +
+    colaColspan +
+    servidoresColspan +
+    finDeAtencionColspan +
+    estadisticosColspan;
 };
 
 const generadorExponencial = (lambda) => {
@@ -1855,8 +1985,9 @@ const procesarLlegadaGenerica = (
     fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
     fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
       finAtencion.value;
-    fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
-      fila.reloj + finAtencion.value;
+    fila[evento.servicio].fin_de_atencion[
+      `hora_de_fin_de_atencion_${servidor}`
+    ] = fila.reloj + finAtencion.value;
 
     /// registrar fin de atención del cliente que llegó actualmente
     eventos.push({
@@ -1959,8 +2090,9 @@ const procesarLlegadaConPrioridad = (
     fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
     fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
       finAtencion.value;
-    fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
-      fila.reloj + finAtencion.value;
+    fila[evento.servicio].fin_de_atencion[
+      `hora_de_fin_de_atencion_${servidor}`
+    ] = fila.reloj + finAtencion.value;
 
     // Registrar fin de atención
     eventos.push({
@@ -2043,8 +2175,9 @@ const procesarFinAtencionGenerica = (
     fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
     fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
       finAtencion.value;
-    fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
-      fila.reloj + finAtencion.value;
+    fila[evento.servicio].fin_de_atencion[
+      `hora_de_fin_de_atencion_${evento.servidor}`
+    ] = fila.reloj + finAtencion.value;
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
@@ -2200,8 +2333,9 @@ const procesarFinAtencionConPrioridad = (
     fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
     fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
       finAtencion.value;
-    fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
-      fila.reloj + finAtencion.value;
+    fila[evento.servicio].fin_de_atencion[
+      `hora_de_fin_de_atencion_${evento.servidor}`
+    ] = fila.reloj + finAtencion.value;
 
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
@@ -2424,7 +2558,7 @@ export const gestorSimulacion = (config) => {
       if (!evento) throw new Error("No se han encontrado eventos");
 
       let fila = JSON.parse(JSON.stringify(filaPrevia));
-      fila = setNullsFila(fila);
+      fila = setNullsFila(fila, evento.hora);
 
       fila.simulacion = i;
       fila.evento = evento.nombre;
@@ -2593,8 +2727,9 @@ export const gestorSimulacion = (config) => {
           fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
           fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
             finAtencion.value;
-          fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion =
-            fila.reloj + finAtencion.value;
+          fila[evento.servicio].fin_de_atencion[
+            `hora_de_fin_de_atencion_servidor_periodico`
+          ] = fila.reloj + finAtencion.value;
 
           /// registro el evento fin de atención
           eventos.push({
