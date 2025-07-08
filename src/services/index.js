@@ -2797,6 +2797,7 @@ export const gestorSimulacion = (config) => {
   }
 
   const rtas = {
+    tiempo_simulacion: ultimaFila.reloj,
     punto_1: {
       envio_de_paquetes: {
         porcentaje_de_ocupacion:
@@ -2915,6 +2916,7 @@ export const gestorSimulacion = (config) => {
     cabeceras: plantillaCabeceras,
     filas,
     rtas,
+   
   };
 };
 

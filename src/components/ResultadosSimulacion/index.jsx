@@ -43,6 +43,9 @@ const ResultadosSimulacion = ({ resultados }) => {
             <i className="bi bi-bar-chart-line me-2"></i>
             Resultados de la simulación
           </h2>
+          <p className="text-white mb-0">
+        Tiempo total simulado: {formatHoursToHHMMSS(resultados.tiempo_simulacion)}
+    </p>
         </div>
 
         {/* Punto 1 */}
