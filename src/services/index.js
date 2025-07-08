@@ -2673,9 +2673,7 @@ export const gestorSimulacion = (config) => {
 
         // Programar próxima ausencia en 1 hora
         registrarEventoAusencia(evento.hora, eventos);
-        // Borro el tiempo remanente de atención
-        fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.tiempo_remanente =
-          null;
+      
 
         // Buscar si hay un evento suspendido para reprogramar
         const eventoSuspendido = encontrarProxEvento(
@@ -2686,19 +2684,24 @@ export const gestorSimulacion = (config) => {
         );
 
         let proximoCliente = null;
+        let tiempo_de_atencion = null;
 
         /// si hay un evento suspendido, lo reprogramo
         if (eventoSuspendido) {
+          
           // Reprogramar el evento suspendido con la hora actual
-          eventoSuspendido.hora =
-            fila.reloj +
-            fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico
+          tiempo_de_atencion = fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico
               .tiempo_remanente;
 
+          // Borro el tiempo remanente de atención
+        fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.tiempo_remanente =
+        null;
           eventoSuspendido.suspendido = false; // Marcar como no suspendido
 
           proximoCliente = eventoSuspendido;
-        } else if (colas.atencion_empresarial_con_ausencia.length > 0) {
+
+        } else if (
+          colas.atencion_empresarial_con_ausencia.length > 0) {
           const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
             colas[evento.servicio],
             fila.reloj
@@ -2716,11 +2719,6 @@ export const gestorSimulacion = (config) => {
           fila.atencion_empresarial_con_ausencia.cola.clientes_en_cola -= 1;
 
           proximoCliente = clienteMasAntiguoEnCola;
-        }
-        if (proximoCliente) {
-          fila.atencion_empresarial_con_ausencia.estadisticos.clientes_atendidos += 1;
-          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
-            "ocupado";
 
           /// genero el fin de atencion
           const finAtencion = generadorExponencial(
@@ -2731,9 +2729,16 @@ export const gestorSimulacion = (config) => {
           fila[evento.servicio].fin_de_atencion.rnd = finAtencion.rnd;
           fila[evento.servicio].fin_de_atencion.tiempo_de_atencion =
             finAtencion.value;
-          fila[evento.servicio].fin_de_atencion[
-            `hora_de_fin_de_atencion_servidor_periodico`
-          ] = fila.reloj + finAtencion.value;
+
+          tiempo_de_atencion = finAtencion.value;
+        }
+        
+        if (proximoCliente) {
+          fila.atencion_empresarial_con_ausencia.estadisticos.clientes_atendidos += 1;
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
+            "ocupado";
+            fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion_servidor_periodico =
+            fila.reloj + tiempo_de_atencion;
 
           /// registro el evento fin de atención
           eventos.push({
@@ -2741,8 +2746,8 @@ export const gestorSimulacion = (config) => {
             cliente_id: proximoCliente.cliente_id,
             servicio: "atencion_empresarial_con_ausencia",
             tipo: "fin_de_atencion",
-            hora: evento.hora + finAtencion.value,
-            tiempo_de_atencion: finAtencion.value,
+            hora: fila.reloj + tiempo_de_atencion,
+            tiempo_de_atencion,
             servidor: "servidor_periodico",
           });
         }
