@@ -1,9 +1,10 @@
+// index.jsx
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { plantillaCofig } from "../../services";
+import "./ConfigForm.css"; // Nuevo archivo de estilos
 
-export default function ConfigForm({ onSubmit }) {
-  // Configuración de React Hook Form
+export default function ConfigForm({ onSubmit, isDisabled }) {
   const {
     register,
     handleSubmit,
@@ -13,14 +14,13 @@ export default function ConfigForm({ onSubmit }) {
   } = useForm({
     defaultValues: {
       simulacion: plantillaCofig.simulacion,
-      // Inicializa solo las tasas que tendrán inputs directos
       tasas: {
         ...plantillaCofig.tasas,
       },
     },
   });
 
-  // Watch para los cambios en las tasas base
+  // Watchers para las tasas base
   const atencionEmpresarialTasaAtencion = watch(
     "tasas.atencion_empresarial.tasa_de_atencion"
   );
@@ -34,7 +34,7 @@ export default function ConfigForm({ onSubmit }) {
     "tasas.venta_de_sellos_y_sobres.tasa_de_llegada"
   );
 
-  // useEffect para actualizar las tasas referenciadas cuando cambian las bases
+  // Efectos para actualizar tasas referenciadas
   useEffect(() => {
     setValue(
       "tasas.atencion_empresarial_con_ausencia.tasa_de_atencion",
@@ -44,11 +44,7 @@ export default function ConfigForm({ onSubmit }) {
       "tasas.atencion_empresarial_con_ausencia.tasa_de_llegada",
       atencionEmpresarialTasaLlegada
     );
-  }, [
-    atencionEmpresarialTasaAtencion,
-    atencionEmpresarialTasaLlegada,
-    setValue,
-  ]);
+  }, [atencionEmpresarialTasaAtencion, atencionEmpresarialTasaLlegada, setValue]);
 
   useEffect(() => {
     setValue(
@@ -59,11 +55,7 @@ export default function ConfigForm({ onSubmit }) {
       "tasas.atencion_empresarial_con_prioridad.tasa_de_llegada",
       atencionEmpresarialTasaLlegada
     );
-  }, [
-    atencionEmpresarialTasaAtencion,
-    atencionEmpresarialTasaLlegada,
-    setValue,
-  ]);
+  }, [atencionEmpresarialTasaAtencion, atencionEmpresarialTasaLlegada, setValue]);
 
   useEffect(() => {
     setValue(
@@ -76,103 +68,106 @@ export default function ConfigForm({ onSubmit }) {
     );
   }, [ventaSellosSobresTasaAtencion, ventaSellosSobresTasaLlegada, setValue]);
 
-  // Manejador del submit del formulario
   const handleFormSubmit = (config) => {
     onSubmit(config);
   };
 
   return (
-    <div className="container mt-4">
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
+    <div className="config-form-container">
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="config-form">
         {/* Sección de Configuración de la Simulación */}
-        <h4 className="mb-3">Configuración de la Simulación</h4>
-        <div className="row g-3 mb-4">
-          <div className="col-md-4">
+        <div className="config-section">
+          <h4 className="section-title">
+            <i className="bi bi-gear me-2"></i>
+            Configuración de la simulación
+          </h4>
+          <hr className="section-divider" />
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
             <label htmlFor="cantidadRondas" className="form-label">
-              Cantidad de Filas
+              Cantidad de filas a simular
             </label>
             <input
               type="number"
-              className={`form-control ${
-                errors.simulacion?.cantidad_de_filas ? "is-invalid" : ""
-              }`}
+              className={`form-input ${errors.simulacion?.cantidad_de_filas ? "input-error" : ""}`}
               id="cantidadRondas"
               {...register("simulacion.cantidad_de_filas", {
                 required: true,
                 min: 1,
-                valueAsNumber: true, 
+                valueAsNumber: true,
               })}
             />
             {errors.simulacion?.cantidad_de_filas && (
-              <div className="invalid-feedback">
+              <span className="error-message">
                 Campo requerido y debe ser al menos 1.
-              </div>
+              </span>
             )}
           </div>
-          <div className="col-md-4">
+
+          <div className="form-group">
             <label htmlFor="cantidadFilas" className="form-label">
-              Cantidad de Filas a Mostrar
+              Cantidad de filas a mostrar
             </label>
             <input
               type="number"
-              className={`form-control ${
-                errors.simulacion?.filas_a_mostrar ? "is-invalid" : ""
-              }`}
+              className={`form-input ${errors.simulacion?.filas_a_mostrar ? "input-error" : ""}`}
               id="cantidadFilas"
               {...register("simulacion.filas_a_mostrar", {
                 required: true,
                 min: 1,
-                valueAsNumber: true, 
+                valueAsNumber: true,
               })}
             />
             {errors.simulacion?.filas_a_mostrar && (
-              <div className="invalid-feedback">
+              <span className="error-message">
                 Campo requerido y debe ser al menos 1.
-              </div>
+              </span>
             )}
           </div>
-          <div className="col-md-4">
+
+          <div className="form-group">
             <label htmlFor="filaDesde" className="form-label">
-              Fila Desde
+              Fila desde
             </label>
             <input
               type="number"
-              className={`form-control ${
-                errors.simulacion?.fila_desde ? "is-invalid" : ""
-              }`}
+              className={`form-input ${errors.simulacion?.fila_desde ? "input-error" : ""}`}
               id="filaDesde"
-              {...register("simulacion.fila_desde", { required: true, min: 1 ,valueAsNumber: true,})}
+              {...register("simulacion.fila_desde", {
+                required: true,
+                min: 1,
+                valueAsNumber: true,
+              })}
             />
             {errors.simulacion?.fila_desde && (
-              <div className="invalid-feedback">
+              <span className="error-message">
                 Campo requerido y debe ser al menos 1.
-              </div>
+              </span>
             )}
           </div>
         </div>
 
         {/* Sección de Tasas de Servicio */}
-        <h5 className="mb-3">
-          Configuración de Tasas de Servicios (clientes/hora)
+        <h5 className="section-subtitle">
+          Configuración de tasas de servicios (clientes/hora)
         </h5>
 
         {/* Servicio: Envio de Paquetes */}
-        <div className="card mb-3">
-          <div className="card-header bg-primary text-white">
+        <div className="service-card">
+          <div className="service-header">
+            <i className="bi bi-box-seam me-2"></i>
             Envio de Paquetes
           </div>
-          <div className="card-body row g-3">
-            <div className="col-md-6">
+          <div className="service-body">
+            <div className="form-group">
               <label htmlFor="epTasaAtencion" className="form-label">
-                Tasa de Atención
+                Tasa de atención
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.envio_de_paquetes?.tasa_de_atencion
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.envio_de_paquetes?.tasa_de_atencion ? "input-error" : ""}`}
                 id="epTasaAtencion"
                 {...register("tasas.envio_de_paquetes.tasa_de_atencion", {
                   required: true,
@@ -180,22 +175,19 @@ export default function ConfigForm({ onSubmit }) {
                 })}
               />
               {errors.tasas?.envio_de_paquetes?.tasa_de_atencion && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
-            <div className="col-md-6">
+
+            <div className="form-group">
               <label htmlFor="epTasaLlegada" className="form-label">
-                Tasa de Llegada
+                Tasa de llegada
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.envio_de_paquetes?.tasa_de_llegada
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.envio_de_paquetes?.tasa_de_llegada ? "input-error" : ""}`}
                 id="epTasaLlegada"
                 {...register("tasas.envio_de_paquetes.tasa_de_llegada", {
                   required: true,
@@ -203,31 +195,28 @@ export default function ConfigForm({ onSubmit }) {
                 })}
               />
               {errors.tasas?.envio_de_paquetes?.tasa_de_llegada && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
           </div>
         </div>
 
         {/* Servicio: Reclamaciones y Devoluciones */}
-        <div className="card mb-3">
-          <div className="card-header bg-primary text-white">
+        <div className="service-card">
+          <div className="service-header">
+            <i className="bi bi-arrow-left-right me-2"></i>
             Reclamaciones y Devoluciones
           </div>
-          <div className="card-body row g-3">
-            <div className="col-md-6">
+          <div className="service-body">
+            <div className="form-group">
               <label htmlFor="rydTasaAtencion" className="form-label">
-                Tasa de Atención
+                Tasa de atención
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.reclamaciones_y_devoluciones?.tasa_de_atencion
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.reclamaciones_y_devoluciones?.tasa_de_atencion ? "input-error" : ""}`}
                 id="rydTasaAtencion"
                 {...register(
                   "tasas.reclamaciones_y_devoluciones.tasa_de_atencion",
@@ -235,22 +224,19 @@ export default function ConfigForm({ onSubmit }) {
                 )}
               />
               {errors.tasas?.reclamaciones_y_devoluciones?.tasa_de_atencion && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
-            <div className="col-md-6">
+
+            <div className="form-group">
               <label htmlFor="rydTasaLlegada" className="form-label">
-                Tasa de Llegada
+                Tasa de llegada
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.reclamaciones_y_devoluciones?.tasa_de_llegada
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.reclamaciones_y_devoluciones?.tasa_de_llegada ? "input-error" : ""}`}
                 id="rydTasaLlegada"
                 {...register(
                   "tasas.reclamaciones_y_devoluciones.tasa_de_llegada",
@@ -258,31 +244,28 @@ export default function ConfigForm({ onSubmit }) {
                 )}
               />
               {errors.tasas?.reclamaciones_y_devoluciones?.tasa_de_llegada && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
           </div>
         </div>
 
         {/* Servicio: Venta de Sellos y Sobres */}
-        <div className="card mb-3">
-          <div className="card-header bg-primary text-white">
+        <div className="service-card">
+          <div className="service-header">
+            <i className="bi bi-envelope me-2"></i>
             Venta de Sellos y Sobres
           </div>
-          <div className="card-body row g-3">
-            <div className="col-md-6">
+          <div className="service-body">
+            <div className="form-group">
               <label htmlFor="vssTasaAtencion" className="form-label">
-                Tasa de Atención
+                Tasa de atención
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.venta_de_sellos_y_sobres?.tasa_de_atencion
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.venta_de_sellos_y_sobres?.tasa_de_atencion ? "input-error" : ""}`}
                 id="vssTasaAtencion"
                 {...register(
                   "tasas.venta_de_sellos_y_sobres.tasa_de_atencion",
@@ -290,22 +273,19 @@ export default function ConfigForm({ onSubmit }) {
                 )}
               />
               {errors.tasas?.venta_de_sellos_y_sobres?.tasa_de_atencion && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
-            <div className="col-md-6">
+
+            <div className="form-group">
               <label htmlFor="vssTasaLlegada" className="form-label">
-                Tasa de Llegada
+                Tasa de llegada
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.venta_de_sellos_y_sobres?.tasa_de_llegada
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.venta_de_sellos_y_sobres?.tasa_de_llegada ? "input-error" : ""}`}
                 id="vssTasaLlegada"
                 {...register("tasas.venta_de_sellos_y_sobres.tasa_de_llegada", {
                   required: true,
@@ -313,31 +293,28 @@ export default function ConfigForm({ onSubmit }) {
                 })}
               />
               {errors.tasas?.venta_de_sellos_y_sobres?.tasa_de_llegada && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
           </div>
         </div>
 
         {/* Servicio: Atencion Empresarial */}
-        <div className="card mb-3">
-          <div className="card-header bg-primary text-white">
+        <div className="service-card">
+          <div className="service-header">
+            <i className="bi bi-building me-2"></i>
             Atencion Empresarial
           </div>
-          <div className="card-body row g-3">
-            <div className="col-md-6">
+          <div className="service-body">
+            <div className="form-group">
               <label htmlFor="aeTasaAtencion" className="form-label">
-                Tasa de Atención
+                Tasa de atención
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.atencion_empresarial?.tasa_de_atencion
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.atencion_empresarial?.tasa_de_atencion ? "input-error" : ""}`}
                 id="aeTasaAtencion"
                 {...register("tasas.atencion_empresarial.tasa_de_atencion", {
                   required: true,
@@ -345,22 +322,19 @@ export default function ConfigForm({ onSubmit }) {
                 })}
               />
               {errors.tasas?.atencion_empresarial?.tasa_de_atencion && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
-            <div className="col-md-6">
+
+            <div className="form-group">
               <label htmlFor="aeTasaLlegada" className="form-label">
-                Tasa de Llegada
+                Tasa de llegada
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.atencion_empresarial?.tasa_de_llegada
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.atencion_empresarial?.tasa_de_llegada ? "input-error" : ""}`}
                 id="aeTasaLlegada"
                 {...register("tasas.atencion_empresarial.tasa_de_llegada", {
                   required: true,
@@ -368,31 +342,28 @@ export default function ConfigForm({ onSubmit }) {
                 })}
               />
               {errors.tasas?.atencion_empresarial?.tasa_de_llegada && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
           </div>
         </div>
 
         {/* Servicio: Postales y Envios Especiales */}
-        <div className="card mb-3">
-          <div className="card-header bg-primary text-white">
+        <div className="service-card">
+          <div className="service-header">
+            <i className="bi bi-postcard me-2"></i>
             Postales y Envios Especiales
           </div>
-          <div className="card-body row g-3">
-            <div className="col-md-6">
+          <div className="service-body">
+            <div className="form-group">
               <label htmlFor="pyeeTasaAtencion" className="form-label">
-                Tasa de Atención
+                Tasa de atención
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.postales_y_envios_especiales?.tasa_de_atencion
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.postales_y_envios_especiales?.tasa_de_atencion ? "input-error" : ""}`}
                 id="pyeeTasaAtencion"
                 {...register(
                   "tasas.postales_y_envios_especiales.tasa_de_atencion",
@@ -400,22 +371,19 @@ export default function ConfigForm({ onSubmit }) {
                 )}
               />
               {errors.tasas?.postales_y_envios_especiales?.tasa_de_atencion && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
-            <div className="col-md-6">
+
+            <div className="form-group">
               <label htmlFor="pyeeTasaLlegada" className="form-label">
-                Tasa de Llegada
+                Tasa de llegada
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.postales_y_envios_especiales?.tasa_de_llegada
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.postales_y_envios_especiales?.tasa_de_llegada ? "input-error" : ""}`}
                 id="pyeeTasaLlegada"
                 {...register(
                   "tasas.postales_y_envios_especiales.tasa_de_llegada",
@@ -423,31 +391,28 @@ export default function ConfigForm({ onSubmit }) {
                 )}
               />
               {errors.tasas?.postales_y_envios_especiales?.tasa_de_llegada && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
           </div>
         </div>
 
-        {/* Servicio: Post Envio de Paquetes (Este tiene su propia configuración de servidores) */}
-        <div className="card mb-3">
-          <div className="card-header bg-primary text-white">
+        {/* Servicio: Post Envio de Paquetes */}
+        <div className="service-card">
+          <div className="service-header">
+            <i className="bi bi-box-arrow-up me-2"></i>
             Post Envio de Paquetes
           </div>
-          <div className="card-body row g-3">
-            <div className="col-md-6">
+          <div className="service-body">
+            <div className="form-group">
               <label htmlFor="pepCantidadServidores" className="form-label">
                 Cantidad de Servidores
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.post_envio_de_paquetes?.cantidad_de_servidores
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.post_envio_de_paquetes?.cantidad_de_servidores ? "input-error" : ""}`}
                 id="pepCantidadServidores"
                 {...register(
                   "tasas.post_envio_de_paquetes.cantidad_de_servidores",
@@ -455,22 +420,19 @@ export default function ConfigForm({ onSubmit }) {
                 )}
               />
               {errors.tasas?.post_envio_de_paquetes?.cantidad_de_servidores && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y debe ser al menos 1.
-                </div>
+                </span>
               )}
             </div>
-            <div className="col-md-6">
+
+            <div className="form-group">
               <label htmlFor="pepTasaAtencion" className="form-label">
-                Tasa de Atención
+                Tasa de atención
               </label>
               <input
                 type="number"
-                className={`form-control ${
-                  errors.tasas?.post_envio_de_paquetes?.tasa_de_atencion
-                    ? "is-invalid"
-                    : ""
-                }`}
+                className={`form-input ${errors.tasas?.post_envio_de_paquetes?.tasa_de_atencion ? "input-error" : ""}`}
                 id="pepTasaAtencion"
                 {...register("tasas.post_envio_de_paquetes.tasa_de_atencion", {
                   required: true,
@@ -478,16 +440,21 @@ export default function ConfigForm({ onSubmit }) {
                 })}
               />
               {errors.tasas?.post_envio_de_paquetes?.tasa_de_atencion && (
-                <div className="invalid-feedback">
+                <span className="error-message">
                   Campo requerido y no negativo.
-                </div>
+                </span>
               )}
             </div>
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary mt-4">
-          Comenzar Simulación
+        <button
+          type="submit"
+          className="submit-button"
+          disabled={isDisabled}
+        >
+          <i className="bi bi-play-circle me-2"></i>
+          {isDisabled ? "Procesando..." : "Comenzar Simulación"}
         </button>
       </form>
     </div>

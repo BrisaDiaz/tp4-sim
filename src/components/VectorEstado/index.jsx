@@ -1,21 +1,48 @@
 import React, { useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 import "./VectorEstado.css";
 
 export default function VectorEstado({ cabeceras, filas }) {
   const [visibleServices, setVisibleServices] = useState({});
+  const [allServicesSelected, setAllServicesSelected] = useState(true);
+  const [indeterminateCheckbox, setIndeterminateCheckbox] = useState(false);
+
+  // Get only the service keys from cabeceras, excluding 'simulacion', 'evento', 'reloj'
+  const serviceKeys = cabeceras
+    .filter(
+      (header) =>
+        header.key && !["simulacion", "evento", "reloj"].includes(header.key)
+    )
+    .map((header) => header.key);
 
   useEffect(() => {
     const initialVisibleServices = {};
-    cabeceras.forEach((header) => {
-      if (
-        header.key &&
-        !["simulacion", "evento", "reloj"].includes(header.key)
-      ) {
-        initialVisibleServices[header.key] = true;
-      }
+    serviceKeys.forEach((key) => {
+      initialVisibleServices[key] = true;
     });
     setVisibleServices(initialVisibleServices);
-  }, [cabeceras]);
+  }, [cabeceras]); // Depend on cabeceras to re-initialize when they change
+
+  useEffect(() => {
+    const totalServices = serviceKeys.length;
+    const selectedServicesCount = Object.values(visibleServices).filter(
+      Boolean
+    ).length;
+
+    if (totalServices === 0) {
+      setAllServicesSelected(true);
+      setIndeterminateCheckbox(false);
+    } else if (selectedServicesCount === totalServices) {
+      setAllServicesSelected(true);
+      setIndeterminateCheckbox(false);
+    } else if (selectedServicesCount > 0) {
+      setAllServicesSelected(false);
+      setIndeterminateCheckbox(true);
+    } else {
+      setAllServicesSelected(false);
+      setIndeterminateCheckbox(false);
+    }
+  }, [visibleServices, serviceKeys]);
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -23,6 +50,27 @@ export default function VectorEstado({ cabeceras, filas }) {
       ...prev,
       [name]: checked,
     }));
+  };
+
+  const handleSelectAllChange = (event) => {
+    const checked = event.target.checked;
+    const newVisibleServices = {};
+    serviceKeys.forEach((key) => {
+      newVisibleServices[key] = checked;
+    });
+    setVisibleServices(newVisibleServices);
+    setAllServicesSelected(checked);
+    setIndeterminateCheckbox(false);
+  };
+
+  const handleDeselectAll = () => {
+    const newVisibleServices = {};
+    serviceKeys.forEach((key) => {
+      newVisibleServices[key] = false;
+    });
+    setVisibleServices(newVisibleServices);
+    setAllServicesSelected(false);
+    setIndeterminateCheckbox(false);
   };
 
   // Función para calcular el número total de columnas finales
@@ -179,58 +227,98 @@ export default function VectorEstado({ cabeceras, filas }) {
   });
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-4 text-center">Vector de Estados</h2>
-
-      <div className="mb-3 p-3 border rounded bg-light">
-        <h5 className="mb-2">Seleccionar Servicios a Mostrar:</h5>
-        {cabeceras.map((header) => {
-          if (
-            header.key &&
-            !["simulacion", "evento", "reloj"].includes(header.key)
-          ) {
-            return (
-              <div className="form-check form-check-inline" key={header.key}>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={`checkbox-${header.key}`}
-                  name={header.key}
-                  checked={visibleServices[header.key] || false}
-                  onChange={handleCheckboxChange}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`checkbox-${header.key}`}
-                >
-                  {header.name}
-                </label>
+    <div className="container mt-4 vector-container">
+      <div className="mb-4">
+        <div>
+        <div className="header-section">
+          <h2 className="text-center vector-title">
+            <i className="bi bi-table me-2"></i>
+            Vector de estados
+          </h2>
+</div>
+          <Card className=" services-card">
+            <Card.Body>
+              <h5 className="mb-3">
+                Seleccionar Servicios a Mostrar:
+              </h5>
+              <div className="d-flex flex-wrap align-items-center mb-2">
+                <div className="form-check form-check-inline me-3">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="checkbox-select-all"
+                    checked={allServicesSelected}
+                    onChange={handleSelectAllChange}
+                    ref={(el) => {
+                      if (el) {
+                        el.indeterminate = indeterminateCheckbox;
+                      }
+                    }}
+                  />
+                  <label
+                    className="form-check-label fw-bold"
+                    htmlFor="checkbox-select-all"
+                  >
+                    Seleccionar Todos
+                  </label>
+                </div>
+          
+                <div className="d-flex flex-wrap">
+                  {cabeceras.map((header) => {
+                    if (
+                      header.key &&
+                      !["simulacion", "evento", "reloj"].includes(header.key)
+                    ) {
+                      return (
+                        <div
+                          className="form-check form-check-inline"
+                          key={header.key}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id={`checkbox-${header.key}`}
+                            name={header.key}
+                            checked={visibleServices[header.key] || false}
+                            onChange={handleCheckboxChange}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox-${header.key}`}
+                          >
+                            {header.name}
+                          </label>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
               </div>
-            );
-          }
-          return null;
-        })}
-      </div>
+            </Card.Body>
+          </Card>
 
-      <div className="table-responsive-wrapper">
-        <table className="table table-bordered table-striped compact-table">
-          <thead className="sticky-header">
-            {renderHeaderRows(filteredCabeceras)}
-          </thead>
-          <tbody>
-            {filas.map((fila, rowIndex) => (
-              <tr key={rowIndex}>
-                {getFlattenedRowValues(fila, filteredCabeceras).map(
-                  (value, colIndex) => (
-                    <td key={colIndex} className="text-center align-middle">
-                      {formatValueForDisplay(value)}
-                    </td>
-                  )
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          <div className="table-responsive-wrapper shadow-sm">
+            <table className="table table-bordered table-striped compact-table">
+              <thead className="sticky-header">
+                {renderHeaderRows(filteredCabeceras)}
+              </thead>
+              <tbody>
+                {filas.map((fila, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {getFlattenedRowValues(fila, filteredCabeceras).map(
+                      (value, colIndex) => (
+                        <td key={colIndex} className="text-center align-middle">
+                          {formatValueForDisplay(value)}
+                        </td>
+                      )
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,102 +1,159 @@
-/* VectorEstado.css */
+/* VectorEstado.css - Versión mejorada */
 
-/* Contenedor para el scroll y la cabecera pegajosa */
+.header-section {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border-radius: 8px;
+  padding: 32px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.header-section h2 {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+}
+.header-section .bi {
+  font-size: 32px;
+  margin-right: 12px;
+  color: #1890ff;
+}
+.services-card {
+  margin-bottom: 32px !important;
+  border-radius: 8px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background-color: #ffffff;
+  border-color: transparent;
+}
+/* Tabla responsive */
 .table-responsive-wrapper {
   max-height: 80vh;
-  overflow: auto; /* Habilita el scroll horizontal y vertical */
-  border: none;
-  border-top: 1px solid #dcdcdc;
-  border-radius: 0.1rem;
+  overflow: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  background-color: white;
 }
 
-/* Estructura principal de la tabla */
+/* Estructura de tabla */
 .compact-table {
   width: 100%;
-  table-layout: auto; /* IMPORTANTE: Mantiene el ajuste automático del contenido */
-  border-collapse: collapse;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
 }
 
-/* Estilos base para todas las celdas (th y td) */
-/* Por defecto, todas las columnas finales (cabeceras y datos) son 130px */
+/* Celdas generales */
 .compact-table th,
 .compact-table td {
-  padding: 0.3rem;
-  border: 1px solid #a0a0a0;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
   box-sizing: border-box;
-  width: 130px; /* Ancho deseado para la mayoría de las columnas finales */
-  min-width: 130px; /* Asegura que no se encojan */
-  max-width: 130px; /* Asegura que no se expandan */
+  min-width: 130px;
+  max-width: 130px;
   vertical-align: middle;
   text-align: center;
+  font-size: 0.9rem;
 }
 
-/* Las celdas de datos mantienen el nowrap para ellipsis */
+/* Celdas de datos */
 .compact-table td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   height: 2.5em;
+  background-color: white;
 }
 
-/* Las cabeceras permiten salto de línea para mejor visualización de textos largos */
+/* Cabeceras */
 .compact-table th {
   white-space: normal;
   word-wrap: break-word;
   word-break: break-word;
   hyphens: auto;
-  min-height: 2.5em; /* Altura mínima para asegurar espacio */
-  line-height: 1.2;
-  border-bottom: 1px solid #a0a0a0 !important;
+  min-height: 2.5em;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6 !important;
 }
 
-/* COLUMNAS ESPECIALES (Simulación, Evento, Reloj) */
-/* Deben tener un max-width mayor y ser sticky en ambas direcciones */
-.compact-table th:nth-child(1), /* Simulacion */
+/* Columnas especiales (Simulación, Evento, Reloj) */
+.compact-table th:nth-child(1),
 .compact-table td:nth-child(1),
-.compact-table th:nth-child(2), /* Evento */
+.compact-table th:nth-child(2),
 .compact-table td:nth-child(2),
-.compact-table th:nth-child(3), /* Reloj */
+.compact-table th:nth-child(3),
 .compact-table td:nth-child(3) {
-  width: 130px; /* Mantener un ancho inicial, pero permitir mayor expansión */
   min-width: 130px;
-  max-width: 400px; /* Permitir hasta 400px */
-  /* No cambiar el white-space from th/td defaults here, it's handled globally */
+  max-width: 250px;
 }
 
-/* Configuración de STICKY para las columnas especiales */
-/* Estas columnas son sticky tanto horizontal como verticalmente.
-   Su z-index será más alto para que queden por encima de otras celdas al hacer scroll. */
-
-/* Primera columna (Simulacion) */
+/* Sticky columns */
 .compact-table th:nth-child(1).header-level-0,
 .compact-table td:nth-child(1) {
-  position: -webkit-sticky;
   position: sticky;
-  left: 0; /* Pegada al borde izquierdo */
-  /* Borde visual */
+  left: 0;
+  z-index: 5;
 }
 
-/* Segunda columna (Evento) */
 .compact-table th:nth-child(2).header-level-0,
 .compact-table td:nth-child(2) {
-  position: -webkit-sticky;
   position: sticky;
-  min-width: 250px;
-  /* El valor de 'left' debe ser la suma de los anchos de las columnas precedentes */
-  /* Si la primera columna también puede crecer hasta 400px, left: 400px; */
-  /* Sin embargo, si quieres que la tabla se mantenga compacta, los 130px anteriores son más consistentes. */
-  /* Vamos a usar el ancho *establecido* de 130px para las posiciones sticky para que no se muevan erraticamente */
-  left: 129px; /* Ancho de la primera columna */
+  left: 130px;
+  z-index: 5;
+  width: 208px; /* Ajuste para evitar superposición */
+  min-width: 208px; /* Asegura que la columna no se reduzca */
+  max-width: 208px; /* Asegura que la columna no se expanda */
+  overflow: hidden; /* Evita el desbordamiento de texto */  
 }
 
-/* Tercera columna (Reloj) */
 .compact-table th:nth-child(3).header-level-0,
 .compact-table td:nth-child(3) {
-  position: -webkit-sticky;
   position: sticky;
-  left: 379px; /* 130px (ancho de la primera) + 130px (ancho de la segunda) */
+  left: 338px;
+  z-index: 5;
 }
 
+/* Sticky header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Niveles de cabecera */
+.header-level-0 {
+  background-color: #e9ecef;
+  font-weight: 600;
+  top: 0;
+}
+
+.header-level-1 {
+  background-color: #f8f9fa;
+  font-weight: 500;
+}
+
+.header-level-2 {
+  background-color: #f8f9fa;
+  font-weight: 500;
+}
+
+/* Filas alternas */
+.compact-table tbody tr:nth-child(even) td {
+  background-color: #f8f9fa;
+}
+
+.compact-table tbody tr:hover td {
+  background-color: #e9ecef;
+}
+
+/* Bordes para columnas sticky */
 .compact-table td:nth-child(1)::after,
 .compact-table td:nth-child(2)::after,
 .compact-table td:nth-child(3)::after,
@@ -106,154 +163,40 @@
   content: "";
   position: absolute;
   top: 0;
-  right: 0px; /* Posiciona el borde correctamente */
+  right: 0;
   bottom: 0;
   width: 1px;
-  background-color: #a0a0a0;
-  z-index: 1;
+  background-color: #dee2e6;
+  z-index: 6;
 }
 
-/* Cabecera pegajosa (sticky vertical para TODAS las cabeceras) */
-/* Esta regla hace que todas las cabeceras (<th>) sean sticky verticalmente (top: 0) */
-/* Aplicar sticky al thead asegura que TODAS las cabeceras se peguen verticalmente. */
-.sticky-header {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 10; /* Z-index para la cabecera general */
-  background-color: #f8f9fa; /* Color de fondo base para todas las cabeceras */
-  /* Important: The z-index here must be lower than the individual sticky columns. */
-  /* The individual th rules for :nth-child(1,2,3) will override specific z-index for them. */
-}
-
-/* Modifica estas reglas */
-.compact-table th:nth-child(1).header-level-0,
-.compact-table th:nth-child(2).header-level-0,
-.compact-table th:nth-child(3).header-level-0 {
-  position: sticky;
-  z-index: 50 !important; /* Valor muy alto */
-  /* Mantén los otros estilos */
-  border-right: 1px solid #a0a0a0 !important;
-}
-
-.compact-table td:nth-child(1),
-.compact-table td:nth-child(2),
-.compact-table td:nth-child(3) {
-  position: sticky;
-  z-index: 5; /* Menor que los headers */
-  border-right: 1px solid #a0a0a0 !important;
-}
-
-/* Estilos para niveles de cabecera */
-/* Estos estilos son para la apariencia, no afectan directamente el sticky */
-.header-level-0 {
-  background-color: #e0e0e0;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: middle;
-  min-height: 50px;
-  height: auto;
-}
-
-.header-level-1 {
-  background-color: #f0f0f0;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: middle;
-  min-height: 45px;
-  height: auto;
-}
-
-.header-level-2 {
-  background-color: #f8f8f8;
-  font-weight: 600;
-  text-align: center;
-  vertical-align: middle;
-  min-height: 40px;
-  height: auto;
-  top: 20px;
-}
-
-.header-level-3 {
-  background-color: #fff;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  min-height: 35px;
-  height: auto;
-}
-
-/* Estilos para filas del cuerpo */
-.compact-table tbody tr:nth-child(even) {
-  background-color: #eaeaea;
-}
-
-/* Fondo sólido para columnas sticky en filas pares */
-.compact-table tbody tr:nth-child(even) td:nth-child(1)::before,
-.compact-table tbody tr:nth-child(even) td:nth-child(2)::before,
-.compact-table tbody tr:nth-child(even) td:nth-child(3)::before {
-  background-color: #eaeaea; /* Color de fondo de filas pares */
-}
-
-.compact-table tbody tr:hover {
-  background-color: #eaeaea;
-}
-
-/* Fondo sólido para columnas sticky en hover */
-.compact-table tbody tr:hover td:nth-child(1)::before,
-.compact-table tbody tr:hover td:nth-child(2)::before,
-.compact-table tbody tr:hover td:nth-child(3)::before {
-  background-color: #e8e8e8; /* Color de fondo en hover */
-}
-
-/* Fondos sólidos para diferentes niveles de cabecera */
-/* Se utiliza inherit para tomar el color de fondo de la celda directamente */
-.header-level-0::before {
-  background-color: inherit;
-}
-
-/* Alineación general */
-.text-center {
-  text-align: center;
-}
-
-.align-middle {
-  vertical-align: middle;
-}
-
-/* Ajustes responsivos */
+/* Responsive */
 @media (max-width: 768px) {
   .compact-table th,
   .compact-table td {
-    width: 100px; /* Ajustar ancho para pantallas pequeñas */
     min-width: 100px;
     max-width: 100px;
-    font-size: 0.85rem;
-    padding: 0.2rem;
+    font-size: 0.8rem;
+    padding: 0.3rem;
   }
 
-  /* Las columnas especiales también deben ajustarse a 100px en móvil */
-  .compact-table th:nth-child(1),
-  .compact-table td:nth-child(1),
-  .compact-table th:nth-child(2),
-  .compact-table td:nth-child(2),
-  .compact-table th:nth-child(3),
-  .compact-table td:nth-child(3) {
-    max-width: 400px; /* Mantener un max-width coherente, pero el ancho base es 100px */
-  }
-
-  .compact-table td {
-    height: 2.5em;
-  }
-
-  /* Ajustar posiciones sticky para móvil */
   .compact-table th:nth-child(2),
   .compact-table td:nth-child(2) {
-    left: 100px; /* 100px (ancho de la primera columna en móvil) */
+    left: 100px;
   }
 
   .compact-table th:nth-child(3),
   .compact-table td:nth-child(3) {
-    left: 200px; /* 100px + 100px */
+    left: 200px;
   }
+}
+
+/* Checkboxes de filtro */
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.form-check-label {
+  user-select: none;
 }

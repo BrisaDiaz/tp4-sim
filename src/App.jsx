@@ -29,9 +29,20 @@ function App() {
   };
 
   return (
-    <Container className="App mb-4">
-      {/* Usa Container de React-Bootstrap para un mejor layout */}
-      <h1 className="text-center my-4">Oficina de Correos Mocasa</h1>
+    <Container className="App mb-5">
+   <div className="text-center my-5">
+  <div className="card border-0 shadow-sm p-4">
+    <div className="card-body">
+      <span className="badge bg-primary fs-6 mb-3">Sistema de simulación</span>
+      <h1 className="display-4 fw-bold text-dark mb-3">
+        Líneas de espera
+      </h1>
+      <h4 className="text-muted mb-0">
+        📮 Oficina de Correos Mocasa
+      </h4>
+    </div>
+  </div>
+</div>
       <ConfigForm onSubmit={handleConfigSubmit} isDisabled={isLoading} />
       {/* Deshabilita el formulario mientras carga */}
       {/* Indicador de carga */}
@@ -69,7 +80,7 @@ function App() {
         !isLoading &&
         !error && (
           <p className="text-center my-4">
-            Ingrese los parámetros de la simulación y presione "Simular".
+            Ingrese los parámetros de la simulación y presione "Comenzar Simulación".
           </p>
         )
       )}
