@@ -100,6 +100,7 @@ export default function ConfigForm({ onSubmit }) {
               {...register("simulacion.cantidad_de_filas", {
                 required: true,
                 min: 1,
+                valueAsNumber: true, 
               })}
             />
             {errors.simulacion?.cantidad_de_filas && (
@@ -121,6 +122,7 @@ export default function ConfigForm({ onSubmit }) {
               {...register("simulacion.filas_a_mostrar", {
                 required: true,
                 min: 1,
+                valueAsNumber: true, 
               })}
             />
             {errors.simulacion?.filas_a_mostrar && (
@@ -139,7 +141,7 @@ export default function ConfigForm({ onSubmit }) {
                 errors.simulacion?.fila_desde ? "is-invalid" : ""
               }`}
               id="filaDesde"
-              {...register("simulacion.fila_desde", { required: true, min: 1 })}
+              {...register("simulacion.fila_desde", { required: true, min: 1 ,valueAsNumber: true,})}
             />
             {errors.simulacion?.fila_desde && (
               <div className="invalid-feedback">

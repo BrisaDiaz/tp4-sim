@@ -2541,6 +2541,10 @@ export const gestorSimulacion = (config) => {
   };
 
   let filaPrevia = null;
+  let ultimaFila = null;
+  let filaInicio = config.simulacion.fila_desde - 1;
+  let filaFin =
+    config.simulacion.fila_desde + config.simulacion.filas_a_mostrar - 1;
 
   for (let i = 0; i < config.simulacion.cantidad_de_filas; i++) {
     const esIncio = i === 0;
@@ -2773,21 +2777,19 @@ export const gestorSimulacion = (config) => {
               porcDeOcupacion;
           }
         });
+
+        ultimaFila = fila;
       }
 
-      /// agregar fila al vector de estados
-      filas.push(JSON.parse(JSON.stringify(fila)));
       filaPrevia = fila;
+
+      /// Agregar fila al vector de estados solo si esta entre el rango a mostrar
+      /// si la fila es la última, siempre se agrega
+      if ((i >= filaInicio && i <= filaFin) || esFin) {
+        filas.push(fila);
+      }
     }
   }
-
-  const filasVisibles = filas.slice(
-    config.simulacion.fila_desde - 1,
-    config.simulacion.fila_desde - 1 + config.simulacion.filas_a_mostrar
-  );
-
-  const ultimaFila = filas[filas.length - 1];
-  filasVisibles.push(ultimaFila);
 
   const rtas = {
     punto_1: {
@@ -2906,7 +2908,7 @@ export const gestorSimulacion = (config) => {
   };
   return {
     cabeceras: plantillaCabeceras,
-    filas: filasVisibles,
+    filas,
     rtas,
   };
 };
