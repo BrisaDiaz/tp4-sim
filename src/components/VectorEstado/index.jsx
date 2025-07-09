@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
-import "./VectorEstado.css";
+import React, { useState, useEffect } from 'react';
+import { Card } from 'react-bootstrap';
+import './VectorEstado.css';
 
 export default function VectorEstado({ cabeceras, filas }) {
   const [visibleServices, setVisibleServices] = useState({});
@@ -11,7 +11,7 @@ export default function VectorEstado({ cabeceras, filas }) {
   const serviceKeys = cabeceras
     .filter(
       (header) =>
-        header.key && !["simulacion", "evento", "reloj"].includes(header.key)
+        header.key && !['simulacion', 'evento', 'reloj'].includes(header.key)
     )
     .map((header) => header.key);
 
@@ -25,9 +25,8 @@ export default function VectorEstado({ cabeceras, filas }) {
 
   useEffect(() => {
     const totalServices = serviceKeys.length;
-    const selectedServicesCount = Object.values(visibleServices).filter(
-      Boolean
-    ).length;
+    const selectedServicesCount =
+      Object.values(visibleServices).filter(Boolean).length;
 
     if (totalServices === 0) {
       setAllServicesSelected(true);
@@ -62,17 +61,6 @@ export default function VectorEstado({ cabeceras, filas }) {
     setAllServicesSelected(checked);
     setIndeterminateCheckbox(false);
   };
-
-  const handleDeselectAll = () => {
-    const newVisibleServices = {};
-    serviceKeys.forEach((key) => {
-      newVisibleServices[key] = false;
-    });
-    setVisibleServices(newVisibleServices);
-    setAllServicesSelected(false);
-    setIndeterminateCheckbox(false);
-  };
-
   // Función para calcular el número total de columnas finales
   const calculateTotalColumns = (headers) => {
     let total = 0;
@@ -125,16 +113,16 @@ export default function VectorEstado({ cabeceras, filas }) {
         // Asignar colores basados en el nivel
         switch (level) {
           case 0:
-            headerStyle.backgroundColor = isEven ? "#e0e0e0" : "#d0d0d0";
+            headerStyle.backgroundColor = isEven ? '#e0e0e0' : '#d0d0d0';
             break;
           case 1:
-            headerStyle.backgroundColor = isEven ? "#f0f0f0" : "#e8e8e8";
+            headerStyle.backgroundColor = isEven ? '#f0f0f0' : '#e8e8e8';
             break;
           case 2:
-            headerStyle.backgroundColor = isEven ? "#f8f8f8" : "#f0f0f0";
+            headerStyle.backgroundColor = isEven ? '#f8f8f8' : '#f0f0f0';
             break;
           default:
-            headerStyle.backgroundColor = isEven ? "#ffffff" : "#f8f8f8";
+            headerStyle.backgroundColor = isEven ? '#ffffff' : '#f8f8f8';
         }
 
         const nestedHeaders = header.subheaders || header.headers;
@@ -211,42 +199,40 @@ export default function VectorEstado({ cabeceras, filas }) {
 
   const formatValueForDisplay = (value) => {
     if (value === null || value === undefined) {
-      return "-";
+      return '-';
     }
-    if (typeof value === "number" && !Number.isInteger(value)) {
+    if (typeof value === 'number' && !Number.isInteger(value)) {
       return parseFloat(value.toFixed(4));
     }
     return value;
   };
 
   const filteredCabeceras = cabeceras.filter((header) => {
-    if (["simulacion", "evento", "reloj"].includes(header.key)) {
+    if (['simulacion', 'evento', 'reloj'].includes(header.key)) {
       return true;
     }
     return visibleServices[header.key];
   });
 
   return (
-    <div className="container mt-4 vector-container">
-      <div className="mb-4">
+    <div className='container mt-4 vector-container'>
+      <div className='mb-4'>
         <div>
-        <div className="header-section">
-          <h2 className="text-center vector-title">
-            <i className="bi bi-table me-2"></i>
-            Vector de estados
-          </h2>
-</div>
-          <Card className=" services-card">
+          <div className='header-section'>
+            <h2 className='text-center vector-title'>
+              <i className='bi bi-table me-2'></i>
+              Vector de estados
+            </h2>
+          </div>
+          <Card className=' services-card'>
             <Card.Body>
-              <h5 className="mb-3">
-                Seleccionar Servicios a Mostrar:
-              </h5>
-              <div className="d-flex flex-wrap align-items-center mb-2">
-                <div className="form-check form-check-inline me-3">
+              <h5 className='mb-3'>Seleccionar Servicios a Mostrar:</h5>
+              <div className='d-flex flex-wrap align-items-center mb-2'>
+                <div className='form-check form-check-inline me-3'>
                   <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="checkbox-select-all"
+                    className='form-check-input'
+                    type='checkbox'
+                    id='checkbox-select-all'
                     checked={allServicesSelected}
                     onChange={handleSelectAllChange}
                     ref={(el) => {
@@ -256,34 +242,34 @@ export default function VectorEstado({ cabeceras, filas }) {
                     }}
                   />
                   <label
-                    className="form-check-label fw-bold"
-                    htmlFor="checkbox-select-all"
+                    className='form-check-label fw-bold'
+                    htmlFor='checkbox-select-all'
                   >
                     Seleccionar Todos
                   </label>
                 </div>
-          
-                <div className="d-flex flex-wrap">
+
+                <div className='d-flex flex-wrap'>
                   {cabeceras.map((header) => {
                     if (
                       header.key &&
-                      !["simulacion", "evento", "reloj"].includes(header.key)
+                      !['simulacion', 'evento', 'reloj'].includes(header.key)
                     ) {
                       return (
                         <div
-                          className="form-check form-check-inline"
+                          className='form-check form-check-inline'
                           key={header.key}
                         >
                           <input
-                            className="form-check-input"
-                            type="checkbox"
+                            className='form-check-input'
+                            type='checkbox'
                             id={`checkbox-${header.key}`}
                             name={header.key}
                             checked={visibleServices[header.key] || false}
                             onChange={handleCheckboxChange}
                           />
                           <label
-                            className="form-check-label"
+                            className='form-check-label'
                             htmlFor={`checkbox-${header.key}`}
                           >
                             {header.name}
@@ -298,9 +284,9 @@ export default function VectorEstado({ cabeceras, filas }) {
             </Card.Body>
           </Card>
 
-          <div className="table-responsive-wrapper shadow-sm">
-            <table className="table table-bordered table-striped compact-table">
-              <thead className="sticky-header">
+          <div className='table-responsive-wrapper shadow-sm'>
+            <table className='table table-bordered table-striped compact-table'>
+              <thead className='sticky-header'>
                 {renderHeaderRows(filteredCabeceras)}
               </thead>
               <tbody>
@@ -308,7 +294,10 @@ export default function VectorEstado({ cabeceras, filas }) {
                   <tr key={rowIndex}>
                     {getFlattenedRowValues(fila, filteredCabeceras).map(
                       (value, colIndex) => (
-                        <td key={colIndex} className="text-center align-middle">
+                        <td
+                          key={colIndex}
+                          className='text-center align-middle'
+                        >
                           {formatValueForDisplay(value)}
                         </td>
                       )
