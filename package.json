@@ -2,6 +2,7 @@
   "name": "tp4-sim",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://brisadiaz.github.io/TP4_SIM/",
   "type": "module",
   "scripts": {
     "dev": "vite",
