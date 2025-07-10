@@ -19,7 +19,7 @@
 .header-section .bi {
   font-size: 32px;
   margin-right: 12px;
-  color: #1890ff;
+  color: #61b3ff;
 }
 .services-card {
   margin-bottom: 32px !important;
@@ -110,7 +110,7 @@
   width: 208px; /* Ajuste para evitar superposición */
   min-width: 208px; /* Asegura que la columna no se reduzca */
   max-width: 208px; /* Asegura que la columna no se expanda */
-  overflow: hidden; /* Evita el desbordamiento de texto */  
+  overflow: hidden; /* Evita el desbordamiento de texto */
 }
 
 .compact-table th:nth-child(3).header-level-0,
@@ -160,7 +160,7 @@
 .compact-table th:nth-child(1).header-level-0::after,
 .compact-table th:nth-child(2).header-level-0::after,
 .compact-table th:nth-child(3).header-level-0::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
