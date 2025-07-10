@@ -39,19 +39,25 @@ const ResultadosSimulacion = ({ resultados }) => {
           </p>
         </div>
 
-        {/* Punto 1 */}
+        {/* Requerimiento: Análisis de Rendimiento de Servicio */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
             <i className='bi bi-graph-up me-2'></i>
-            1. Tiempo de espera promedio y Porcentaje de ocupación
+            Análisis de rendimiento de servicio
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> ¿Cuál es el Tiempo de espera promedio y
-              Porcentaje de ocupación para cada tipo de servicio?
+              <strong>Propósito:</strong> Comprender la eficiencia operativa
+              actual de cada servicio dentro de la oficina.
+            </p>
+            <p>
+              <strong>Detalle:</strong> El sistema debe calcular y mostrar el
+              tiempo de espera promedio y el porcentaje de ocupación para cada
+              tipo de servicio. Esta información es crucial para identificar
+              cuellos de botella y áreas de mejora.
             </p>
             <div className='table-responsive'>
               <Table
@@ -89,20 +95,27 @@ const ResultadosSimulacion = ({ resultados }) => {
           </Card.Body>
         </Card>
 
-        {/* Punto 2 */}
+        {/* Requerimiento: Evaluación de Impacto por Ausencia de Personal */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
             <i className='bi bi-person-x me-2'></i>
-            2. Impacto de la ausencia del empleado
+            Evaluación de impacto por ausencia de personal
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> Si uno de los empleados de Atención
-              Empresarial cada hora debe ausentarse 12 minutos, ¿cómo cambiarían
-              los tiempos de espera?
+              <strong>Propósito:</strong> Cuantificar las consecuencias
+              operativas de la ausencia de personal en servicios clave.
+            </p>
+            <p>
+              <strong>Detalle:</strong> El sistema debe simular el escenario en
+              el que un empleado del servicio de 'Atención Empresarial' se
+              ausenta 12 minutos cada hora. Se debe reportar el cambio en el
+              tiempo de espera promedio para este servicio bajo estas
+              condiciones, permitiendo planificar contingencias y ajustes de
+              personal.
             </p>
             <div className='table-responsive'>
               <Table
@@ -152,20 +165,26 @@ const ResultadosSimulacion = ({ resultados }) => {
           </Card.Body>
         </Card>
 
-        {/* Punto 3 */}
+        {/* Requerimiento: Optimización de Asignación de Recursos */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
-            <i className='bi bi-people me-2'></i>
-            3. Porcentaje de ocupación con un empleado menos
+            <i className='bi bi-person-x me-2'></i>
+            Optimización de asignación de recursos
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> ¿Cuál sería el Porcentaje de ocupación
-              en la venta de sellos y sobres si uno de los empleados se dedica
-              temporalmente a reclamaciones y devoluciones?
+              <strong>Propósito:</strong> Analizar la flexibilidad y el impacto
+              de la reasignación de personal entre servicios.
+            </p>
+            <p>
+              <strong>Detalle:</strong> El sistema debe determinar el porcentaje
+              de ocupación en el servicio de 'Venta de Sellos y Sobres' si uno
+              de sus empleados es reasignado temporalmente a 'Reclamaciones y
+              Devoluciones'. Esto facilita la toma de decisiones sobre la
+              distribución del personal para equilibrar la carga de trabajo.
             </p>
             <div className='table-responsive'>
               <Table
@@ -210,24 +229,26 @@ const ResultadosSimulacion = ({ resultados }) => {
           </Card.Body>
         </Card>
 
-        {/* Punto 4 */}
+        {/* Requerimiento: Dimensionamiento de Capacidad de Cola */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
-            <i className='bi bi-queue me-2'></i>
-            4. Máxima cantidad de clientes en cola
+            <i className='bi bi-people me-2'></i>
+            Dimensionamiento de capacidad de cola
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> Determinar el máximo número de clientes
-              que hubo en cada cola durante la simulación.
+              <strong>Propósito:</strong> Planificar la infraestructura física y
+              la capacidad del sistema para gestionar la afluencia de clientes.
             </p>
             <p>
-              <strong>Justificación:</strong> Conocer el tamaño máximo de las
-              colas es crucial para dimensionar el espacio físico, planificar la
-              capacidad del sistema y aplicar estrategias para picos de demanda.
+              <strong>Detalle:</strong> El sistema debe identificar el número
+              máximo de clientes que estuvieron en cada cola durante la
+              simulación. Conocer el tamaño máximo de las colas es fundamental
+              para dimensionar el espacio físico, planificar la capacidad del
+              sistema y aplicar estrategias para picos de demanda.
             </p>
             <div className='table-responsive'>
               <Table
@@ -270,29 +291,31 @@ const ResultadosSimulacion = ({ resultados }) => {
           </Card.Body>
         </Card>
 
-        {/* Punto 5 */}
+        {/* Requerimiento: Análisis de Implementación de Colas Prioritarias */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
             <i className='bi bi-star me-2'></i>
-            5. Impacto de cola de prioridad
+            Análisis de implementación de colas prioritarias
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> Proponer e implementar una cola de
-              prioridad en el área de 'Atención Empresarial', asumiendo que el
-              20% de los clientes son clasificados con alta prioridad al llegar
-              al sistema, y determinar el impacto de esta priorización en el
-              tiempo de espera promedio de los clientes de alta prioridad y el
-              tiempo de espera promedio de los clientes de baja prioridad.
+              <strong>Propósito:</strong> Evaluar la viabilidad y el impacto de
+              introducir un servicio prioritario para segmentos específicos de
+              clientes.
             </p>
             <p>
-              <strong>Justificación:</strong> Simular este escenario permite
-              cuantificar el efecto de la priorización en los tiempos de espera
-              y predecir si la mejora en el servicio para clientes de alta
-              prioridad afecta negativamente a los de baja prioridad.
+              <strong>Detalle:</strong> El sistema debe permitir la simulación
+              de una cola de prioridad en el área de 'Atención Empresarial',
+              asumiendo que el 20% de los clientes son clasificados con alta
+              prioridad. Se debe determinar el tiempo de espera promedio para
+              los clientes de alta prioridad y para los de baja prioridad.
+              Simular este escenario permite cuantificar el efecto de la
+              priorización en los tiempos de espera y predecir si la mejora en
+              el servicio para clientes de alta prioridad afecta negativamente a
+              los de baja prioridad.
             </p>
             <div className='table-responsive'>
               <Table
@@ -328,26 +351,27 @@ const ResultadosSimulacion = ({ resultados }) => {
           </Card.Body>
         </Card>
 
-        {/* Punto 6 */}
+        {/* Requerimiento: Control de Nivel de Servicio para Clientes Críticos */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
             <i className='bi bi-clock me-2'></i>
-            6. Probabilidad espera {'>'} 15 min
+            Control de nivel de servicio para clientes críticos
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> Calcular la probabilidad de que un
-              cliente espere más de 15 minutos en el servicio 'Envíos de
-              Paquetes'.
+              <strong>Propósito:</strong> Asegurar que los tiempos de espera en
+              servicios de alto volumen se mantengan dentro de límites
+              aceptables para la satisfacción del cliente.
             </p>
             <p>
-              <strong>Justificación:</strong> El servicio de 'Envíos de
-              Paquetes' concentra el mayor flujo de clientes y es crítico para
-              la operativa diaria; determinar la probabilidad de espera superior
-              a 15 minutos permite enfocar la optimización de recursos y mejorar
+              <strong>Detalle:</strong> El sistema debe calcular la probabilidad
+              de que un cliente espere más de 15 minutos en el servicio de
+              'Envíos de Paquetes'. Este servicio concentra el mayor flujo de
+              clientes y es crítico para la operativa diaria; determinar esta
+              probabilidad permite enfocar la optimización de recursos y mejorar
               la experiencia del usuario donde el impacto es mayor.
             </p>
             <div className='table-responsive'>
@@ -374,22 +398,28 @@ const ResultadosSimulacion = ({ resultados }) => {
           </Card.Body>
         </Card>
 
-        {/* Punto 7 */}
+        {/* Requerimiento: Evaluación de Nuevo Servicio Derivado */}
         <Card className='shadow-sm'>
           <Card.Header
             as='h3'
             className='d-flex align-items-center'
           >
             <i className='bi bi-plus-circle me-2'></i>
-            7. Nuevo servicio derivado
+            Evaluación de nuevo servicio derivado
           </Card.Header>
           <Card.Body>
             <p>
-              <strong>Consigna:</strong> Se debe agregar un servicio más a la
-              oficina de correos, donde el 50% de los clientes que llegan a
-              despachar Paquetes o Postales, deben pasar sí o sí por ese nuevo
-              servicio. Calcular estadísticas sobre la cola y el porcentaje de
-              ocupación del nuevo servicio.
+              <strong>Propósito:</strong> Analizar la integración y el
+              rendimiento de un nuevo servicio que depende de otros flujos de
+              clientes.
+            </p>
+            <p>
+              <strong>Detalle:</strong> El sistema debe permitir la integración
+              de un nuevo servicio obligatorio por el cual deben pasar el 50% de
+              los clientes que llegan para 'Envíos de Paquetes'. Se deben
+              calcular las estadísticas sobre la cola y el porcentaje de
+              ocupación de este nuevo servicio para evaluar su impacto
+              operativo.
             </p>
             <div className='table-responsive'>
               <Table

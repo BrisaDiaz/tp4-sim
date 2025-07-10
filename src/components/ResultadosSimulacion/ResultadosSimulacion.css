@@ -143,7 +143,7 @@
 /* Service name formatting */
 .resultados-simulacion .service-name {
   font-weight: 500;
-  color: #61b3ff;
+  color: #1890ff;
   text-transform: capitalize;
 }
 
@@ -183,7 +183,7 @@
 
 /* Icons styling */
 .resultados-simulacion .bi {
-  color: #1890ff;
+  color: #61b3ff;
 }
 
 /* Responsive design */
