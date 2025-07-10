@@ -15,9 +15,9 @@ const plantillaFila = {
       esperas_mayores_a_15m: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
-      servidor_3: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
+      servidor_3: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -46,8 +46,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -74,9 +74,9 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
-      servidor_3: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
+      servidor_3: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -103,8 +103,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -131,7 +131,7 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -158,11 +158,11 @@ const plantillaFila = {
     },
     servidores: {
       servidor_periodico: {
-        estado: "libre",
+        estado: 'libre',
         inicio_ocupacion: null,
         tiempo_remanente: null,
       },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
     },
     fin_de_atencion: {
       rnd: null,
@@ -186,8 +186,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -222,8 +222,8 @@ const plantillaFila = {
       longitud_maxima: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
-      servidor_2: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
+      servidor_2: { estado: 'libre', inicio_ocupacion: null },
     },
     fin_de_atencion: {
       rnd: null,
@@ -249,7 +249,7 @@ const plantillaFila = {
       tiempos_de_espera_acumulados: 0,
     },
     servidores: {
-      servidor_1: { estado: "libre", inicio_ocupacion: null },
+      servidor_1: { estado: 'libre', inicio_ocupacion: null },
       tiempos_de_ocupacion_acumulados: 0,
     },
     fin_de_atencion: {
@@ -266,1404 +266,1404 @@ const plantillaFila = {
 };
 
 export const plantillaCabeceras = [
-  { name: "Simulacion", colspan: 1, rowspan: 3, key: "simulacion" },
-  { name: "Evento", colspan: 1, rowspan: 4, key: "evento" },
-  { name: "Reloj", colspan: 1, rowspan: 3, key: "reloj" },
+  { name: 'Simulacion', colspan: 1, rowspan: 3, key: 'simulacion' },
+  { name: 'Evento', colspan: 1, rowspan: 4, key: 'evento' },
+  { name: 'Reloj', colspan: 1, rowspan: 3, key: 'reloj' },
   {
-    name: "Envio de Paquetes",
+    name: 'Envio de Paquetes',
     colspan: 23, // Corrected: 3 (Llegada) + 4 (Cola) + 7 (Servidores) + 5 (Fin de Atencion) + 4 (Estadisticos) = 23
     rowspan: 1,
-    key: "envio_de_paquetes",
+    key: 'envio_de_paquetes',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 4,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Esperas Mayores a 15m",
+            name: 'Esperas Mayores a 15m',
             colspan: 1,
             rowspan: 1,
-            key: "esperas_mayores_a_15m",
+            key: 'esperas_mayores_a_15m',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 7, // 2 (Servidor 1) + 2 (Servidor 2) + 2 (Servidor 3) + 1 (Tiempos de Ocupacion Acumulados) = 7
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
               {
-                name: "Estado",
+                name: 'Estado',
                 colspan: 1,
                 rowspan: 1,
-                key: "estado",
+                key: 'estado',
               },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
               {
-                name: "Estado",
+                name: 'Estado',
                 colspan: 1,
                 rowspan: 1,
-                key: "estado",
+                key: 'estado',
               },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 3",
+            name: 'Servidor 3',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_3",
+            key: 'servidor_3',
             subheaders: [
               {
-                name: "Estado",
+                name: 'Estado',
                 colspan: 1,
                 rowspan: 1,
-                key: "estado",
+                key: 'estado',
               },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 5, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 3 (Servidores) = 5
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
           {
-            name: "Fin de Atencion Servidor 3",
+            name: 'Fin de Atencion Servidor 3',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_3",
+            key: 'hora_de_fin_de_atencion_servidor_3',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 4,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
           {
-            name: "Probabilidad de Espera Mayor a 15m",
+            name: 'Probabilidad de Espera Mayor a 15m',
             colspan: 1,
             rowspan: 1,
-            key: "probabilidad_de_espera_mayor_a_15m",
+            key: 'probabilidad_de_espera_mayor_a_15m',
           },
         ],
       },
     ],
   },
   {
-    name: "Reclamaciones y Devoluciones",
+    name: 'Reclamaciones y Devoluciones',
     colspan: 18, // Corrected: 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 4 (Fin de Atencion) + 3 (Estadisticos) = 18
     rowspan: 1,
-    key: "reclamaciones_y_devoluciones",
+    key: 'reclamaciones_y_devoluciones',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 3,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 5, // 2 (Servidor 1) + 2 (Servidor 2) + 1 (Tiempos de Ocupacion Acumulados) = 5
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
         ],
       },
     ],
   },
   {
-    name: "Venta de Sellos y Sobres",
+    name: 'Venta de Sellos y Sobres',
     colspan: 21, // Corrected: 3 (Llegada) + 3 (Cola) + 7 (Servidores) + 5 (Fin de Atencion) + 3 (Estadisticos) = 21
     rowspan: 1,
-    key: "venta_de_sellos_y_sobres",
+    key: 'venta_de_sellos_y_sobres',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 3,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 7, // 2 (Servidor 1) + 2 (Servidor 2) + 2 (Servidor 3) + 1 (Tiempos de Ocupacion Acumulados) = 7
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 3",
+            name: 'Servidor 3',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_3",
+            key: 'servidor_3',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 5, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 3 (Servidores) = 5
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
           {
-            name: "Fin de Atencion Servidor 3",
+            name: 'Fin de Atencion Servidor 3',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_3",
+            key: 'hora_de_fin_de_atencion_servidor_3',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
         ],
       },
     ],
   },
   {
-    name: "Atencion Empresarial",
+    name: 'Atencion Empresarial',
     colspan: 18, // Corrected: 3 (Llegada) + 3 (Cola) + 5 (Servidores) + 4 (Fin de Atencion) + 3 (Estadisticos) = 18
     rowspan: 1,
-    key: "atencion_empresarial",
+    key: 'atencion_empresarial',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 3,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 5, // 2 (Servidor 1) + 2 (Servidor 2) + 1 (Tiempos de Ocupacion Acumulados) = 5
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
         ],
       },
     ],
   },
   {
-    name: "Postales y Envios Especiales",
+    name: 'Postales y Envios Especiales',
     colspan: 15, // Corrected: 3 (Llegada) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 15
     rowspan: 1,
-    key: "postales_y_envios_especiales",
+    key: 'postales_y_envios_especiales',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 3,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 3, // 2 (Servidor 1) + 1 (Tiempos de Ocupacion Acumulados) = 3
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 3, // 1 (RND) + 1 (Tiempo de Atencion) + 1 (Servidor) = 3
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
         ],
       },
     ],
   },
   {
-    name: "Atencion Empresarial con Ausencia",
+    name: 'Atencion Empresarial con Ausencia',
     colspan: 15, // Corrected: 3 (Llegada) + 3 (Cola) + 3 (Servidores) + 4 (Fin de Atencion) + 2 (Estadisticos) = 15
     rowspan: 1,
-    key: "atencion_empresarial_con_ausencia",
+    key: 'atencion_empresarial_con_ausencia',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 3,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 3, // 2 (Servidor Periodico: Estado, Tiempo Remanente) + 1 (Servidor 2: Estado) = 3
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor Periodico",
+            name: 'Servidor Periodico',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_periodico",
+            key: 'servidor_periodico',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Tiempo Remanente de Atención",
+                name: 'Tiempo Remanente de Atención',
                 colspan: 1,
                 rowspan: 1,
-                key: "tiempo_remanente",
+                key: 'tiempo_remanente',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
             ],
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor Periodico",
+            name: 'Fin de Atencion Servidor Periodico',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_periodico",
+            key: 'hora_de_fin_de_atencion_servidor_periodico',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 2,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
         ],
       },
     ],
   },
   {
-    name: "Venta de Sellos y Sobres sin 1 Empleado",
+    name: 'Venta de Sellos y Sobres sin 1 Empleado',
     colspan: 16, // Corrected: 3 (Llegada) + 2 (Cola) + 5 (Servidores) + 4 (Fin de Atencion) + 2 (Estadisticos) = 16
     rowspan: 1,
-    key: "venta_de_sellos_y_sobres_sin_1_empleado",
+    key: 'venta_de_sellos_y_sobres_sin_1_empleado',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 2,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 5, // 2 (Servidor 1) + 2 (Servidor 2) + 1 (Tiempos de Ocupacion Acumulados) = 5
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 4, // Corrected: 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 2,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
         ],
       },
     ],
   },
   {
-    name: "Atencion Empresarial con Prioridad",
+    name: 'Atencion Empresarial con Prioridad',
     colspan: 23, // Corrected: 3 (Llegada) + 2 (Prioridad) + 3 (Cola Sin Prioridad) + 3 (Cola Con Prioridad) + 4 (Servidores) + 4 (Fin de Atencion) + 4 (Estadisticos) = 23
     rowspan: 1,
-    key: "atencion_empresarial_con_prioridad",
+    key: 'atencion_empresarial_con_prioridad',
     subheaders: [
       {
-        name: "Llegada de Cliente",
+        name: 'Llegada de Cliente',
         colspan: 3,
         rowspan: 1,
-        key: "llegada_de_cliente",
+        key: 'llegada_de_cliente',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo entre Llegada",
+            name: 'Tiempo entre Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_entre_llegada",
+            key: 'tiempo_entre_llegada',
           },
           {
-            name: "Hora de Llegada",
+            name: 'Hora de Llegada',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_llegada",
+            key: 'hora_de_llegada',
           },
         ],
       },
       {
-        name: "Prioridad",
+        name: 'Prioridad',
         colspan: 2,
         rowspan: 1,
-        key: "prioridad",
+        key: 'prioridad',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tipo de Prioridad",
+            name: 'Tipo de Prioridad',
             colspan: 1,
             rowspan: 1,
-            key: "tipo_prioridad",
+            key: 'tipo_prioridad',
           },
         ],
       },
       {
-        name: "Cola Sin Prioridad",
+        name: 'Cola Sin Prioridad',
         colspan: 3,
         rowspan: 1,
-        key: "cola_sin_prioridad",
+        key: 'cola_sin_prioridad',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Cola Con Prioridad",
+        name: 'Cola Con Prioridad',
         colspan: 3,
         rowspan: 1,
-        key: "cola_con_prioridad",
+        key: 'cola_con_prioridad',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 4, // 2 (Servidor 1) + 2 (Servidor 2) = 4
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Servidor 2",
+            name: 'Servidor 2',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_2",
+            key: 'servidor_2',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 4, // 1 (RND) + 1 (Tiempo de Atencion) + 2 (Servidores) = 4
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
           {
-            name: "Fin de Atencion Servidor 2",
+            name: 'Fin de Atencion Servidor 2',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_2",
+            key: 'hora_de_fin_de_atencion_servidor_2',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 4,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos CP",
+            name: 'Clientes Atendidos CP',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos_cp",
+            key: 'clientes_atendidos_cp',
           },
           {
-            name: "Clientes Atendidos SP",
+            name: 'Clientes Atendidos SP',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos_sp",
+            key: 'clientes_atendidos_sp',
           },
           {
-            name: "Tiempo Promedio de Espera CSP",
+            name: 'Tiempo Promedio de Espera CSP',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera_csp",
+            key: 'tiempo_promedio_de_espera_csp',
           },
           {
-            name: "Tiempo Promedio de Espera CCP",
+            name: 'Tiempo Promedio de Espera CCP',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera_ccp",
+            key: 'tiempo_promedio_de_espera_ccp',
           },
         ],
       },
     ],
   },
   {
-    name: "Post Envio de Paquetes",
+    name: 'Post Envio de Paquetes',
     colspan: 15, // Corrected: 2 (Solicitud del Servicio) + 3 (Cola) + 3 (Servidores) + 3 (Fin de Atencion) + 3 (Estadisticos) = 14
     rowspan: 1,
-    key: "post_envio_de_paquetes",
+    key: 'post_envio_de_paquetes',
     subheaders: [
       {
-        name: "Solicitud del Servicio",
+        name: 'Solicitud del Servicio',
         colspan: 2,
         rowspan: 1,
-        key: "solicitud_del_servicio",
+        key: 'solicitud_del_servicio',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Solicita",
+            name: 'Solicita',
             colspan: 1,
             rowspan: 1,
-            key: "solicita",
+            key: 'solicita',
           },
         ],
       },
       {
-        name: "Cola",
+        name: 'Cola',
         colspan: 3,
         rowspan: 1,
-        key: "cola",
+        key: 'cola',
         subheaders: [
           {
-            name: "Clientes en Cola",
+            name: 'Clientes en Cola',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_en_cola",
+            key: 'clientes_en_cola',
           },
           {
-            name: "Longitud Maxima",
+            name: 'Longitud Maxima',
             colspan: 1,
             rowspan: 1,
-            key: "longitud_maxima",
+            key: 'longitud_maxima',
           },
           {
-            name: "Tiempos de Espera Acumulados",
+            name: 'Tiempos de Espera Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_espera_acumulados",
+            key: 'tiempos_de_espera_acumulados',
           },
         ],
       },
       {
-        name: "Servidores",
+        name: 'Servidores',
         colspan: 3, // 2 (Servidor 1) + 1 (Tiempos de Ocupacion Acumulados) = 3
         rowspan: 1,
-        key: "servidores",
+        key: 'servidores',
         subheaders: [
           {
-            name: "Servidor 1",
+            name: 'Servidor 1',
             colspan: 2,
             rowspan: 1,
-            key: "servidor_1",
+            key: 'servidor_1',
             subheaders: [
-              { name: "Estado", colspan: 1, rowspan: 1, key: "estado" },
+              { name: 'Estado', colspan: 1, rowspan: 1, key: 'estado' },
               {
-                name: "Inicio de Ocupación",
+                name: 'Inicio de Ocupación',
                 colspan: 1,
                 rowspan: 1,
-                key: "inicio_ocupacion",
+                key: 'inicio_ocupacion',
               },
             ],
           },
           {
-            name: "Tiempos de Ocupacion Acumulados",
+            name: 'Tiempos de Ocupacion Acumulados',
             colspan: 1,
             rowspan: 1,
-            key: "tiempos_de_ocupacion_acumulados",
+            key: 'tiempos_de_ocupacion_acumulados',
           },
         ],
       },
       {
-        name: "Fin de Atencion",
+        name: 'Fin de Atencion',
         colspan: 3, // 1 (RND) + 1 (Tiempo de Atencion) + 1 (Servidor) = 3
         rowspan: 1,
-        key: "fin_de_atencion",
+        key: 'fin_de_atencion',
         subheaders: [
-          { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+          { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
           {
-            name: "Tiempo de Atencion",
+            name: 'Tiempo de Atencion',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_de_atencion",
+            key: 'tiempo_de_atencion',
           },
           {
-            name: "Fin de Atencion Servidor 1",
+            name: 'Fin de Atencion Servidor 1',
             colspan: 1,
             rowspan: 1,
-            key: "hora_de_fin_de_atencion_servidor_1",
+            key: 'hora_de_fin_de_atencion_servidor_1',
           },
         ],
       },
       {
-        name: "Estadisticos",
+        name: 'Estadisticos',
         colspan: 3,
         rowspan: 1,
-        key: "estadisticos",
+        key: 'estadisticos',
         subheaders: [
           {
-            name: "Clientes Atendidos",
+            name: 'Clientes Atendidos',
             colspan: 1,
             rowspan: 1,
-            key: "clientes_atendidos",
+            key: 'clientes_atendidos',
           },
           {
-            name: "Porcentaje de Ocupacion",
+            name: 'Porcentaje de Ocupacion',
             colspan: 1,
             rowspan: 1,
-            key: "porcentaje_de_ocupacion",
+            key: 'porcentaje_de_ocupacion',
           },
           {
-            name: "Tiempo Promedio de Espera",
+            name: 'Tiempo Promedio de Espera',
             colspan: 1,
             rowspan: 1,
-            key: "tiempo_promedio_de_espera",
+            key: 'tiempo_promedio_de_espera',
           },
         ],
       },
@@ -1671,15 +1671,15 @@ export const plantillaCabeceras = [
   },
 ];
 const abreviaciones = {
-  envio_de_paquetes: "EP",
-  reclamaciones_y_devoluciones: "RyD",
-  venta_de_sellos_y_sobres: "VSyS",
-  atencion_empresarial: "AE",
-  postales_y_envios_especiales: "PyEE",
-  atencion_empresarial_con_ausencia: "AECA",
-  venta_de_sellos_y_sobres_sin_1_empleado: "VSySS1E",
-  atencion_empresarial_con_prioridad: "AECP",
-  post_envio_de_paquetes: "PEP",
+  envio_de_paquetes: 'EP',
+  reclamaciones_y_devoluciones: 'RyD',
+  venta_de_sellos_y_sobres: 'VSyS',
+  atencion_empresarial: 'AE',
+  postales_y_envios_especiales: 'PyEE',
+  atencion_empresarial_con_ausencia: 'AECA',
+  venta_de_sellos_y_sobres_sin_1_empleado: 'VSySS1E',
+  atencion_empresarial_con_prioridad: 'AECP',
+  post_envio_de_paquetes: 'PEP',
 };
 // tasa = clientes/hora
 const tasasBase = {
@@ -1743,18 +1743,18 @@ export const plantillaCofig = {
   },
 };
 const serviciosBase = [
-  "envio_de_paquetes",
-  "reclamaciones_y_devoluciones",
-  "venta_de_sellos_y_sobres",
-  "atencion_empresarial",
-  "postales_y_envios_especiales",
+  'envio_de_paquetes',
+  'reclamaciones_y_devoluciones',
+  'venta_de_sellos_y_sobres',
+  'atencion_empresarial',
+  'postales_y_envios_especiales',
 ];
 const servicios = [
   ...serviciosBase,
-  "atencion_empresarial_con_ausencia",
-  "venta_de_sellos_y_sobres_sin_1_empleado",
-  "atencion_empresarial_con_prioridad",
-  "post_envio_de_paquetes",
+  'atencion_empresarial_con_ausencia',
+  'venta_de_sellos_y_sobres_sin_1_empleado',
+  'atencion_empresarial_con_prioridad',
+  'post_envio_de_paquetes',
 ];
 
 const setNullsFila = (fila, horaActual) => {
@@ -1775,7 +1775,7 @@ const setNullsFila = (fila, horaActual) => {
       fila[servicio].fin_de_atencion.tiempo_de_atencion = null;
       // Mantiene la hora del proximo fin de atención si aún no ha ocurrido
       for (const key in fila[servicio].fin_de_atencion) {
-        if (key.startsWith("hora_de_fin_de_atencion_servidor_")) {
+        if (key.startsWith('hora_de_fin_de_atencion_servidor_')) {
           if (fila[servicio].fin_de_atencion[key] <= horaActual) {
             fila[servicio].fin_de_atencion[key] = null;
           }
@@ -1801,41 +1801,41 @@ const setNullsFila = (fila, horaActual) => {
 
 const ajustarServidores = (config) => {
   const cant_servidores_envio_de_paquetes =
-    config.tasas["post_envio_de_paquetes"].cantidad_de_servidores || 1;
+    config.tasas['post_envio_de_paquetes'].cantidad_de_servidores || 1;
 
   // Inicializar correctamente el objeto servidores
-  plantillaFila["post_envio_de_paquetes"].servidores = {
+  plantillaFila['post_envio_de_paquetes'].servidores = {
     tiempos_de_ocupacion_acumulados: 0,
   };
 
   // Inicializar correctamente el objeto fin_de_atencion
-  plantillaFila["post_envio_de_paquetes"].fin_de_atencion = {
+  plantillaFila['post_envio_de_paquetes'].fin_de_atencion = {
     rnd: null,
     tiempo_de_atencion: null,
   };
 
   // Agregar servidores dinámicamente y sus respectivos fines de atención
   for (let i = 1; i <= cant_servidores_envio_de_paquetes; i++) {
-    plantillaFila["post_envio_de_paquetes"].servidores[`servidor_${i}`] = {
-      estado: "libre",
+    plantillaFila['post_envio_de_paquetes'].servidores[`servidor_${i}`] = {
+      estado: 'libre',
       inicio_ocupacion: null,
     };
-    plantillaFila["post_envio_de_paquetes"].fin_de_atencion[
+    plantillaFila['post_envio_de_paquetes'].fin_de_atencion[
       `hora_de_fin_de_atencion_servidor_${i}`
     ] = null;
   }
 
   // Actualizar cabeceras
   const postEnvioDePaquetesHeader = plantillaCabeceras.find(
-    (header) => header.key === "post_envio_de_paquetes"
+    (header) => header.key === 'post_envio_de_paquetes'
   );
 
   const servidoresSubheader = postEnvioDePaquetesHeader.subheaders.find(
-    (sub) => sub.key === "servidores"
+    (sub) => sub.key === 'servidores'
   );
 
   const finDeAtencionSubheader = postEnvioDePaquetesHeader.subheaders.find(
-    (sub) => sub.key === "fin_de_atencion"
+    (sub) => sub.key === 'fin_de_atencion'
   );
 
   // Limpiar y reconstruir subheaders para servidores
@@ -1850,38 +1850,38 @@ const ajustarServidores = (config) => {
       key: `servidor_${i}`,
       subheaders: [
         {
-          name: "Estado",
+          name: 'Estado',
           colspan: 1,
           rowspan: 1,
-          key: "estado",
+          key: 'estado',
         },
         {
-          name: "Inicio de Ocupación",
+          name: 'Inicio de Ocupación',
           colspan: 1,
           rowspan: 1,
-          key: "inicio_ocupacion",
+          key: 'inicio_ocupacion',
         },
       ],
     });
     servidoresColspan += 2;
   }
   servidoresSubheader.subheaders.push({
-    name: "Tiempos de Ocupacion Acumulados",
+    name: 'Tiempos de Ocupacion Acumulados',
     colspan: 1,
     rowspan: 1,
-    key: "tiempos_de_ocupacion_acumulados",
+    key: 'tiempos_de_ocupacion_acumulados',
   });
   servidoresColspan += 1;
   servidoresSubheader.colspan = servidoresColspan;
 
   // Limpiar y reconstruir subheaders para fin_de_atencion
   finDeAtencionSubheader.subheaders = [
-    { name: "RND", colspan: 1, rowspan: 1, key: "rnd" },
+    { name: 'RND', colspan: 1, rowspan: 1, key: 'rnd' },
     {
-      name: "Tiempo de Atencion",
+      name: 'Tiempo de Atencion',
       colspan: 1,
       rowspan: 1,
-      key: "tiempo_de_atencion",
+      key: 'tiempo_de_atencion',
     },
   ];
   let finDeAtencionColspan = 2; // for RND and Tiempo de Atencion
@@ -1930,7 +1930,7 @@ const procesarLlegadaGenerica = (
   clientes_registrados[evento.servicio] += 1;
 
   /// generar la proxima llegada (si no es servicio post envio de paquetes)
-  if (evento.servicio !== "post_envio_de_paquetes") {
+  if (evento.servicio !== 'post_envio_de_paquetes') {
     const llegada = generadorExponencial(
       config.tasas[evento.servicio].tasa_de_llegada
     );
@@ -1947,7 +1947,7 @@ const procesarLlegadaGenerica = (
       }`,
       cliente_id: clientes_registrados[evento.servicio],
       servicio: evento.servicio,
-      tipo: "llegada_de_cliente",
+      tipo: 'llegada_de_cliente',
       hora: fila.reloj + llegada.value,
     });
   }
@@ -1974,7 +1974,7 @@ const procesarLlegadaGenerica = (
   } else {
     /// ocupar un servidor
     const servidor = serividoresLibres[0];
-    fila[evento.servicio].servidores[servidor].estado = "ocupado";
+    fila[evento.servicio].servidores[servidor].estado = 'ocupado';
     fila[evento.servicio].servidores[servidor].inicio_ocupacion = fila.reloj;
 
     /// generar el fin de atencion
@@ -1996,7 +1996,7 @@ const procesarLlegadaGenerica = (
       }`,
       cliente_id: evento.cliente_id,
       servicio: evento.servicio,
-      tipo: "fin_de_atencion",
+      tipo: 'fin_de_atencion',
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
       servidor, /// para saber que servidor se debe liberar
@@ -2004,7 +2004,7 @@ const procesarLlegadaGenerica = (
 
     /// determinar si el servidor venía de estar libre
     const estabaLibre =
-      filaPrevia[evento.servicio].servidores[servidor].estado === "libre";
+      filaPrevia[evento.servicio].servidores[servidor].estado === 'libre';
 
     /// actualizo el inicio de ocupación con la hora en que se ocupa nuevamente
     if (estabaLibre) {
@@ -2035,7 +2035,7 @@ const procesarLlegadaConPrioridad = (
 
   // Generar prioridad del cliente
   const rndPrioridad = Math.random();
-  const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
+  const prioridad = rndPrioridad < 0.2 ? 'alta' : 'normal';
 
   // Actualizar valores de prioridad
   fila[evento.servicio].prioridad.rnd = rndPrioridad;
@@ -2045,16 +2045,16 @@ const procesarLlegadaConPrioridad = (
   eventos.push({
     nombre: `llegada_cliente_${abreviaciones[evento.servicio]}_${
       clientes_registrados[evento.servicio]
-    }_${prioridad === "alta" ? "cp" : "sp"}`,
+    }_${prioridad === 'alta' ? 'cp' : 'sp'}`,
     cliente_id: clientes_registrados[evento.servicio],
     servicio: evento.servicio,
-    tipo: "llegada_de_cliente",
+    tipo: 'llegada_de_cliente',
     hora: fila.reloj + llegada.value,
     prioridad,
   });
 
   const cola =
-    evento.prioridad === "alta" ? "cola_con_prioridad" : "cola_sin_prioridad";
+    evento.prioridad === 'alta' ? 'cola_con_prioridad' : 'cola_sin_prioridad';
 
   // Verificar servidores libres
   const servidoresLibres = encontrarServidoresLibres(evento.servicio, fila);
@@ -2080,7 +2080,7 @@ const procesarLlegadaConPrioridad = (
   } else {
     // Ocupar servidor
     const servidor = servidoresLibres[0];
-    fila[evento.servicio].servidores[servidor].estado = "ocupado";
+    fila[evento.servicio].servidores[servidor].estado = 'ocupado';
 
     // Generar fin de atención
     const finAtencion = generadorExponencial(
@@ -2098,10 +2098,10 @@ const procesarLlegadaConPrioridad = (
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         evento.cliente_id
-      }_${evento.prioridad === "alta" ? "cp" : "sp"}`,
+      }_${evento.prioridad === 'alta' ? 'cp' : 'sp'}`,
       cliente_id: evento.cliente_id,
-      servicio: "atencion_empresarial_con_prioridad",
-      tipo: "fin_de_atencion",
+      servicio: 'atencion_empresarial_con_prioridad',
+      tipo: 'fin_de_atencion',
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
       servidor,
@@ -2110,7 +2110,7 @@ const procesarLlegadaConPrioridad = (
     });
 
     // Actualizar contadores según el tipo de cola
-    if (cola === "cola_con_prioridad") {
+    if (cola === 'cola_con_prioridad') {
       fila[evento.servicio].estadisticos.clientes_atendidos_cp += 1;
     } else {
       fila[evento.servicio].estadisticos.clientes_atendidos_sp += 1;
@@ -2118,7 +2118,7 @@ const procesarLlegadaConPrioridad = (
 
     // Calcular promedios
     const clientesAtendidos =
-      cola === "cola_con_prioridad"
+      cola === 'cola_con_prioridad'
         ? fila[evento.servicio].estadisticos.clientes_atendidos_cp
         : fila[evento.servicio].estadisticos.clientes_atendidos_sp;
 
@@ -2127,7 +2127,7 @@ const procesarLlegadaConPrioridad = (
         fila[evento.servicio][cola].tiempos_de_espera_acumulados;
       const promDeEspera = tiempoEsperaAcum / clientesAtendidos;
 
-      if (cola === "cola_con_prioridad") {
+      if (cola === 'cola_con_prioridad') {
         fila[evento.servicio].estadisticos.tiempo_promedio_de_espera_ccp =
           promDeEspera;
       } else {
@@ -2161,7 +2161,7 @@ const procesarFinAtencionGenerica = (
   /// comprovar si hay clientes en la cola (si debe ausentarse el servidor se omite)
   if (clienteMasAntiguoEnCola) {
     /// el servidor se mantiene ocupado
-    fila[evento.servicio].servidores[evento.servidor].estado = "ocupado";
+    fila[evento.servicio].servidores[evento.servidor].estado = 'ocupado';
 
     /// actualizo la logitud de la cola
     fila[evento.servicio].cola.clientes_en_cola -= 1;
@@ -2185,18 +2185,18 @@ const procesarFinAtencionGenerica = (
       }`,
       cliente_id: clienteMasAntiguoEnCola.cliente_id,
       servicio: evento.servicio,
-      tipo: "fin_de_atencion",
+      tipo: 'fin_de_atencion',
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
       servidor: evento.servidor, /// para saber que servidor se debe liberar (es el mismo servidor del evento fin de atención, permanece ocupado)
     });
   } else {
     /// liberar el servidor
-    fila[evento.servicio].servidores[evento.servidor].estado = "libre";
+    fila[evento.servicio].servidores[evento.servidor].estado = 'libre';
     fila[evento.servicio].servidores[evento.servidor].inicio_ocupacion = null;
 
     /// verificar si se debe calcular el porcentaje de ocupacion (se recalcula únicamente cuando el servidor se libera)
-    if ("porcentaje_de_ocupacion" in fila[evento.servicio].estadisticos) {
+    if ('porcentaje_de_ocupacion' in fila[evento.servicio].estadisticos) {
       /// actualizar los tiempos de ocupación acumulados
       let tiempoAcum =
         filaPrevia[evento.servicio].servidores.tiempos_de_ocupacion_acumulados;
@@ -2224,7 +2224,7 @@ const procesarFinAtencionGenerica = (
     }
   }
   /// verificar si se debe calcular los tiempos promedios de espera
-  if ("tiempo_promedio_de_espera" in fila[evento.servicio].estadisticos) {
+  if ('tiempo_promedio_de_espera' in fila[evento.servicio].estadisticos) {
     /// actualizo los tiempos acumulados en cola
     fila[evento.servicio].cola.tiempos_de_espera_acumulados += tiempoEspera;
 
@@ -2242,7 +2242,7 @@ const procesarFinAtencionGenerica = (
 
   /// verificar si se debe calcular la probabilidad de espera >15min
   if (
-    "probabilidad_de_espera_mayor_a_15m" in fila[evento.servicio].estadisticos
+    'probabilidad_de_espera_mayor_a_15m' in fila[evento.servicio].estadisticos
   ) {
     /// actualizar la cantidad de esperas > 15 min
     const esperaSup15m = tiempoEspera > 15 / 60 ? true : false;
@@ -2271,9 +2271,9 @@ const procesarFinAtencionConPrioridad = (
   eventos
 ) => {
   // Determinar qué cola tiene clientes (priorizando la cola con prioridad)
-  let colaActual = "cola_con_prioridad";
+  let colaActual = 'cola_con_prioridad';
   if (colas[evento.servicio][colaActual].length === 0) {
-    colaActual = "cola_sin_prioridad";
+    colaActual = 'cola_sin_prioridad';
   }
 
   const clienteMasAntiguoEnCola =
@@ -2292,7 +2292,7 @@ const procesarFinAtencionConPrioridad = (
     );
 
     // Actualizar contadores según el tipo de cola
-    if (colaActual === "cola_con_prioridad") {
+    if (colaActual === 'cola_con_prioridad') {
       fila[evento.servicio].estadisticos.clientes_atendidos_cp += 1;
     } else {
       fila[evento.servicio].estadisticos.clientes_atendidos_sp += 1;
@@ -2307,7 +2307,7 @@ const procesarFinAtencionConPrioridad = (
 
     // Calcular promedios
     const clientesAtendidos =
-      colaActual === "cola_con_prioridad"
+      colaActual === 'cola_con_prioridad'
         ? fila[evento.servicio].estadisticos.clientes_atendidos_cp
         : fila[evento.servicio].estadisticos.clientes_atendidos_sp;
 
@@ -2316,7 +2316,7 @@ const procesarFinAtencionConPrioridad = (
         fila[evento.servicio][colaActual].tiempos_de_espera_acumulados;
       const promDeEspera = tiempoEsperaAcum / clientesAtendidos;
 
-      if (colaActual === "cola_con_prioridad") {
+      if (colaActual === 'cola_con_prioridad') {
         fila[evento.servicio].estadisticos.tiempo_promedio_de_espera_ccp =
           promDeEspera;
       } else {
@@ -2340,10 +2340,10 @@ const procesarFinAtencionConPrioridad = (
     eventos.push({
       nombre: `fin_atencion_${abreviaciones[evento.servicio]}_${
         clienteMasAntiguoEnCola.cliente_id
-      }_${colaActual === "cola_con_prioridad" ? "cp" : "sp"}`,
+      }_${colaActual === 'cola_con_prioridad' ? 'cp' : 'sp'}`,
       cliente_id: clienteMasAntiguoEnCola.cliente_id,
-      servicio: "atencion_empresarial_con_prioridad",
-      tipo: "fin_de_atencion",
+      servicio: 'atencion_empresarial_con_prioridad',
+      tipo: 'fin_de_atencion',
       hora: fila.reloj + finAtencion.value,
       tiempo_de_atencion: finAtencion.value,
       servidor: evento.servidor,
@@ -2352,25 +2352,25 @@ const procesarFinAtencionConPrioridad = (
     });
   } else {
     // Liberar el servidor si no hay clientes en ninguna cola
-    fila[evento.servicio].servidores[evento.servidor].estado = "libre";
+    fila[evento.servicio].servidores[evento.servidor].estado = 'libre';
   }
 };
 
 const registrarEventoAusencia = (reloj, eventos) => {
   eventos.push({
-    nombre: `ausencia_servidor_${abreviaciones["atencion_empresarial_con_ausencia"]}`,
-    servicio: "atencion_empresarial_con_ausencia",
-    tipo: "ausencia_servidor",
-    servidor: "servidor_periodico",
+    nombre: `ausencia_servidor_${abreviaciones['atencion_empresarial_con_ausencia']}`,
+    servicio: 'atencion_empresarial_con_ausencia',
+    tipo: 'ausencia_servidor',
+    servidor: 'servidor_periodico',
     hora: reloj + 1, /// hora actual + 1 hora
   });
 };
 const registrarEventoRegreso = (reloj, eventos) => {
   eventos.push({
-    nombre: `regreso_servidor_${abreviaciones["atencion_empresarial_con_ausencia"]}`,
-    servicio: "atencion_empresarial_con_ausencia",
-    tipo: "regreso_servidor",
-    servidor: "servidor_periodico",
+    nombre: `regreso_servidor_${abreviaciones['atencion_empresarial_con_ausencia']}`,
+    servicio: 'atencion_empresarial_con_ausencia',
+    tipo: 'regreso_servidor',
+    servidor: 'servidor_periodico',
     hora: reloj + 12 / 60, /// hora actual + 12 min
   });
 };
@@ -2378,14 +2378,14 @@ const registrarEventoRegreso = (reloj, eventos) => {
 const inicializarSimulacion = (config, eventos, clientes_registrados) => {
   const fila = JSON.parse(JSON.stringify(plantillaFila));
   fila.simulacion = 0;
-  fila.evento = "Inicio";
+  fila.evento = 'Inicio';
   fila.reloj = 0;
 
   // Iterar sobre cada servicio para generar su primer evento de llegada
   for (const servicio of servicios) {
     // Verificar si el servicio tiene una tasa de llegada definida
     if (
-      servicio !== "post_envio_de_paquetes" &&
+      servicio !== 'post_envio_de_paquetes' &&
       config.tasas[servicio] &&
       config.tasas[servicio].tasa_de_llegada !== undefined
     ) {
@@ -2409,10 +2409,10 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
       const abreviacion = abreviaciones[servicio] || servicio; // Usa abreviación o el nombre completo si no existe
 
       /// se determina su prioridad al generar la llegada
-      if (servicio === "atencion_empresarial_con_prioridad") {
+      if (servicio === 'atencion_empresarial_con_prioridad') {
         // Generar prioridad del cliente
         const rndPrioridad = Math.random();
-        const prioridad = rndPrioridad < 0.2 ? "alta" : "normal";
+        const prioridad = rndPrioridad < 0.2 ? 'alta' : 'normal';
 
         // Actualizar valores de prioridad
         fila[servicio].prioridad.rnd = rndPrioridad;
@@ -2422,10 +2422,10 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
         eventos.push({
           nombre: `llegada_cliente_${abreviacion}_${
             clientes_registrados[servicio]
-          }_${prioridad === "alta" ? "cp" : "sp"}`,
+          }_${prioridad === 'alta' ? 'cp' : 'sp'}`,
           cliente_id: clientes_registrados[servicio],
           servicio,
-          tipo: "llegada_de_cliente",
+          tipo: 'llegada_de_cliente',
           hora: fila.reloj + llegada.value,
           prioridad,
         });
@@ -2434,7 +2434,7 @@ const inicializarSimulacion = (config, eventos, clientes_registrados) => {
           nombre: `llegada_cliente_${abreviacion}_${clientes_registrados[servicio]}`,
           cliente_id: clientes_registrados[servicio],
           servicio: servicio,
-          tipo: "llegada_de_cliente",
+          tipo: 'llegada_de_cliente',
           hora: llegada.value,
         });
       }
@@ -2559,7 +2559,7 @@ export const gestorSimulacion = (config) => {
       registrarEventoAusencia(0, eventos);
     } else {
       const evento = encontrarProxEvento(eventos);
-      if (!evento) throw new Error("No se han encontrado eventos");
+      if (!evento) throw new Error('No se han encontrado eventos');
 
       let fila = JSON.parse(JSON.stringify(filaPrevia));
       fila = setNullsFila(fila, evento.hora);
@@ -2568,8 +2568,8 @@ export const gestorSimulacion = (config) => {
       fila.evento = evento.nombre;
       fila.reloj = evento.hora;
 
-      if (evento.tipo === "llegada_de_cliente") {
-        if (evento.servicio === "atencion_empresarial_con_prioridad") {
+      if (evento.tipo === 'llegada_de_cliente') {
+        if (evento.servicio === 'atencion_empresarial_con_prioridad') {
           procesarLlegadaConPrioridad(
             clientes_registrados,
             evento,
@@ -2589,8 +2589,8 @@ export const gestorSimulacion = (config) => {
             filaPrevia
           );
         }
-      } else if (evento?.tipo === "fin_de_atencion") {
-        if (evento.servicio === "atencion_empresarial_con_prioridad") {
+      } else if (evento?.tipo === 'fin_de_atencion') {
+        if (evento.servicio === 'atencion_empresarial_con_prioridad') {
           procesarFinAtencionConPrioridad(fila, evento, colas, config, eventos);
         } else {
           procesarFinAtencionGenerica(
@@ -2602,9 +2602,9 @@ export const gestorSimulacion = (config) => {
             filaPrevia
           );
 
-          if (evento.servicio === "envio_de_paquetes") {
+          if (evento.servicio === 'envio_de_paquetes') {
             const rndSolicitud = Math.random();
-            const solicita = rndSolicitud < 0.5 ? "SI" : "NO";
+            const solicita = rndSolicitud < 0.5 ? 'SI' : 'NO';
 
             /// actualizar los datos de solicitud de servicio post envio de paquetes
             fila.post_envio_de_paquetes.solicitud_del_servicio.rnd =
@@ -2612,13 +2612,13 @@ export const gestorSimulacion = (config) => {
             fila.post_envio_de_paquetes.solicitud_del_servicio.solicita =
               solicita;
 
-            if (solicita === "SI") {
+            if (solicita === 'SI') {
               /// creamos un evento falso para reutilzar la lógica del método procesarLlegadaGenerica
               const falsoEvento = {
-                nombre: "falso",
+                nombre: 'falso',
                 cliente_id: evento.cliente_id, /// se trata del mismo cliente que sale del servicio de envio de paquetes
-                servicio: "post_envio_de_paquetes",
-                tipo: "llegada_de_cliente",
+                servicio: 'post_envio_de_paquetes',
+                tipo: 'llegada_de_cliente',
                 hora: evento.hora,
               };
 
@@ -2634,18 +2634,18 @@ export const gestorSimulacion = (config) => {
             }
           }
         }
-      } else if (evento.tipo === "ausencia_servidor") {
+      } else if (evento.tipo === 'ausencia_servidor') {
         // Verificar estado actual del servidor
         const estadoServidor =
           fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico
             .estado;
 
-        if (estadoServidor === "ocupado") {
+        if (estadoServidor === 'ocupado') {
           // Si está ocupado, programar ausencia cuando termine la atención actual
           const eventoFinAtencion = encontrarProxEvento(
             eventos,
-            "atencion_empresarial_con_ausencia",
-            "servidor_periodico"
+            'atencion_empresarial_con_ausencia',
+            'servidor_periodico'
           ); /// retorna y remueve el evento
 
           /// modifico el evento para detectar si se encuentra suspendido
@@ -2663,23 +2663,22 @@ export const gestorSimulacion = (config) => {
         }
         // Marcarlo como ausente inmediatamente
         fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
-          "ausente";
+          'ausente';
         // Programar regreso después de 12 minutos
         registrarEventoRegreso(evento.hora, eventos);
-      } else if (evento.tipo === "regreso_servidor") {
+      } else if (evento.tipo === 'regreso_servidor') {
         // Restaurar servidor a estado libre por defecto
         fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
-          "libre";
+          'libre';
 
         // Programar próxima ausencia en 1 hora
         registrarEventoAusencia(evento.hora, eventos);
-      
 
         // Buscar si hay un evento suspendido para reprogramar
         const eventoSuspendido = encontrarProxEvento(
           eventos,
-          "atencion_empresarial_con_ausencia",
-          "servidor_periodico",
+          'atencion_empresarial_con_ausencia',
+          'servidor_periodico',
           true
         );
 
@@ -2688,20 +2687,18 @@ export const gestorSimulacion = (config) => {
 
         /// si hay un evento suspendido, lo reprogramo
         if (eventoSuspendido) {
-          
           // Reprogramar el evento suspendido con la hora actual
-          tiempo_de_atencion = fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico
+          tiempo_de_atencion =
+            fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico
               .tiempo_remanente;
 
           // Borro el tiempo remanente de atención
-        fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.tiempo_remanente =
-        null;
+          fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.tiempo_remanente =
+            null;
           eventoSuspendido.suspendido = false; // Marcar como no suspendido
 
           proximoCliente = eventoSuspendido;
-
-        } else if (
-          colas.atencion_empresarial_con_ausencia.length > 0) {
+        } else if (colas.atencion_empresarial_con_ausencia.length > 0) {
           const clienteMasAntiguoEnCola = encontrarClienteMasAntiguo(
             colas[evento.servicio],
             fila.reloj
@@ -2709,7 +2706,7 @@ export const gestorSimulacion = (config) => {
 
           /// pasa al etado ocupado en el cado de haber clientes en la cola
           fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
-            "ocupado";
+            'ocupado';
           const tiempoEspera =
             evento.hora - clienteMasAntiguoEnCola.hora_de_ingreso;
 
@@ -2732,23 +2729,25 @@ export const gestorSimulacion = (config) => {
 
           tiempo_de_atencion = finAtencion.value;
         }
-        
+
         if (proximoCliente) {
           fila.atencion_empresarial_con_ausencia.estadisticos.clientes_atendidos += 1;
           fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
-            "ocupado";
-            fila[evento.servicio].fin_de_atencion.hora_de_fin_de_atencion_servidor_periodico =
+            'ocupado';
+          fila[
+            evento.servicio
+          ].fin_de_atencion.hora_de_fin_de_atencion_servidor_periodico =
             fila.reloj + tiempo_de_atencion;
 
           /// registro el evento fin de atención
           eventos.push({
             nombre: `fin_atencion_${abreviaciones.atencion_empresarial_con_ausencia}_${proximoCliente.cliente_id}`,
             cliente_id: proximoCliente.cliente_id,
-            servicio: "atencion_empresarial_con_ausencia",
-            tipo: "fin_de_atencion",
+            servicio: 'atencion_empresarial_con_ausencia',
+            tipo: 'fin_de_atencion',
             hora: fila.reloj + tiempo_de_atencion,
             tiempo_de_atencion,
-            servidor: "servidor_periodico",
+            servidor: 'servidor_periodico',
           });
         }
       }
@@ -2757,14 +2756,14 @@ export const gestorSimulacion = (config) => {
         /// hacer un barrido final, iterar sobre los servidores de todos los servicio, si estan ocupados, setear su tiempo de ocupacion acumulado y calcular su porcentaje de ocupacion
         // En el bloque esFin
         servicios.forEach((servicio) => {
-          if ("tiempos_de_ocupacion_acumulados" in fila[servicio].servidores) {
+          if ('tiempos_de_ocupacion_acumulados' in fila[servicio].servidores) {
             let tiempoAcum =
               filaPrevia[servicio].servidores.tiempos_de_ocupacion_acumulados;
 
             // Sumar tiempo de servidores que aún están ocupados
             Object.entries(filaPrevia[servicio].servidores).forEach(
               ([clave, valor]) => {
-                if (clave.includes("servidor") && valor.estado === "ocupado") {
+                if (clave.includes('servidor') && valor.estado === 'ocupado') {
                   tiempoAcum += fila.reloj - valor.inicio_ocupacion;
                 }
               }
@@ -2916,7 +2915,6 @@ export const gestorSimulacion = (config) => {
     cabeceras: plantillaCabeceras,
     filas,
     rtas,
-   
   };
 };
 
@@ -2925,7 +2923,7 @@ const encontrarServidoresLibres = (nombreServicio, fila) => {
 
   Object.entries(fila[nombreServicio].servidores).forEach(([clave, valor]) => {
     /// valida que sea la columna servidor_n y no el acumulador de los tiempos de ocupación
-    if (clave.includes("servidor") && valor.estado === "libre")
+    if (clave.includes('servidor') && valor.estado === 'libre')
       servidoresLibres.push(clave);
   });
 
