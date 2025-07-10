@@ -1,8 +1,7 @@
-// index.jsx
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { plantillaCofig } from '../../services';
-import './ConfigForm.css'; // Nuevo archivo de estilos
+import './ConfigForm.css'; // Archivo de estilos
 
 export default function ConfigForm({ onSubmit, isDisabled }) {
   const {
@@ -16,6 +15,30 @@ export default function ConfigForm({ onSubmit, isDisabled }) {
       simulacion: plantillaCofig.simulacion,
       tasas: {
         ...plantillaCofig.tasas,
+        // Inicializar los campos de horas y minutos para la ausencia
+        atencion_empresarial_con_ausencia: {
+          ...plantillaCofig.tasas.atencion_empresarial_con_ausencia,
+          duracion_de_ausencia_horas: Math.floor(
+            plantillaCofig.tasas.atencion_empresarial_con_ausencia
+              .duracion_de_ausencia
+          ),
+          duracion_de_ausencia_minutos: Math.round(
+            (plantillaCofig.tasas.atencion_empresarial_con_ausencia
+              .duracion_de_ausencia %
+              1) *
+              60
+          ),
+          intervalo_de_ausencia_horas: Math.floor(
+            plantillaCofig.tasas.atencion_empresarial_con_ausencia
+              .intervalo_de_ausencia
+          ),
+          intervalo_de_ausencia_minutos: Math.round(
+            (plantillaCofig.tasas.atencion_empresarial_con_ausencia
+              .intervalo_de_ausencia %
+              1) *
+              60
+          ),
+        },
       },
     },
   });
@@ -77,7 +100,32 @@ export default function ConfigForm({ onSubmit, isDisabled }) {
   }, [ventaSellosSobresTasaAtencion, ventaSellosSobresTasaLlegada, setValue]);
 
   const handleFormSubmit = (config) => {
-    onSubmit(config);
+    // Convertir duracion_de_ausencia y intervalo_de_ausencia a horas
+    const duracionAusenciaHoras =
+      (config.tasas.atencion_empresarial_con_ausencia
+        .duracion_de_ausencia_horas || 0) +
+      (config.tasas.atencion_empresarial_con_ausencia
+        .duracion_de_ausencia_minutos || 0) /
+        60;
+    const intervalosAusenciaHoras =
+      (config.tasas.atencion_empresarial_con_ausencia
+        .intervalo_de_ausencia_horas || 0) +
+      (config.tasas.atencion_empresarial_con_ausencia
+        .intervalo_de_ausencia_minutos || 0) /
+        60;
+
+    const updatedConfig = {
+      ...config,
+      tasas: {
+        ...config.tasas,
+        atencion_empresarial_con_ausencia: {
+          ...config.tasas.atencion_empresarial_con_ausencia,
+          duracion_de_ausencia: duracionAusenciaHoras,
+          intervalo_de_ausencia: intervalosAusenciaHoras,
+        },
+      },
+    };
+    onSubmit(updatedConfig);
   };
 
   return (
@@ -426,6 +474,201 @@ export default function ConfigForm({ onSubmit, isDisabled }) {
               {errors.tasas?.atencion_empresarial?.tasa_de_llegada && (
                 <span className='error-message'>
                   Campo requerido y no negativo.
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Servicio: Atencion Empresarial con Ausencia */}
+        <div className='service-card'>
+          <div className='service-header'>
+            <i className='bi bi-person-x me-2'></i>
+            Atención Empresarial con Ausencia
+          </div>
+          <div className='service-body'>
+            <div className='form-group'>
+              <label
+                htmlFor='aecaTasaAtencion'
+                className='form-label'
+              >
+                Tasa de atención
+              </label>
+              <input
+                type='number'
+                className={`form-input ${
+                  errors.tasas?.atencion_empresarial_con_ausencia
+                    ?.tasa_de_atencion
+                    ? 'input-error'
+                    : ''
+                }`}
+                id='aecaTasaAtencion'
+                {...register(
+                  'tasas.atencion_empresarial_con_ausencia.tasa_de_atencion',
+                  {
+                    required: true,
+                    min: 0,
+                  }
+                )}
+                disabled // Deshabilitado porque se hereda de Atencion Empresarial
+              />
+              {errors.tasas?.atencion_empresarial_con_ausencia
+                ?.tasa_de_atencion && (
+                <span className='error-message'>
+                  Campo requerido y no negativo.
+                </span>
+              )}
+            </div>
+
+            <div className='form-group'>
+              <label
+                htmlFor='aecaTasaLlegada'
+                className='form-label'
+              >
+                Tasa de llegada
+              </label>
+              <input
+                type='number'
+                className={`form-input ${
+                  errors.tasas?.atencion_empresarial_con_ausencia
+                    ?.tasa_de_llegada
+                    ? 'input-error'
+                    : ''
+                }`}
+                id='aecaTasaLlegada'
+                {...register(
+                  'tasas.atencion_empresarial_con_ausencia.tasa_de_llegada',
+                  {
+                    required: true,
+                    min: 0,
+                  }
+                )}
+                disabled // Deshabilitado porque se hereda de Atencion Empresarial
+              />
+              {errors.tasas?.atencion_empresarial_con_ausencia
+                ?.tasa_de_llegada && (
+                <span className='error-message'>
+                  Campo requerido y no negativo.
+                </span>
+              )}
+            </div>
+
+            <div className='form-group'>
+              <label
+                htmlFor='aecaDuracion'
+                className='form-label'
+              >
+                Duración de Ausencia
+              </label>
+              <div className='input-group'>
+                <input
+                  type='number'
+                  className={`form-input ${
+                    errors.tasas?.atencion_empresarial_con_ausencia
+                      ?.duracion_de_ausencia_horas
+                      ? 'input-error'
+                      : ''
+                  }`}
+                  id='aecaDuracionHoras'
+                  {...register(
+                    'tasas.atencion_empresarial_con_ausencia.duracion_de_ausencia_horas',
+                    {
+                      required: true,
+                      min: 0,
+                      valueAsNumber: true,
+                    }
+                  )}
+                  placeholder='Horas'
+                />
+                <span className='input-group-text'>hs</span>
+                <input
+                  type='number'
+                  className={`form-input ${
+                    errors.tasas?.atencion_empresarial_con_ausencia
+                      ?.duracion_de_ausencia_minutos
+                      ? 'input-error'
+                      : ''
+                  }`}
+                  id='aecaDuracionMinutos'
+                  {...register(
+                    'tasas.atencion_empresarial_con_ausencia.duracion_de_ausencia_minutos',
+                    {
+                      required: true,
+                      min: 0,
+                      max: 59,
+                      valueAsNumber: true,
+                    }
+                  )}
+                  placeholder='Minutos'
+                />
+                <span className='input-group-text'>min</span>
+              </div>
+              {(errors.tasas?.atencion_empresarial_con_ausencia
+                ?.duracion_de_ausencia_horas ||
+                errors.tasas?.atencion_empresarial_con_ausencia
+                  ?.duracion_de_ausencia_minutos) && (
+                <span className='error-message'>
+                  Campos requeridos. Horas no negativas. Minutos entre 0 y 59.
+                </span>
+              )}
+            </div>
+
+            <div className='form-group'>
+              <label
+                htmlFor='aecaIntervalo'
+                className='form-label'
+              >
+                Intervalo de Ausencia
+              </label>
+              <div className='input-group'>
+                <input
+                  type='number'
+                  className={`form-input ${
+                    errors.tasas?.atencion_empresarial_con_ausencia
+                      ?.intervalo_de_ausencia_horas
+                      ? 'input-error'
+                      : ''
+                  }`}
+                  id='aecaIntervaloHoras'
+                  {...register(
+                    'tasas.atencion_empresarial_con_ausencia.intervalo_de_ausencia_horas',
+                    {
+                      required: true,
+                      min: 0,
+                      valueAsNumber: true,
+                    }
+                  )}
+                  placeholder='Horas'
+                />
+                <span className='input-group-text'>hs</span>
+                <input
+                  type='number'
+                  className={`form-input ${
+                    errors.tasas?.atencion_empresarial_con_ausencia
+                      ?.intervalo_de_ausencia_minutos
+                      ? 'input-error'
+                      : ''
+                  }`}
+                  id='aecaIntervaloMinutos'
+                  {...register(
+                    'tasas.atencion_empresarial_con_ausencia.intervalo_de_ausencia_minutos',
+                    {
+                      required: true,
+                      min: 0,
+                      max: 59,
+                      valueAsNumber: true,
+                    }
+                  )}
+                  placeholder='Minutos'
+                />
+                <span className='input-group-text'>min</span>
+              </div>
+              {(errors.tasas?.atencion_empresarial_con_ausencia
+                ?.intervalo_de_ausencia_horas ||
+                errors.tasas?.atencion_empresarial_con_ausencia
+                  ?.intervalo_de_ausencia_minutos) && (
+                <span className='error-message'>
+                  Campos requeridos. Horas no negativas. Minutos entre 0 y 59.
                 </span>
               )}
             </div>

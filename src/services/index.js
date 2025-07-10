@@ -1723,6 +1723,8 @@ export const plantillaCofig = {
       tasa_de_llegada: tasasBase.atencion_empresarial.tasa_de_llegada,
       cantidad_de_servidores:
         tasasBase.atencion_empresarial.cantidad_de_servidores,
+      duracion_de_ausencia: 12 / 60, // Duración de ausencia en horas
+      intervalo_de_ausencia: 1, // Intervalos de ausencia en horas
     },
     venta_de_sellos_y_sobres_sin_1_empleado: {
       tasa_de_atencion: tasasBase.venta_de_sellos_y_sobres.tasa_de_atencion,
@@ -2356,22 +2358,22 @@ const procesarFinAtencionConPrioridad = (
   }
 };
 
-const registrarEventoAusencia = (reloj, eventos) => {
+const registrarEventoAusencia = (reloj, eventos, intervalo) => {
   eventos.push({
-    nombre: `ausencia_servidor_${abreviaciones['atencion_empresarial_con_ausencia']}`,
+    nombre: `ausencia_servidor_${abreviaciones.atencion_empresarial_con_ausencia}`,
     servicio: 'atencion_empresarial_con_ausencia',
     tipo: 'ausencia_servidor',
     servidor: 'servidor_periodico',
-    hora: reloj + 1, /// hora actual + 1 hora
+    hora: reloj + intervalo, /// hora actual + intervalo de ausencia
   });
 };
-const registrarEventoRegreso = (reloj, eventos) => {
+const registrarEventoRegreso = (reloj, eventos, durancion) => {
   eventos.push({
-    nombre: `regreso_servidor_${abreviaciones['atencion_empresarial_con_ausencia']}`,
+    nombre: `regreso_servidor_${abreviaciones.atencion_empresarial_con_ausencia}`,
     servicio: 'atencion_empresarial_con_ausencia',
     tipo: 'regreso_servidor',
     servidor: 'servidor_periodico',
-    hora: reloj + 12 / 60, /// hora actual + 12 min
+    hora: reloj + durancion, /// hora actual + duración de ausencia
   });
 };
 
@@ -2556,7 +2558,11 @@ export const gestorSimulacion = (config) => {
       filas.push(fila);
       filaPrevia = fila;
       /// generar el evento de ausencia
-      registrarEventoAusencia(0, eventos);
+      registrarEventoAusencia(
+        0,
+        eventos,
+        config.tasas.atencion_empresarial_con_ausencia.intervalo_de_ausencia
+      );
     } else {
       const evento = encontrarProxEvento(eventos);
       if (!evento) throw new Error('No se han encontrado eventos');
@@ -2665,14 +2671,22 @@ export const gestorSimulacion = (config) => {
         fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
           'ausente';
         // Programar regreso después de 12 minutos
-        registrarEventoRegreso(evento.hora, eventos);
+        registrarEventoRegreso(
+          evento.hora,
+          eventos,
+          config.tasas.atencion_empresarial_con_ausencia.duracion_de_ausencia
+        );
       } else if (evento.tipo === 'regreso_servidor') {
         // Restaurar servidor a estado libre por defecto
         fila.atencion_empresarial_con_ausencia.servidores.servidor_periodico.estado =
           'libre';
 
-        // Programar próxima ausencia en 1 hora
-        registrarEventoAusencia(evento.hora, eventos);
+        // Programar próxima ausencia
+        registrarEventoAusencia(
+          evento.hora,
+          eventos,
+          config.tasas.atencion_empresarial_con_ausencia.intervalo_de_ausencia
+        );
 
         // Buscar si hay un evento suspendido para reprogramar
         const eventoSuspendido = encontrarProxEvento(
@@ -2837,6 +2851,10 @@ export const gestorSimulacion = (config) => {
       },
     },
     punto_2: {
+      duracion_de_ausencia:
+        config.tasas.atencion_empresarial_con_ausencia.duracion_de_ausencia,
+      intervalo_de_ausencia:
+        config.tasas.atencion_empresarial_con_ausencia.intervalo_de_ausencia,
       tiempo_promedio_de_espera_con_sin_asusencia:
         ultimaFila.atencion_empresarial.estadisticos.tiempo_promedio_de_espera,
       tiempo_promedio_de_espera_con_con_asusencia:

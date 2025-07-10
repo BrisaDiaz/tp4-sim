@@ -91,6 +91,8 @@
   border-radius: 4px;
   font-size: 14px;
   transition: all 0.3s;
+  /* Eliminar border-radius para los inputs dentro de .input-group */
+  border-radius: 0;
 }
 
 .form-input:focus {
@@ -222,4 +224,76 @@
 }
 .service-card:nth-child(6) {
   animation-delay: 0.6s;
+}
+
+/* --- Nuevos estilos para Input Group --- */
+.input-group {
+  display: flex; /* Permite que los elementos se alineen en fila */
+  width: 100%;
+}
+
+.input-group .form-input {
+  flex: 1 1 auto; /* Permite que los inputs se expandan */
+  border-right: none; /* Elimina el borde entre inputs adyacentes */
+}
+.input-group .form-input:focus {
+  border-right: none;
+}
+.input-group .form-input:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group .form-input:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px; /* Superpone un poco para eliminar el espacio del borde */
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #595959;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #f0f0f0;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.input-group-text:first-of-type {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-text:last-of-type {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Ajustes de borde para el input group */
+.input-group .form-input:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.input-group .form-input:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-right: 1px solid #d9d9d9; /* Asegura el borde derecho del último input */
+}
+
+.input-group-text:first-of-type {
+  border-right: none;
+}
+
+/* Eliminar el margen en la parte inferior de los inputs dentro de un input-group */
+.input-group .form-input {
+  margin-bottom: 0;
+  width: 5px;
 }

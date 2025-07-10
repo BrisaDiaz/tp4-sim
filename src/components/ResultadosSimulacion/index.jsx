@@ -112,10 +112,10 @@ const ResultadosSimulacion = ({ resultados }) => {
             <p>
               <strong>Detalle:</strong> El sistema debe simular el escenario en
               el que un empleado del servicio de 'Atención Empresarial' se
-              ausenta 12 minutos cada hora. Se debe reportar el cambio en el
-              tiempo de espera promedio para este servicio bajo estas
-              condiciones, permitiendo planificar contingencias y ajustes de
-              personal.
+              ausenta por una duración específica cada intervalo de tiempo
+              definido. Se debe reportar el cambio en el tiempo de espera
+              promedio para este servicio bajo estas condiciones, permitiendo
+              planificar contingencias y ajustes de personal.
             </p>
             <div className='table-responsive'>
               <Table
@@ -131,7 +131,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                 <tbody>
                   <tr>
                     <td className='metric-value'>
-                      Tiempo promedio (Sin ausencia)
+                      Tiempo de espera promedio (sin ausencia)
                     </td>
                     <td className='time-value'>
                       {formatHoursToHHMMSS(
@@ -142,7 +142,7 @@ const ResultadosSimulacion = ({ resultados }) => {
                   </tr>
                   <tr>
                     <td className='metric-value'>
-                      Tiempo promedio (Con ausencia)
+                      Tiempo de espera promedio (con ausencia)
                     </td>
                     <td className='time-value'>
                       {formatHoursToHHMMSS(
@@ -269,8 +269,8 @@ const ResultadosSimulacion = ({ resultados }) => {
                           ([subQueueName, subValue]) => (
                             <tr key={`${queueName} - ${subQueueName}`}>
                               <td className='service-name'>
-                                {queueName.replace(/_/g, ' ')} {' - '}
-                                {subQueueName.replace(/_/g, ' ')}
+                                {queueName.replace(/_/g, ' ')} (
+                                {subQueueName.replace(/_/g, ' ')})
                               </td>
                               <td className='metric-value'>{subValue}</td>
                             </tr>

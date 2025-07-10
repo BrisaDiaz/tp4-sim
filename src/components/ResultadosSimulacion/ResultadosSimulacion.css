@@ -144,9 +144,11 @@
 .resultados-simulacion .service-name {
   font-weight: 500;
   color: #1890ff;
-  text-transform: capitalize;
+  text-transform: lowercase;
 }
-
+.resultados-simulacion .service-name::first-letter {
+  text-transform: uppercase;
+}
 /* Metrics styling */
 .resultados-simulacion .metric-value {
   font-weight: 600;
